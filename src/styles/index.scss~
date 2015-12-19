@@ -1,0 +1,255 @@
+@mixin move($x, $y) {
+	-webkit-transform: translate($x,$y);
+	   -moz-transform: translate($x,$y);
+	    -ms-transform: translate($x,$y);
+	     -o-transform: translate($x,$y);
+	        transform: translate($x,$y);
+}
+@mixin scale($times) {
+	-webkit-transform: scale($times);
+	   -moz-transform: scale($times);
+	    -ms-transform: scale($times);
+	     -o-transform: scale($times);
+	        transform: scale($times);
+}
+@mixin transition($mul...) {
+	-webkit-transition: $mul;
+	   -moz-transition: $mul;
+	    -ms-transition: $mul;
+	     -o-transition: $mul;
+	        transition: $mul;
+}
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+ul {
+	list-style-type: none;
+}
+#at-plus-container {
+	width: 25px;
+	height: 25px;
+	#bottom-positioner {
+		position: absolute;
+		bottom: 100px;
+		left:49%;
+	}
+}
+#button {
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	&:hover {
+		.icon {
+			@include transition(all .5s ease-in-out 0.5s);
+			@include scale(1.8);
+			background: #343DA4 center no-repeat url('../images/atplus_green.png');
+			background-size:  20px 16px;
+			// background-position: 4px 5px;
+			background-origin: content-box;
+			border-radius: 22.75px;
+		}
+		.mask {
+			@include move(-54px, -36px);
+			opacity: 1;
+		}
+		.history {
+			@include move(-68px, 0px);
+			opacity: 1;
+		}
+		.message {
+			@include move(-54px, 35px);
+			opacity: 1;
+		}
+		.setting {
+			@include move(-27px, 57px);
+			opacity: 1;
+		}
+		.sign {
+			@include move(17px, 55px);
+			opacity: 1;
+		}
+		.info {
+			@include move(-50px, -150px);
+			width: 120px;
+			height: 120px;
+		}
+		#control-ring-container {
+			width: 150px;
+			height: 150px;
+
+		}
+	}
+}
+.icon {
+	z-index: 999;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	background: #9AA0D4 center no-repeat url('../images/atplus_white.png');
+	background-size:  auto 16px;
+	background-origin: content-box;
+	border-radius: 50%;
+	//left:125px;
+	// top:138px;
+	@include transition(all .5s ease-in-out 1s);
+}
+.info {
+	// width: 120px;
+	// height: 120px;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	top:7.5px;
+	left:7.5px;
+	background:#7E7E7E;
+	border-radius:50%; 
+	overflow: hidden;
+	// left:133px;
+	// top:145px;
+	z-index: 2;
+	@include transition(all .5s ease-in-out 0.5s);
+	.page {
+		position: relative;
+	}
+	.user {
+		top:8px;
+		left:35px;
+		span {
+			position: absolute;
+			width: 30px;
+			height: 30px;
+			text-align: center;
+			font: {
+				family: sans-serif;
+				weight: bold;
+				size: 15px;
+			}
+			color: white;
+		}
+	}
+	.comment {
+		top:15px;
+		left:28px;
+		span {
+			position: absolute;
+			top:-8px;
+			left: 32px;
+			width: 30px;
+			height: 30px;
+			text-align: center;
+			font: {
+				family: sans-serif;
+				weight: bold;
+				size: 28px;
+			}
+			color: white;
+		}
+	}
+	.mine {
+		position: relative;
+		span {
+			position: absolute;
+			width: 23px;
+			height: 23px;
+			text-align: center;
+			font: {
+				family: sans-serif;
+				weight: bold;
+				size: 17px;
+			}
+			color: #17DC94;
+		}
+	}
+	.posted {
+		top:20px;
+		left:15px;
+	}
+	.like {
+		top:-6px;
+		left:65px;
+	}
+}
+#control-ring-container {
+	// width: 150px;
+	// height: 150px;
+	z-index: -1;
+	width: 0px;
+	height: 0px;
+	position: absolute;
+	top:-50px;
+	left:-70px;
+	// top: 90px;
+	// left:50px;
+	.button {
+		z-index: -2;
+		background-size:  auto;
+		background-origin: content-box;
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		position: absolute;
+		@include transition( all .5s ease-in-out 0.5s);
+		opacity: 0;
+	}
+	.mask {
+		background: #676767 center no-repeat url('../images/nomask.png');
+		background-size: 16px auto;
+		// left:13px;
+		// top:9px;
+		left:73px;
+		top:45px;
+	}
+
+	.history {
+		background: #676767 center no-repeat url('../images/history.png');
+		background-size: 16px auto;
+		// top:45px;
+		// left: 5px;
+		left:73px;
+		top:45px;
+	}
+	.message {
+		position: relative;
+		background: #676767 center no-repeat url('../images/message.png');
+		background-size: 16px auto;
+		// top:80px;
+		// left: 19px;
+		left:73px;
+		top:45px;
+	}
+	.message .unread{
+		display: block;
+		position: absolute;
+		top:-3px;
+		left:20px;
+		width: 16px;
+		height: 16px;
+		background: red;
+		border-radius: 50%;
+		text-align: center;
+		font: {
+			family: sans-serif;
+			weight: bold;
+			size: 12px;
+		}
+		color: #F5C3BB;
+	}
+	.setting {
+		background: #676767 center no-repeat url('../images/setting.png');
+		background-size: 16px auto;
+		// top:102px;
+		// left:50px;
+		left:73px;
+		top:45px;
+	}
+	.sign {
+		background: #676767 center no-repeat url('../images/signin.png');
+		background-size: 16px auto;
+		// top:98px;
+		// left:90px;
+		left:73px;
+		top:45px;
+	}
+}
