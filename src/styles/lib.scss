@@ -1,0 +1,27 @@
+@mixin move($x, $y) {
+	-webkit-transform: translate($x,$y);
+	   -moz-transform: translate($x,$y);
+	    -ms-transform: translate($x,$y);
+	     -o-transform: translate($x,$y);
+	        transform: translate($x,$y);
+}
+@mixin scale($times) {
+	-webkit-transform: scale($times);
+	   -moz-transform: scale($times);
+	    -ms-transform: scale($times);
+	     -o-transform: scale($times);
+	        transform: scale($times);
+}
+@mixin transition($mul...) {
+	-webkit-transition: $mul;
+	   -moz-transition: $mul;
+	    -ms-transition: $mul;
+	     -o-transition: $mul;
+	        transition: $mul;
+}
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+  	box-sizing:border-box;
+}
