@@ -6,7 +6,8 @@ import Store from '../stores/Store'
 
 const User = React.createClass({
   getInitialState() {
-      return Store.getAll();
+      // return Store.getAll();
+      return null;
   },
   componentDidMount() {
     Store.addChangeListener(this._onChange);
@@ -17,12 +18,12 @@ const User = React.createClass({
   render() {
     return (
       <div>
-        <h1>User:{this.state.account}</h1>
+        <h1>{'User'}</h1>
       </div>
     )
   },
   _onChange: function() {
-    // this.setState(getTodoState());
+    this.setState(Store.getAll);
   }
 })
 export default User;

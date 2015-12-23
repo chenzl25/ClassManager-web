@@ -1,0 +1,71 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/user.css">
+<div class="wrapper">
+    <div class="user_info">
+        <div class="top">
+            <img ng-src="{{user_data.image | checkImage}}" class="user_image">
+            <span class="user_name">{{user_data.name | checkName}}</span>
+            <a href="#/settings/user"><img src="images/settings.png" class="settings" /></a>
+            <a href="#/"><img src="images/logout.png" class="logout" ng-click="logout()"/></a>
+        </div>
+        <div class="switch">
+            <img src="images/people.png" >
+            <img src="images/message.png" >
+            <img src="images/comment.png" >
+        </div>
+        <div class="organization_list" >
+            <div class="organization" ng-repeat="organization in user_data.relationships" ng-click="show_organization(organization.account)">
+                <img ng-src="{{organization.image | checkImage}}" alt=""> <span class="name">{{organization.name | checkName}}</span>
+            </div>
+        </div>
+        <!-- <form action="/settings/user" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+            image:
+            <input type="file" name="image" />
+            <br />
+            <input type="submit" value="setting" />
+        </form> -->
+    </div>
+    <div class="info_detail">
+        <img ng-src="{{organization_data.image | checkImage}}" />
+        <span class="name">Name:{{organization_data.name | checkName}}</span>
+        <span class="account">Account:{{organization_data.account | checkName}}</span>
+        <div class="member_list">
+            member:
+            <div class="member" ng-repeat="member in organization_data.members">
+                <img ng-src="{{member.image | checkImage}}" />
+                <span class="account">{{member.account | checkName}}</span>
+                <span class="name">{{member.name | checkName}}</span>
+            </div>
+        </div>
+        <div class="homework_list">
+            homework:
+            <div class="homework" ng-repeat="homework in organization_data.homeworks">
+                <span class="name">name:{{homework.name | checkName}}</span>
+            </div>
+        </div>
+        <div class="notice_list">
+            notice:
+            <div class="notice" ng-repeat="notice in organization_data.notices">
+                <img ng-src="{{notice.image | checkImage}}" />
+                <span class="name">name:{{notice.name | checkName}}</span>
+            </div>
+        </div>
+        <div class="vote_list">
+            vote:
+            <div class="vote" ng-repeat="vote in organization_data.votes">
+                <span class="name">vote_name:{{vote.name | checkName}}</span>
+                <div class="option_list">
+                    <div ng-repeat="option in vote.options">
+                        <span class="name">option_name:{{option.name | checkName}}</span>
+                        <div class="supporter_list">
+                            supporters:
+                            <div class="supporter" ng-repeat="supporter in option.supporters">
+                                <span class="account">account: {{supporter.accout | checkName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- {{$parent.user_data | checkName}} -->
+</div>

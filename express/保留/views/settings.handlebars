@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="http://{{host}}:{{port}}/stylesheets/settings.css">
+    <script src="http://{{host}}:{{port}}/javascripts/settings.js" type="text/javascript" charset="utf-8" ></script>
+    <title>Class Manger</title>
+</head>
+<body>
+	<nav>
+		<ul>
+			<li>
+				<div id="search">
+					<input  type="text" name="search" value="" placeholder="search">
+					<button >search</button>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img id="image" src="http://{{host}}:{{port}}/{{user_data.image}}" alt="">
+					<span id="name" >{{user_data.name}}</span>
+				</div>
+			</li>
+			<li><a href=""><img id="message" src="http://{{host}}:{{port}}/images/message.png" alt=""></a></li>
+			<li><a href="/setting"><img id="setting" src="http://{{host}}:{{port}}/images/setting.png" alt=""></a></li>
+			<li><a href=""><img id="logout" src="http://{{host}}:{{port}}/images/logout.png" alt=""></a></li>
+		</ul>
+	</nav>
+	<div class="content">
+		<div>
+			<ul>
+				<li>image:<img src="http://{{host}}:{{port}}/{{user_data.image}}" alt=""></li>
+				<li>name:{{user_data.name}}</li>
+				<li>student_id:{{user_data.student_id}}</li>
+				<li>email:{{user_data.email}}</li>
+				<li>phone:{{user_data.phone}}</li>
+			</ul>
+		</div>
+		<form action="http://{{host}}:{{port}}/settings/user" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+		<label for="name">name:</label><input type="text" name="name" value="{{user_data.name}}" placeholder="name" required>
+		<label for="student_id">student_id:</label><input type="number" name="student_id" value="{{user_data.student_id}}" placeholder="student_id"  >
+		<label for="email">email:</label><input type="text" name="email" value="{{user_data.email}}" placeholder="email" >
+		<label for="phone">phone:</label><input type="text" name="phone" value="{{user_data.phone}}" placeholder="phone">
+		<label for="image">image:</label><input type="file" name="image"  placeholder="">
+		<input type="submit" name="settings" value="settings">
+	</form>
+	</div>
+</body>
+</html>

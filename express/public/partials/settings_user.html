@@ -1,0 +1,17 @@
+<div class="wrapper">
+    <div ng-controller="SettingsUserCtrl">
+        <form class="simple-form">
+            Name:
+            <input type="text" ng-model="copy_data.name" />
+            <br /> E-mail:
+            <input type="email" ng-model="copy_data.email" />
+            <br /> Gender:
+            <input type="radio" ng-model="copy_data.gender" value="male" />male
+            <input type="radio" ng-model="copy_data.gender" value="female" />female
+            <br /> Image:
+            <input type="file" file-model="image"/>
+            <input type="button" ng-click="reset()" value="Reset" />
+            <input type="submit" ng-click="update()" value="Save" />
+        </form>
+    </div>
+</div>

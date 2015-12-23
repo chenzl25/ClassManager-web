@@ -1,0 +1,592 @@
+数据库分两个部分组成：User 和 Organization  // 使用Organization是为了防止class与保留字冲突，同时更有利于扩展
+											//  后面称呼Organization为 “班级”
+一：User
+User = {
+	_id: ObjectId,              //User 在数据库里面的ID
+	name: String,               //真实姓名  陈梓麟
+    nick_name: String,          //昵称		Dylan
+    account: String,            //账号，（用户名感觉会与姓名混淆，所以叫账号）asd123
+    password: String,           //密码		123abc
+    gender: String,      //性别 male  或  female
+    age: Number, 		//  18
+    signature: String,   //   随便写的个性签名
+    accessible:Boolean,   //是否可以被其他用户搜索到，用户自己设置
+    student_id: String,		    //学号		14331048
+    image: String,				//图像的地址（或者说名称） 这个由后台来处理，前端只需要上传文件。
+    relationships: [Relationship],	//与对应班级的关系  （子类 Relationship 见下面）
+    school: String,			//学校   中山大学
+    email: String,			//电子邮件   595084778@qq.com
+    join_on: Date,			// 注册日期	 Date 这个类型由mongo自己给。有可能是字符串，排序可能要自己转化下。
+    homeworks: [Homework], //作业数组    （子类Homework 见下面）
+    messages; [MessageSchema],    //加班级的通知，或其他以后说
+    friends: [String], //朋友列表。  存的是好友的账号account  以备以后使用
+    phone: String,  //手机号码
+    qq: String,     //QQ号
+    wechat: String, // 微信号
+    status: [Status],  
+    // 其中status数组存了3个对象
+    //{name:'self', code:Math.random()}，
+    //{name:'homeworks', code:Math.random()}，
+    //{name:'relationships', code:Math.random()}
+}
+Message = {
+	_id:ObjectId,
+    name:String,           //消息的名字
+    content:String, 		   //消息的内容
+    sender: String,
+    join_on: Date,
+    image: String,
+    unlook: Boolean
+}
+Homework = {
+	_id: ObjectId,         //在数据库里面的ID，子对象都有ID，可以不用管
+	account: String,       // organization account
+	name: String,		   //作业的名称
+	content: String,	   //作业内容
+	deadline: Date,		   //作业的截至日期
+	unlook: Boolean,        //对于User来说，看到了没    方便Organization类统计
+	uncomplish: Boolean     //是否完成了作业
+});
+Relationship = {
+	_id: ObjectId,	             //在数据库里面的ID，子对象都有ID，可以不用管
+    name:String,				 //班级的名字
+    account:String,				 //班级的账号
+    position: String      		 //User在班级的职务
+    image: String
+});
+Status = {   //当User的对应数据更新后 ，对应的Status更新随机数，用于测试是否更改过数据，
+	_id: ObjectId,				//在数据库里面的ID，子对象都有ID，可以不用管
+    name:String,				//有3个status， 名字（name）为'self'，'homeworks'，'relationships'
+    code: Number                //code存随机数 小于1的小数  长这个样子0.1254168986144
+}
+
+二: Organization
+var Organization = {
+	_id: ObjectId,
+    name: String,                      //班级名字
+    account: String,				   //班级账号
+    password: String, 				   //班级密码 用于User的加入
+    image: String,					   //班级头像
+    school: String,
+    join_on: Date,
+    members: [Member],		   		   //成员数组
+    homeworks: [Homework],			   //作业数组
+    notices: [Notice],  			   //公告数组
+    votes: [Vote], 					   //投票数组
+    joiners:[String],				   //申请加入该群的人的账号
+    status: [Status] 				   //类似与User里的status，用于检验是否修改了，这一有6个元素
+});
+
+var Homework =  {	//作业类
+	_id: ObjectId,							
+	name: String, 					   //作业名字
+	content: String,				   //作业内容
+	deadline: Date,					   //作业截止日期
+	join_on: Date,
+	unlooks: [String],				   //没点开作业的同学的账号
+	// unlooks_num: Number 			   //没查看的人数  //deprecated
+});
+var Notice =  {		//公告类
+	_id: ObjectId,
+	name: String, 						//公告名字
+	content: String,					//公告内容
+	deadline: Date,						//公告截止日期
+	join_on: Date,
+	image: String,  					//公告的图片
+	unlooks: [String],					//没点开公告的同学的账号
+	// unlooks_num: Number 			   //没查看的人数 //deprecated
+});
+var Member =  {	    //班级成员类
+	_id: ObjectId,
+	position: String,					//职务
+	student_id: String,					//学号
+	name:String,						//姓名
+	join_on: Date,
+	nick_name:String,//++					
+	account: String 					//账号
+});
+
+var Vote =  {      //投票类   			
+	_id: ObjectId,
+	name: String,						//投票的标题
+	content: String,					//投票的内容说明
+	options: [Option],					//可投选项数组
+	deadline: Date, 					//投票截至日期
+	join_on: Date,
+	unvotes: [String], 					//没投人的账号account
+	// unvotes_num: Number 			   //没查看的人数 //deprecated
+});
+var Option =  {    //投票选项类
+	_id: ObjectId, 
+	name: String, 						//选项的名字
+	votes : Number, 					//这个选项所得票数
+	supporters: [String]				//有谁投了它
+});
+var Status =  {    //是否修改过的状态值类似于User
+	_id: ObjectId,
+	name:String, 						
+	code: Number 						//一共有五个元素在上面的数组里
+										// self_status : {type: Number, default: 0},
+									    // homeworks_status: {type: Number, default: 0},
+									    // notices_status: {type: Number, default: 0},
+									    // votes_status: {type: Number, default: 0},
+									    // members_status: {type: Number, default: 0}
+									    // joiners_status: {type: Number, default: 0}
+});
+
+
+
+接下来是数据的验证：
+	//注册时
+	account 账号长度  >=　6  符合 /[a-zA-z0-9]+/
+	password密码长度　>=  6	 符合 /[a-zA-z0-9]+/
+	//设置时
+	name nick_name 名字不为空
+	email                    符合 /[a-zA-z0-9]+@[a-zA-z0-9]+\..*/
+	student_id 学号 		 符合 /[0-9]+/
+	phone      电话          符合 /^[0-9]{11}$/
+	。。//什么qq wechat之类的以后补充了
+
+
+接下来是API：
+	//注册
+	POST                 				 //方法
+	1: /register/user  					 //url
+	input: {account:'',password:''}			 //接受数据
+	output: {error:'', message:''} 				 //返回数据
+	if 注册成功 
+		error = false;
+	else
+		error = true;
+	POST
+	2: /register/organization			 				//url
+	input: {account:''}			 			//接受数据
+	output: {error:'', message:''，organization_data:{所有信息}}//返回数据
+	if 注册成功  						 //班级注册成功后后台会自动设置user为群主founder
+		error = false;					 //此时客户端根据返回结果需要向服务器请求新的User数据relationship
+	else 							     //或者自己跟新relationship
+		error = true; 			
+
+
+	//登陆
+	POST                 				 //方法
+	1: /login/user  					 //url
+	{account:'',password:''}			 //接受数据
+	{error:'', message:'', user_status}  //返回数据   user_status = [{name:'self',code:'0.1238954'},...3个];
+ 	if 登陆成功 
+		error = false;  并请求设置cookies
+	else
+		error = true;
+
+	//设置    修改个人信息（在这不修改User的homework和relationships）
+	POST  	
+	1: /settings/user  //把登陆后的cookie发过来 同时再加上post数据
+	input: {需要修改的属性键值对}              //把需要修改的信息按JSON发过来例如修改name和email
+											   //   发{name:'姓名',email:'123456@qq.com'}
+											   // 修改图片的话直接上传，大小限制在500k
+											   // 表单头 enctype="multipart/form-data"
+	output: {error:'', message:''}      //放回的时候cookie还是有的，你们看下有没有什么插件直接处理
+	if 设置成功 
+		error = false;   	
+	else
+		error = true;
+
+	POST
+	2: /settings/organization/{:account}		 //把User登陆后的cookie发过来 同时再加上post数据   
+	input:{name:''} 	 //这里只包括名字和班级头像，表单头 enctype="multipart/form-data"
+	output:{error:'', message:''}    
+	if 设置成功  		//放回的时候cookie还是有的，你们看下有没有什么插件直接处理
+		error = false;
+	else
+		error = true;
+
+
+	//更新
+	POST  							//注意对于用户来说不需要发account给我，只要给cookie
+	1: /update/user/homework/{:homework_id}
+	input: { 						  //传入需要修改的，不修改的不用传
+		uncomplish: Boolean 
+	}
+	output:{error:'', message:''}
+
+	2. /update/user/message/{:message_id}
+	input: {
+		unlook: Boolean
+	}
+    output:{error:'', message:''}
+
+    3. /update/user/organization/{:account}/member  //相当于修改自己的群名片
+    input: {
+    	name: String       
+    }
+    output:{error:'', message:''}
+
+    POST
+	4: /update/organization/{:account}/member/{:member_id}          //这个更新一般是职务吧，但由班级管理员来跟新
+	input: {				  
+		name:String,
+		position: String
+	}
+	output:{error:'', message:''}  	
+
+	POST 								
+	5: /update/organization/{:account}/homework/{:homework_id} //这里注意{:account} 表示的是这个班级的account，加到url上,加的时候注意，没有花括号{}和冒号：只要加account
+	input:  {
+		name: String,    				//管理员更新。
+		content: String, 				//unlooks不由终端跟新，后台管理 所以这里input没有
+		deadline: Date,				    //还有更新完了后，已经看的同学会被重新设置为没看过
+	}); 								//同时我会修改相应的status随机数，这里就会出现手机端和服务器不统一数据的情况
+	output:{error:'', message:''}
+
+	POST
+	6: /update/organization/{:account}/notice/{:notice_id}    //这里注意{:account} 表示的是这个群的account，加到url上
+	input:  {		
+		name: String, 						
+		content: String,					//管理员更新。
+		image: String,						//unlooks不由终端跟新，后台管理 所以这里input没有
+		deadline: Date,						//还有更新完了后，已经看的同学会被重新设置为没看过
+	}); 									//同时我会修改相应的status随机数，这里就会出现手机端和服务器不统一数据的情况
+	output:{error:'', message:''} 
+
+	POST
+	7:/update/organization/{:account}/vote/{:vote_id}     //这里注意{:account} 表示的是这个群的account，加到url上
+	input: {         			
+		name: String,						 //修改Vote名字和内容和截止日期
+		content: String,					 //
+		deadline: Date, 					
+		options: [{_id:'',name=''}...]       //把需要修改的投票项的_id加上name放到数组里传过来
+	});
+
+
+    //查找
+    GET
+    1: /search/user				//加cookie
+    output: {
+    	error:'',
+    	message:'',
+    	user_data:该用户的所有信息,
+    }
+    GET
+	2: /search/user/status
+	output: {
+    	error:'',
+    	message:'',
+    	status:[所有信息],
+    }
+
+    GET
+    3: /search/user/messages
+    output: {
+    	error:'',
+    	message:'',
+    	messages:[所有信息],
+    }
+
+    GET
+    4: /search/user/homeworks
+    output: {
+    	error:'',
+    	message:'',
+    	homeworks:[所有信息],
+    }
+
+    GET
+    5: /search/user/relationships
+    output: {
+    	error:'',
+    	message:'',
+    	relationships:[所有信息],
+    }
+
+    GET
+    6: /search/user/account/{:account}   //没cookie，代表其他用户访问
+    if find    
+	    if accessible = true
+		    output: {     //如果account的accessible是true则返回一下信息
+		    	error:false,
+		    	message:'...',
+		    	user_data: {
+			    	name: String,
+			    	account: String,
+			    	age: Number,
+			    	student_id: String,
+			    	qq: String,
+			    	wechat: String,
+			    	nick_name: String,
+					gender: String,
+					image: String,
+					school: String,
+					email: String,
+					phone: String
+		    	}
+		    }
+		else if accessible = false
+			output: {     //如果account的accessible是false则返回一下信息
+				error:false,
+		    	message:"user doesn't want to be searched",
+		    	user_data: {}
+		    }
+    else if not find
+    	output: {     //如果account的accessible是false则返回一下信息
+			error:true,
+	    	message:"..",
+	    	user_data: {}
+	    }
+
+	GET
+	7: /search/organization/{:account} 	//这个方法要求User在群里
+		if find 
+			outout：{
+				error:false,
+			    message:'...',
+			    organization_data:'所有的信息';
+			}
+		else if not find
+			output: {
+				error:true,
+		    	message:"..",
+		    	organization_data: {}
+		    }
+
+	GET
+	8: /search/organization/{:account}/homeworks 	//这个方法要求User在群里
+		if find
+			outout：{
+				error:false,
+			    message:'...',
+			    homeworks:['所有的信息'];
+			}
+		else if not find
+			output: {
+				error:true,
+		    	message:"..",
+			    homeworks:[],
+		    }
+
+	GET
+	9: /search/organization/{:account}/notices 	//这个方法要求User在群里
+		if find
+			outout：{
+				error:false,
+			    message:'...',
+			    notices:['所有的信息'];
+			}
+		else if not find
+			output: {
+				error:true,
+		    	message:"..",
+			    notices:[];
+		    }
+
+	GET
+	10: /search/organization/{:account}/votes 	//这个方法要求User在群里
+		if find
+			outout：{
+				error:false,
+			    message:'...',
+			    votes:['所有的信息'];
+			}
+		else if not find
+			output: {
+				error:true,
+		    	message:"..",
+			    votes:[];
+		    }
+
+	GET
+	11: /search/organization/{:account}/members 	//这个方法要求User在群里
+		if find
+			outout：{
+				error:false,
+			    message:'...',
+			    members:['所有的信息'];
+			}
+		else if not find
+			output: {
+				error:true,
+		    	message:"..",
+			    members[];
+		    }
+
+
+	12: /search/organization/account/{:account}    //
+	    if find
+		    outout：{
+				error:false,
+			    message:'...',
+			    organization_data:{
+			    	account: String,
+			    	name: String,
+			    	image: String,
+			    	need_password: Boolean,
+			    };
+			}
+		else if not find
+			output: {     
+				error:true,
+		    	message:"..",
+		    	user_data: {}
+		    }
+
+	GET          //cookie
+	search/organization/{:account}/homework/{:_id}  //account 是 organization的
+	output: {									  //id  是 homework的 
+    	error:'',
+    	message:''
+    	homework: {};
+    }
+
+	GET
+	search/organization/{:account}/notice/{:_id}
+	output: {
+    	error:'',
+    	message:''
+    	notice:{}
+    }
+
+	GET
+	search/organization/{:account}/vote/{:_id}
+	output: {
+    	error:'',
+    	message:''
+    	vote:{}
+    }
+
+
+
+    //join 加群处理
+    POST 				  //用密码加班级
+    /join/organization   //加cookie
+    input: {
+    	account: String,
+    	password: String
+    }
+    output: {
+    	error:'',  //false 或者 true
+    	message:'',
+    	organization_data:'' //+++
+    }
+    
+    GET
+    /join/organization/{:account}   //不用密码加班级，但需要同意
+    output: {
+    	error:'',   //false 或者 true
+    	message:'',
+    	organization_data:'' //+++ 
+    }
+
+    POST
+    管理员对班级的joiners的是否同意处理
+    /agree/organization/{:account}
+    input:{
+    	account:String，   //joiner的账号
+    	agree: Boolean 	   //true or false
+    }
+    output: {
+    	error:'',
+    	message:''
+    }
+
+
+    //create 布置作业，发公告，发起投票
+    POST
+    /create/organization/{:account}/homework    //加cookie，  这得account是班级账号 
+    input: {
+    	name:String
+		content:String
+		deadline:String
+    }
+    output: {
+    	error:'',
+    	message:''
+    }
+
+    POST
+    /create/organization/{:account}/notice    //加cookie，  这得account是班级账号 
+    input: {
+    	name:String,
+		content:String,
+		deadline:String,
+		image:String
+    }
+    output: {
+    	error:'',
+    	message:''
+    }
+
+    POST
+    /create/organization/{:account}/vote    //加cookie，  这得account是班级账号 
+    input: {
+    	name:String,
+		content:String,
+		deadline:String,
+		options:[{name:''},...]
+    }
+    output: {
+    	error:'',
+    	message:''
+    }
+
+    //投票处理 vote
+	POST
+	/vote/organization/{:acccount}   // 加cookie ，account是班级账号 
+	input: {
+++		vote_id: ObjectId,     	//该班级的投票数组votes中某个投票元素votes[i]的ID
+		option_id：ObjectId // 该班级的投票数组votes中某个投票元素votes[i]里面的votes[i].options[j]投票选项的ID
+	}
+
+	删除
+	DELETE  					//解散班级
+	organization/{:account}
+	outout：{
+		error:'',
+		message:''
+	}
+
+	DELETE  					//踢人
+	organization/{:account}/member/{:account}     /第一个是班级的账号，第二个是用户的账号
+	outout：{
+		error:'',
+		message:''
+	}
+
+	DELETE  					
+	organization/{:account}/homework/{:_id}
+	outout：{
+		error:'',
+		message:''
+	}
+
+	DELETE  					
+	organization/{:account}/notice/{:_id}
+	outout：{
+		error:'',
+		message:''
+	}
+
+	DELETE  					
+	organization/{:account}/vote/{:_id}
+	outout：{
+		error:'',
+		message:''
+	}
+
+	DELETE  					//退出班级
+	user/organization/{:account}    //班级的账号
+	outout：{
+		error:'',
+		message:''
+	}
+
+//send message  
+    POST
+    send/{:account}    //account 是接受人的account
+    input: {
+    	content:String,
+    }
+    output: {
+    	error:'',
+    	message:''
+    }
+
+

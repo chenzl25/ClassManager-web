@@ -1,0 +1,16 @@
+<link rel="stylesheet" type="text/css" href="http://{{host}}:{{port}}/stylesheets/register.css">
+<h1><a href="http://{{host}}:{{port}}/">Class Manager</a></h1>
+<h2>Register</h2>
+<div>
+{{!-- multipart/form-data --}}
+	<form action="http://{{host}}:{{port}}/register/organization" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+		<label for="account">account:</label><input type="text" name="account" value="" placeholder="account" required>
+		{{!-- <label for="password">password:</label><input type="password" name="password" value="" placeholder="password" required> --}}
+		<label for="name">name:</label><input type="text" name="name" value="" placeholder="name" required>
+		{{!-- <label for="email">email:</label><input type="text" name="email" value="" placeholder="email" > --}}
+		{{!-- <label for="student_id">student_id:</label><input type="number" name="student_id" value="" placeholder="student_id"  > --}}
+		<label for="image">image:</label><input type="file" name="image"  placeholder="">
+
+		<input type="submit" name="register" value="register">
+	</form>
+</div>

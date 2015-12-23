@@ -1,20 +1,23 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var Constants = require('../constants/Constants');
-var assign = require('object-assign');
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import {EventEmitter} from 'events'
+import Constants from '../constants/Constants'
+import assign from 'object-assign'
+import Immutable from 'immutable'
 
 var CHANGE_EVENT = 'change';
 
-var _user = {};
-var _message = {};
-var _state = {
+var _user = Immutable.Map();
+var _message = Immutable.Map();
+var _state = Immutable.Map({
   isLogin: false,
-  //others
-};
+  // self: null
+})
 function createUser(data) {
-  _user.account = data.account;
-  _user.name = data.name;
-  _state.isLogin = true;
+  // _user.account = data.account;
+  // _user.name = data.name;
+  _user = Immutable.Map(data.get('user_data'));
+  _state = _state.set(data.getIn(['status', 'name']), data.getIn(['status', 'code']));
+  _state = _state.set('isLogin', true);
 }
 function updateUser(data) {
 
@@ -34,7 +37,7 @@ var Store = assign({}, EventEmitter.prototype, {
     return _message;
   },
   isLogin: function() {
-    return _state.isLogin;
+    return _state.get('isLogin');
   },
   emitChange: function() {
     this.emit(CHANGE_EVENT);

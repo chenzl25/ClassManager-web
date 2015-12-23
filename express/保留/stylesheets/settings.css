@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+nav {
+  margin-top: 10px;
+  background: #0663C1; }
+
+nav > ul > li {
+  display: inline-block; }
+  nav > ul > li > a > img {
+    background: #0E78E7;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px; }
+
+.left {
+  float: left; }
+
+.right {
+  float: right; }
+
+#search input {
+  width: 150px;
+  height: 25px;
+  margin-left: 20px; }
+#search button {
+  background: #0E78E7;
+  border: 0;
+  height: 25px; }
+
+img {
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
+  vertical-align: middle; }
+
+#name {
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: middle; }
+
+/*# sourceMappingURL=settings.css.map */

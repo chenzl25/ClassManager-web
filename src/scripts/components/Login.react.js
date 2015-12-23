@@ -2,62 +2,73 @@ import React from 'react'
 import { Router, Route, Link } from 'react-router'
 import Actions from '../actions/Actions'
 import validator from '../lib/validator'
+import { post, get } from '../lib/service'
 import Store from '../stores/Store'
+import Immutable from 'immutable';
+
 
 const Login = React.createClass({
+  setImmState(fn) {
+    return this.setState(({data}) => ({
+      data: fn(data)
+    }));
+  },
+  shouldComponentUpdate(nextProps, nextState) {
+    return !nextState.data.equals(this.state.data);
+  },
   getInitialState() {
       return {
-        account: null,
-        password: null,
-        warning: null
-      };
+        data: Immutable.Map({
+                account: "",
+                password: "",
+                warning: "",
+                isLogin: Store.isLogin()})
+        };
   },
-  componentDidMount: () => {
-    Store.addChangeListener(this._isLogin);
+  componentDidMount(){
+    Store.addChangeListener(this.isLogin);
   },
-  componentWillUnmount: () => {
-    Store.removeChangeListener(this._isLogin);
+  componentWillUnmount(){
+    Store.removeChangeListener(this.isLogin);
   },
   
   render() {
     return (
-	    <form onSubmit={this._submitHandler}>
-	    	<div>
+	    <form onSubmit={this.submitHandler}>
+        <div>
 	    		<label htmlFor="account">Account:</label>
-	    		<input type="text" autoFocus="true" name="account" placeholder="account" onChange={this._changeHandler} />
+	    		<input type="text" autoFocus="true" name="account" placeholder="account" onChange={this.changeHandler} />
 	    	</div>
 	    	<div>
 	    		<label htmlFor="password">password:</label>
-	    		<input type="text" name="password" placeholder="password" onChange={this._changeHandler} />
+	    		<input type="password" name="password" placeholder="password" onChange={this.changeHandler} />
 	    	</div>
 	    	<div>
 	    		<label htmlFor="submit"></label>
 	    		<input type="submit" name ="submit"/>
 	    	</div>
-	    	<div className="warning">{this.state.warning}</div>
+	    	<div className="warning">{JSON.stringify(this.state.data.get('warning'))}</div>
 	    </form>
     )
   },
-  _changeHandler: (event) => {
-    var newState = {}
-    newState[event.target.name] = event.target.value;
-    this.setState(newState);
+  changeHandler(event) {
+    this.setImmState(d => d.update(event.target.name, v => event.target.value));
   },
-  _submitHandler: (event) => {
+  submitHandler(event) {
     event.preventDefault();
-    var result = validator.validate({accout: this.state.account,
-                        password: this.state.password});
-    if (result) {
-      // toString should be considered again
-      this.setState(warning, result.toString());
-    } else{
-      Actions.login(this.state.account, this.state.password);
+    var result = validator.validate(this.state.data.toJS())
+    this.setImmState(d => d.update('warning', v => result.toJS()));
+    if (result.size == 0) {
+      Actions.login(this.state.data.get('account'), this.state.data.get('password'));
     }
+    // console.log(this.props.history)
+    // this.props.history.pushState(null, '/user/' + this.state.account);
   },
-  _isLogin: () => {
+  isLogin()  {
+    console.log(Store.isLogin())
     if(Store.isLogin()) {
       this.props.history.pushState(null, '/user/' + this.state.account);
     }
-  }
+  },
 })
 export default Login;

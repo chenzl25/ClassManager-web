@@ -1,25 +1,21 @@
-/*
- * Copyright (c) 2014-2015, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * Actions
- */
-
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import Constants from '../constants/Constants'
+import { post, get } from '../lib/service'
 
 var Actions = {
   login: function(account, password) {
     //some ajax here
-    var data;
-    AppDispatcher.dispatch({
-      actionType: Constants.LOGIN,
-      data: data
-    });
+    console.log('login!!!');
+    post('/login/user', {account: account, password: password})
+          .then((result) => {
+            console.log(result.toJS());
+            AppDispatcher.dispatch({
+              actionType: Constants.LOGIN,
+              data: result
+            });
+          }, (err) => {
+            console.log('reject:', err);
+          })
   },
   logout: function(account, password) {
     //some ajax here

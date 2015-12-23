@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="http://{{host}}:{{port}}/stylesheets/user.css">
+    <script src="http://{{host}}:{{port}}/javascripts/user.js" type="text/javascript" charset="utf-8" ></script>
+    <title>Class Manger</title>
+</head>
+<body>
+	<nav>
+		<ul>
+			<li>
+				<form>
+					<input type="radio" name="user" value="" checked> User
+					<input type="radio" name="organization" value="" > Organization
+					<input  id="input" type="text" name="search" value="" placeholder="search">
+					<button id="search">search</button>
+				</form>
+			</li>
+			<li>
+				<div>
+					<img id="image" src="{{user_data.image}}" alt="">
+					<span id="name" >{{user_data.name}}</span>
+				</div>
+			</li>
+			<li><a href=""><img id="message" src="http://{{host}}:{{port}}/images/message.png" alt=""></a></li>
+			<li><a href="http://{{host}}:{{port}}/settings/user"><img id="setting" src="images/setting.png" alt=""></a></li>
+			<li><a href=""><img id="logout" src="http://{{host}}:{{port}}/images/logout.png" alt=""></a></li>
+		</ul>
+	</nav>
+	<div class="left post">
+		post
+		<ul>
+		</ul>
+	</div>
+	<div class="center">
+		search result
+		<div id="result">
+			
+		</div>
+	</div>
+	<div class="right organizations">
+		<a href="http://{{host}}:{{port}}/register/organization">create_organization</a>
+		<ul>
+			{{#each user_data.relationships}}
+		  		<li><a href="http://{{../host}}:{{../port}}/organizations/{{account}}">goto</a>name:{{name}}, account:{{account}}, position:{{position}}</li>
+		  	{{/each}}
+		</ul>
+	</div>
+</body>
+</html>

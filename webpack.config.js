@@ -15,15 +15,25 @@ var PATH = {
 }
 
 module.exports = {
+  devtool: 'eval-source-map',
   entry: [
-    'webpack/hot/dev-server',
+    // 'webpack-hot-middleware/client?path=/&reload=true&timeout=2000&overlay=false',
+    'webpack/hot/only-dev-server',
     'webpack-dev-server/client?http://localhost:8080',
     path.resolve(PATH.src, 'scripts', 'app.js')
   ],
   output: {
-    path: path.resolve(PATH.dist, 'scripts'),
-    filename: 'bundle.js'
-    // publicPath: '/static/'
+    path: path.resolve(PATH.dist),
+    filename: 'bundle.js',
+    publicPath: ''
+  },
+  devServer: {
+    proxy: {
+      '/api/*': {
+          target: 'http://localhost:3000',
+          secure: false
+      }
+    }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -35,12 +45,14 @@ module.exports = {
     }),
     new OpenBrowserPlugin({url: 'http://localhost:8080'}),
     new CommonsChunkPlugin('init.js'),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.NoErrorsPlugin(),
     devFlagPlugin,
   ],
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      loaders: ['babel-loader?presets[]=es2015&presets[]=react'],
+      loaders: ['react-hot','babel-loader?presets[]=es2015&presets[]=react'],
       include: path.join(PATH.src, 'scripts')
     },
     { test: /\.scss$/,

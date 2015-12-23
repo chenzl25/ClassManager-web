@@ -1,0 +1,18 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/register.css">
+<div class="wrapper">
+    <form name="register_form">
+        Account:
+        <input type="text" name="account" ng-model="account" required ng-minlength="6" />
+        <br />
+        Password:
+        <input type="password" name="password" ng-model="password" required ng-minlength="6" />
+        <br />
+        Password again:
+        <input type="password" name="re_password" ng-model="re_password" required ng-minlength="6" />
+        <br />
+        <input type="submit" ng-click="register()" value="register"  />
+    </form>
+    <div>
+        {{result | json}}
+    </div>
+</div>

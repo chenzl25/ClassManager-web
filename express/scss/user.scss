@@ -1,0 +1,94 @@
+$total_width: 75%;
+$total_height: 100%;
+.wrapper {
+	height: $total_height;
+	width: $total_width;
+	margin: 0 auto 0;
+}
+.user_info {
+	width: 30%;
+	height: $total_height;
+	float: left;
+	background:#2B2F35;
+	.top {
+		position: relative;
+		height: $total_height/12;
+		.user_image {
+			width: 50px;
+			height: 50px;
+		}
+		.user_name {
+			position: relative;
+			left: 10px;
+			top: -20px;
+			color: white;
+			font: {
+				family: sans-serif;
+				size : 20px;
+			}
+		}
+		.settings {
+			width: 30px;
+			height: 30px;
+			position: relative;
+			left: 50px;
+			top: -10px;
+		}
+		.logout {
+			width: 30px;
+			height: 30px;
+			position: relative;
+			left: 100px;
+			top: -10px;
+		}
+	}
+}
+.info_detail {
+	width: 70%;
+	height: $total_height;
+	float: right;
+	background: #eee;
+}
+.switch {
+	height: $total_height/12;
+	img {
+		width: 30px;
+		height: 30px;
+		margin: 3px 15px 3px;
+	}
+	border: {
+		top: 1px black solid;
+		bottom: 1px black solid;
+	}
+}
+.organization_list {
+	overflow-y: scroll;
+	height: $total_height/12*10;
+}
+.organization {
+	.name {
+		color: white;
+		font: {
+			family: sans-serif;
+			size : 15px;
+		}
+	}
+	img {
+		height: 25px;
+		width: 25px;
+	}
+	margin: 2px 0 2px;
+}
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track {
+    background-color: #eaeaea;
+    border-left: 1px solid #ccc;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #999999;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #ccc;
+}

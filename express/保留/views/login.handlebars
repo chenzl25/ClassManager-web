@@ -1,0 +1,11 @@
+<link rel="stylesheet" type="text/css" href="http://{{host}}:{{port}}/stylesheets/register.css">
+<h1><a href="http://{{host}}:{{port}}/">Class Manager</a></h1>
+<h2>Login</h2>
+<div>
+	<form action="/login/user" method="post" enctype="application/json" accept-charset="utf-8">
+		<label for="account">account:</label><input type="text" name="account" value="" placeholder="account" required>
+		<label for="password">password:</label><input type="password" name="password" value="" placeholder="password" required>
+		<input type="submit" name="login" value="login">
+	</form>
+</div>
+

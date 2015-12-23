@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 var validator = {
 	beChecked: {
 		account: {
@@ -6,6 +7,10 @@ var validator = {
 		},
 		password: {
 			errorMessage: 'Error: wrong format of the password',
+			pattern: /^[a-zA-Z0-9]{6,18}$/
+		},
+		again: {
+			errorMessage: 'Error: wrong format of the again',
 			pattern: /^[a-zA-Z0-9]{6,18}$/
 		},
 		phone: {
@@ -18,11 +23,16 @@ var validator = {
 		}
 	},
 	validate: function(input) {
-		var result = {};
+		var result = Immutable.Map({});
 		for (var key in input) {
 			if (key in this.beChecked && !this.beChecked[key].pattern.test(input[key])) {
-				result[key] = this.beChecked[key].errorMessage;
+				if (key == 'again' && input['again'] !== input['password']) {
+					result = result.set('again', this.beChecked['again'].errorMessage);
+				} else{
+					result = result.set(key, this.beChecked[key].errorMessage);
+				}
 			}
+			// exception
 		}
 		return result;
 	}

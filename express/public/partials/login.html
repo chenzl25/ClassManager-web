@@ -1,0 +1,15 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/login.css">
+<div class="wrapper">
+    <form name="login_form">
+        Account:
+        <input type="text" name="account" ng-model="account" required ng-minlength="6"/>
+        <br />
+        Password:
+        <input type="password" name="password" ng-model="password" required ng-minlength="6"/>
+        <br />
+        <input type="submit" ng-click="login()" value="login"  />
+    </form>
+	<div>
+        {1parent.user_data}
+	</div>
+</div>
