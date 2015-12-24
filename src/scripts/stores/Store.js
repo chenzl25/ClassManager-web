@@ -10,12 +10,13 @@ var _user = Immutable.Map();
 var _message = Immutable.Map();
 var _state = Immutable.Map({
   isLogin: false,
-  // self: null
+  // self: null,
 })
 function createUser(data) {
   // _user.account = data.account;
   // _user.name = data.name;
-  _user = Immutable.Map(data.get('user_data'));
+  _user = Immutable.Map({user_data: data.get('user_data')});
+  _message = Immutable.Map({message: data.get('message')});
   _state = _state.set(data.getIn(['status', 'name']), data.getIn(['status', 'code']));
   _state = _state.set('isLogin', true);
 }
@@ -31,10 +32,10 @@ function registerUser(data) {
 var Store = assign({}, EventEmitter.prototype, {
 
   getUser: function() {
-    return _user;
+    return _user.get('user_data');
   },
   getMessage: function() {
-    return _message;
+    return _message.get('message');
   },
   isLogin: function() {
     return _state.get('isLogin');

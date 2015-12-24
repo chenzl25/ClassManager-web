@@ -79,6 +79,7 @@ var organizations_upload = multer({
     } else {
       console.log(file);
       if (!/image\/*/.test(file.mimetype)) {
+        // if (!/image\/*/.test(file.mimetype) && file.mimetype != 'application/octet-stream') {
         console.log('not image file has been uploaded by', req.session.user_data.account);
         req.unformat_upload = true;
         cb(null, false);
@@ -326,7 +327,7 @@ function user_in_organization(user, account, result) {
           user.relationships[i].position === 'manager') {
         return true;
       } else {
-        result.message('you have no enough privilege');
+        result.message ='you have no enough privilege';
         return false;
       }
     }

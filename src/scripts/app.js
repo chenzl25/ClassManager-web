@@ -6,14 +6,20 @@ import App from './components/App.react'
 import Register from './components/Register.react'
 import Login from './components/Login.react'
 import User from './components/User.react'
+import Homeworks from './components/Homeworks.react'
+import Organizations from './components/Organizations.react'
 
 // const history = createHistory();
 render((
   <Router>
     <Route path="/" component={App}>
-      <Route path="register" component={Register}/>
-      <Route path="login" component={Login}/>
-      <Route path="user/:account" component={User}/>
+      <IndexRoute  component={Login}/>
+      <Route path="/register" component={Register}/>
+      <Route path="/login" component={Login}/>
+      <Route path="/user/:account" component={User}>
+      	<Route path="homeworks" component={Homeworks}/>
+		<Route path="organizatons" component={Organizations}/>
+      </Route>
       <Redirect from="*" to="/" />
     </Route>
   </Router>

@@ -9,9 +9,9 @@
 # echo '\n'
 # # login user
 
-# curl  -c cookie15.file --data 'account=myuser15&password=myuser15' \
-# http://localhost:3000/login/user
-# echo '\n'
+curl  -c cookie15.file --data 'account=myuser15&password=myuser15' \
+http://localhost:3000/login/user
+echo '\n'
 
 
 # curl  -c cookie11.file --data 'account=myuser11&password=myuser11' \
@@ -30,12 +30,12 @@ echo '\n'
 
 # # setting organization
 
-curl -b cookie48.file --form accessible=true \
-http://localhost:3000/settings/user
+# curl -b cookie48.file --form accessible=true \
+# http://localhost:3000/settings/user
 
-# curl  -b cookie48.file --form name=group48 --form image=@b.png --form password=123456 \
-# http://localhost:3000/settings/organization/mygroup48
-# echo '\n'
+curl  -b cookie15.file --form name=class999 --form image=@e.png  \
+http://localhost:3000/settings/organization/class999
+echo '\n'
 
 # #join
 

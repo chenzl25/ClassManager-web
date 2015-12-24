@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "build": "rm -r dist/* && webpack -p",
-    "rm": "rm -r dist/*"
+    "rm": "rm -r dist/*",
+    "start": "./express/bin/www & node server.js"
   },
   "keywords": [
     "ClassManager",

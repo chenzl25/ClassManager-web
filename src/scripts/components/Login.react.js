@@ -5,7 +5,7 @@ import validator from '../lib/validator'
 import { post, get } from '../lib/service'
 import Store from '../stores/Store'
 import Immutable from 'immutable';
-
+import path from 'path'
 
 const Login = React.createClass({
   setImmState(fn) {
@@ -67,7 +67,7 @@ const Login = React.createClass({
   isLogin()  {
     console.log(Store.isLogin())
     if(Store.isLogin()) {
-      this.props.history.pushState(null, '/user/' + this.state.account);
+      this.props.history.pushState(null, path.join('/','user', this.state.data.get('account'), '/'));
     }
   },
 })

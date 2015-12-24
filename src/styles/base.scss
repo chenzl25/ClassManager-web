@@ -5,21 +5,21 @@
 	     -o-transform: scale($times);
 	        transform: scale($times);
 }
-.base-enter {
+.hehe-enter {
   // @include scale(1.2);
   opacity: 0.01;
 }
 
-.base-enter.base-enter-active {
+.hehe-enter.hehe-enter-active {
   opacity: 1;
   transition: all 500ms ease-in;
 }
 
-.base-appear {
+.hehe-appear {
   opacity: 0.01;
 }
 
-.base-appear.base-appear-active {
+.hehe-appear.hehe-appear-active {
   opacity: 1;
   transition: all .5s ease-in;
 }

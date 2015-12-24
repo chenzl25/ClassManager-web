@@ -39,6 +39,7 @@ router.post('/user', function(req,res) {
 			        	req.session.user_data = data;
 			  			result.message = 'login successfully';
 			  			result.user_data = data;
+			  			data.status = [];
 			  			data.status.push({name:'self',code:Math.random()});
 			  			data.status.push({name:'homeworks', code:Math.random()});
 			  			data.status.push({name:'relationships', code:Math.random()});

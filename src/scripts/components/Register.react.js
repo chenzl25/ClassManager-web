@@ -1,8 +1,10 @@
 import React from 'react'
 import { post, get } from '../lib/service'
 import validator from '../lib/validator'
-import Immutable from 'immutable';
-
+import Immutable from 'immutable'
+import classNames from 'classnames'
+import Warning from './Warning.react'
+import Store from '../stores/Store'
 
 const Register = React.createClass({
   setImmState(fn) {
@@ -16,13 +18,20 @@ const Register = React.createClass({
   getInitialState() {
       return {
         data: Immutable.Map({
-                account: "",
-                password: "",
-                again: "",
-                warning: "",})
+                account: null,
+                password: null,
+                again: null,
+                warning: null,
+                registered: false,
+                submited: false})
         };
   },
   render() {
+    var WarningComponent;
+    if (this.state.data.get('submited')) {
+      WarningComponent = <Warning message={JSON.stringify(this.state.data.get('warning'))} 
+               url={this.state.data.get('registered')? '/login' : null}/>
+    }
     return (
 			<form key="register" onSubmit={this.submitHandler}>
         <div>
@@ -31,7 +40,7 @@ const Register = React.createClass({
 				</div>
 				<div>
 					<label htmlFor="password">password:</label>
-					<input type="text" name="password" placeholder="password" onChange={this.changeHandler} />
+					<input type="password" name="password" placeholder="password" onChange={this.changeHandler} />
 				</div>
 				<div>
 					<label htmlFor="again">Again:</label>
@@ -41,12 +50,13 @@ const Register = React.createClass({
 					<label htmlFor="submit"></label>
 					<input type="submit" name ="submit"/>
 				</div>
-				<div className="warning">{JSON.stringify(this.state.data.get('warning'))}</div>
+        {WarningComponent}
 			</form>
     )
   },
   changeHandler(event) {
     this.setImmState(d => d.update(event.target.name, v => event.target.value));
+    this.setImmState(d => d.update('submited', v => false));
   },
   submitHandler(event) {
     event.preventDefault();
@@ -56,9 +66,16 @@ const Register = React.createClass({
       post('/register/user', {account:this.state.data.get('account'), password: this.state.data.get('password')})
           .then((result) => {
             console.log(result.toJS());
+            this.setImmState(d=> d.update('registered', v => true));
+            this.setImmState(d => d.update('warning', v => Store.getMessage()));
+            this.setImmState(d => d.update('submited', v => true));
           }, (err) => {
-            console.log(err);
+            console.log('reject:',err);
+            this.setImmState(d => d.update('warning', v => err));
+            this.setImmState(d => d.update('submited', v => true));
           })
+    } else {
+      this.setImmState(d => d.update('submited', v => true));
     }
   },
 })
