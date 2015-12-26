@@ -39,7 +39,7 @@ const Login = React.createClass({
       WarningComponent = <Warning message={this.state.data.get('warning')} />
     }
     return (
-	    <form id="login-form" key="login" onSubmit={this.submitHandler}>
+	    <form id="login-form"  onSubmit={this.submitHandler}>
         <div>
 	    		<label htmlFor="account">Account:</label>
 	    		<input type="text" autoFocus="true" name="account" placeholder="account" onChange={this.changeHandler} />

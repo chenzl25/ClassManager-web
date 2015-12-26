@@ -17,23 +17,17 @@ var PATH = {
 module.exports = {
   devtool: 'eval-source-map',
   entry: [
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true&overlay=false',
     // 'webpack-hot-middleware/client?path=/&reload=true&timeout=2000&overlay=false',
-    'webpack/hot/only-dev-server',
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-hot-middleware/client',
+    // 'webpack/hot/dev-server',
+    // 'webpack-dev-server/client?http://localhost:8080',
     path.resolve(PATH.src, 'scripts', 'app.js')
   ],
   output: {
     path: path.resolve(PATH.dist),
     filename: 'bundle.js',
     publicPath: ''
-  },
-  devServer: {
-    proxy: {
-      '/api/*': {
-          target: 'http://localhost:3000',
-          secure: false
-      }
-    }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -43,28 +37,26 @@ module.exports = {
       template:  path.resolve(PATH.src, 'index.html'),
       inject: 'body',
     }),
-    new OpenBrowserPlugin({url: 'http://localhost:8080'}),
+    // new OpenBrowserPlugin({url: 'http://localhost:8080'}),
     new CommonsChunkPlugin('init.js'),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     devFlagPlugin,
   ],
   module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        loaders: ['react-hot','babel-loader?presets[]=es2015&presets[]=react'],
-        include: path.join(PATH.src, 'scripts')
-      }, { test: /\.(s)?css$/,
-        loader: 'style-loader!css-loader?moudle!sass-loader',
-        include: path.join(PATH.src, 'styles')
-      }, { test: /\.(png|jpg)$/,
-        loader: 'url-loader?limit=8192',
-        include: path.join(PATH.src, 'images')
-      }, {
-        test   : /\.(ttf|eot|svg|woff(2))(\?[a-z0-9]+)?$/,
-        loader : 'file-loader'
-      }
+    loaders: [{
+      test: /\.jsx?$/,
+      loaders: ['babel-loader?presets[]=es2015&presets[]=react'],
+      include: path.join(PATH.src, 'scripts')
+    },
+    { test: /\.scss$/,
+      loader: 'style-loader!css-loader?moudle!sass-loader',
+      include: path.join(PATH.src, 'styles')
+    },
+    { test: /\.(png|jpg)$/,
+      loader: 'url-loader?limit=8192',
+      include: path.join(PATH.src, 'images')
+    },
     ]
   }
 };

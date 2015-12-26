@@ -33,7 +33,7 @@ const Register = React.createClass({
                url={this.state.data.get('registered')? '/login' : null}/>
     }
     return (
-			<form id="register-form" key="register" onSubmit={this.submitHandler}>
+			<form id="register-form"  onSubmit={this.submitHandler}>
         <div>
 					<label htmlFor="account">Account:</label>
 					<input type="text" autoFocus="true" name="account" placeholder="account" onChange={this.changeHandler} />

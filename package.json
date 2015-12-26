@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rm -r dist/* && webpack -p",
     "rm": "rm -r dist/*",
-    "start": "./express/bin/www & node server.js"
+    "start": "./express/bin/www & node server.js",
+    "deploy": "NODE_ENV=production webpack -p --config webpack.config.pro.js"
   },
   "keywords": [
     "ClassManager",
@@ -50,7 +51,7 @@
     "webpack-dev-middleware": "^1.4.0",
     "webpack-dev-server": "^1.10.1"
   },
-  "repository": "",
+  "repository": "https://github.com/chenzl25/webpack-react.git",
   "devDependencies": {
     "webpack-hot-middleware": "^2.6.0"
   }

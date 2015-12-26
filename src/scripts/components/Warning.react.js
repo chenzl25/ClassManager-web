@@ -15,8 +15,8 @@ const Warning = React.createClass({
   },
   render() {
     var LinkComponent;
-    if (this.props.url || true) {
-      LinkComponent = <Link className="success" to={this.props.url}>Continue</Link>
+    if (this.props.url) {
+      LinkComponent = <Link className="success" to={this.props.url || ''}>Continue</Link>
     }
     var message = Immutable.fromJS(this.props.message);
     var warningMessage = [];
