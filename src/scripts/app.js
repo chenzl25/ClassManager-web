@@ -17,7 +17,7 @@ render((
       <Route path="/register" component={Register}/>
       <Route path="/login" component={Login}/>
       <Route path="/user/:account" component={User}>
-        <IndexRoute component={Homeworks} />
+        <IndexRoute component={Organizations} />
       	<Route path="homeworks" component={Homeworks}/>
 		    <Route path="organizatons" component={Organizations}/>
 		    <Route path="searchResult" component={SearchResult}/>

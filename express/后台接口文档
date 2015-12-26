@@ -83,7 +83,7 @@ var Homework =  {	//作业类
 	content: String,				   //作业内容
 	deadline: Date,					   //作业截止日期
 	join_on: Date,
-	unlooks: [String],				   //没点开作业的同学的账号
+	unlooks: [Member],				   //没点开作业的同学的账号
 	// unlooks_num: Number 			   //没查看的人数  //deprecated
 });
 var Notice =  {		//公告类
@@ -93,7 +93,7 @@ var Notice =  {		//公告类
 	deadline: Date,						//公告截止日期
 	join_on: Date,
 	image: String,  					//公告的图片
-	unlooks: [String],					//没点开公告的同学的账号
+	unlooks: [Member],					//没点开公告的同学的账号
 	// unlooks_num: Number 			   //没查看的人数 //deprecated
 });
 var Member =  {	    //班级成员类

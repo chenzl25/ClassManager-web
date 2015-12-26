@@ -69,7 +69,11 @@ var validator = {
 			result.error = true;
 			result.message += 'the account is too short;';
 		}
-		if (!/[a-zA-z0-p]+/.test(account)) {
+		if (account.length > 18) {
+			result.error = true;
+			result.message += 'the account is too long;';
+		}
+		if (!/^[a-zA-Z0-9]{6,18}$/.test(account)) {
 			result.error = true;
 			result.message += 'the account contains illegal letter;';
 		}
@@ -85,7 +89,11 @@ var validator = {
 			result.error = true;
 			result.message += 'the password is too short;';
 		}
-		if (!/[a-zA-z0-p]+/.test(password)) {
+		if (password.length > 18) {
+			result.error = true;
+			result.message += 'the password is too long;';
+		}
+		if (!/^[a-zA-Z0-9]{6,18}$/.test(password)) {
 			result.error = true;
 			result.message += 'the password contains illegal letter;';
 		}

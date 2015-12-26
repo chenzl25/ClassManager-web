@@ -22,18 +22,18 @@ const Register = React.createClass({
                 password: null,
                 again: null,
                 warning: null,
-                registered: false,
-                submited: false})
+                registered: false})
         };
   },
   render() {
     var WarningComponent;
-    if (this.state.data.get('submited')) {
-      WarningComponent = <Warning message={JSON.stringify(this.state.data.get('warning'))} 
+    console.log(this.state.data.get('waring'))
+    if (this.state.data.get('warning')) {
+      WarningComponent = <Warning message={this.state.data.get('warning')} 
                url={this.state.data.get('registered')? '/login' : null}/>
     }
     return (
-			<form key="register" onSubmit={this.submitHandler}>
+			<form id="register-form" key="register" onSubmit={this.submitHandler}>
         <div>
 					<label htmlFor="account">Account:</label>
 					<input type="text" autoFocus="true" name="account" placeholder="account" onChange={this.changeHandler} />
@@ -56,7 +56,6 @@ const Register = React.createClass({
   },
   changeHandler(event) {
     this.setImmState(d => d.update(event.target.name, v => event.target.value));
-    this.setImmState(d => d.update('submited', v => false));
   },
   submitHandler(event) {
     event.preventDefault();
@@ -68,14 +67,10 @@ const Register = React.createClass({
             console.log(result.toJS());
             this.setImmState(d=> d.update('registered', v => true));
             this.setImmState(d => d.update('warning', v => Store.getMessage()));
-            this.setImmState(d => d.update('submited', v => true));
           }, (err) => {
             console.log('reject:',err);
-            this.setImmState(d => d.update('warning', v => err));
-            this.setImmState(d => d.update('submited', v => true));
+            this.setImmState(d => d.update('warning', v => Object({error: err})));
           })
-    } else {
-      this.setImmState(d => d.update('submited', v => true));
     }
   },
 })

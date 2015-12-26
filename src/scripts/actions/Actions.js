@@ -13,8 +13,6 @@ var Actions = {
               actionType: Constants.LOGIN,
               data: result
             });
-          }, (err) => {
-            console.log('reject:', err);
           })
   },
   logout: function(account, password) {

@@ -17,7 +17,9 @@ const Organizations = React.createClass({
     									onClick={this.clickHandlerGenerator(v.get('account'))}/>);
     return (
       <div className="organizations">
-        {organizations}
+        <ul className="organizations-list">
+          {organizations}
+        </ul>
       </div>
     )
   },

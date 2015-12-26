@@ -17,11 +17,11 @@ const App = React.createClass({
   },  
   render() {
     return (
-      <div>
-        <h1>App{this.props.data}</h1>
-        <ul>
-          <li><Link to="/register">Register</Link></li>
-          <li><Link to="/login">Login</Link></li>
+      <div className="app-wrap">
+        <h1 className="app-name">ClassManager</h1>
+        <ul className="app-top-buttons">
+          <li><Link className="register" to="/register">Register</Link></li>
+          <li><Link className="login" to="/login">Login</Link></li>
         </ul>
         <RouteCSSTransitionGroup transitionName="base" transitionAppear={false} transitionLeave={false} transitionEnter={false} transitionAppearTimeout={0} transitionEnterTimeout={0}  >
           {this.props.children&&React.cloneElement(this.props.children, {data: this.props.data})}

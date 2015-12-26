@@ -98,7 +98,7 @@ const User = React.createClass({
             {this.props.children&&React.cloneElement(this.props.children, {data: this.state.data, selectedValue: this.state.selectedValue})}
           </RouteCSSTransitionGroup>
         </div>
-        <OrganizationDetail />
+        <OrganizationDetail userAccount={data.get('account')}/>
       </div>
     )
   },

@@ -14,7 +14,9 @@ const Homeworks = React.createClass({
     var homeworks = data.map( v => <HomeworkItem homework={v} key={v.get('_id')} />);
     return (
       <div className="homeworks">
-        {homeworks}
+        <ul className="homwroks-list">
+        	{homeworks}
+		</ul>
       </div>
     )
   },

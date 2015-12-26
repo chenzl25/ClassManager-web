@@ -50,19 +50,21 @@ module.exports = {
     devFlagPlugin,
   ],
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      loaders: ['react-hot','babel-loader?presets[]=es2015&presets[]=react'],
-      include: path.join(PATH.src, 'scripts')
-    },
-    { test: /\.scss$/,
-      loader: 'style-loader!css-loader?moudle!sass-loader',
-      include: path.join(PATH.src, 'styles')
-    },
-    { test: /\.(png|jpg)$/,
-      loader: 'url-loader?limit=8192',
-      include: path.join(PATH.src, 'images')
-    },
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loaders: ['react-hot','babel-loader?presets[]=es2015&presets[]=react'],
+        include: path.join(PATH.src, 'scripts')
+      }, { test: /\.scss$/,
+        loader: 'style-loader!css-loader?moudle!sass-loader',
+        include: path.join(PATH.src, 'styles')
+      }, { test: /\.(png|jpg)$/,
+        loader: 'url-loader?limit=8192',
+        include: path.join(PATH.src, 'images')
+      }, {
+        test   : /\.(ttf|eot|svg|woff(2))(\?[a-z0-9]+)?$/,
+        loader : 'file-loader'
+      }
     ]
   }
 };

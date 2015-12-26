@@ -35,7 +35,7 @@ const OrganizationItem = React.createClass({
               <span className="account">{organization.get('account')}</span>
             </li>
             <li>
-              <span className="name">{organization.get('position')}</span>
+              <span className="position">{organization.get('position')}</span>
             </li>
           </ul>
         </div>
