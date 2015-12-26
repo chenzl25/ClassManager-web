@@ -5,6 +5,7 @@ function Request(url, options) {
         let xhr = new XMLHttpRequest;
 
         xhr.onload = function(event) {
+            console.log(event.target.response)
             var response = Immutable.Map(event.target.response);
             if (response.get('error') == true) {
                 reject(response.get('message'));
@@ -38,6 +39,9 @@ function Request(url, options) {
             } else {
                 xhr.send(JSON.stringify(options.data));
             }
+        } else {
+            //GET
+            xhr.send(null);
         }
     });
 }
@@ -68,8 +72,8 @@ export function get(url, data) {
     url = '/api' + url;
     return Request(url, {
         method: "GET",
-        // mimeType: "application/json",
+        mimeType: "application/json",
         // data: data,
-        // responseType: "json"
+        responseType: "json"
     })
 }

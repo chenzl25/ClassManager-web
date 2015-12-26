@@ -78,8 +78,8 @@ var organizations_upload = multer({
       cb(null,false);
     } else {
       console.log(file);
-      if (!/image\/*/.test(file.mimetype)) {
-        // if (!/image\/*/.test(file.mimetype) && file.mimetype != 'application/octet-stream') {
+      // if (!/image\/*/.test(file.mimetype)) {
+        if (!/image\/*/.test(file.mimetype) && file.mimetype != 'application/octet-stream') {
         console.log('not image file has been uploaded by', req.session.user_data.account);
         req.unformat_upload = true;
         cb(null, false);
@@ -261,14 +261,16 @@ router.post('/organization/:account', organizations_upload.single('image'),funct
         image_changed = true;
       }
       var before_image = data.image;
-      if (image_changed) {
-        data.image = input.image;
-      }
+      // if (image_changed) {
+      //   data.image = input.image;
+      // }
       var keys = Object.keys(input);
       var change_keys = [];
       var cnt = 0;
       for (var i in keys) {
-        if (input[keys[i]] !== null && input[keys[i]] !== data[keys[i]]) {
+        if(keys[i] == 'image') {
+        }
+        if (input[keys[i]] !==  null && input[keys[i]] !== data[keys[i]]) {
           data[keys[i]] = input[keys[i]];
           cnt++;
           change_keys.push(keys[i]);
@@ -294,8 +296,8 @@ router.post('/organization/:account', organizations_upload.single('image'),funct
                     rel[k][change_keys[m]] = input[change_keys[m]];
                   }
                 }
+                break;
               }
-              break;
             }
             datas[j].save(tools.invalid_data_handler);
           }

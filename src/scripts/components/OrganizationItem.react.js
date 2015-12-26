@@ -7,6 +7,7 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
+import '../../styles/organizationItem.scss'
 
 const OrganizationItem = React.createClass({
   propTypes: {
@@ -19,11 +20,11 @@ const OrganizationItem = React.createClass({
     var organization = this.props.organization;
     return (
       <li key={organization.get('_id')}>
-        <div  className={classNames({'organization': true })}>
+        <div  className={classNames({'organization-item': true })} onClick={this.props.onClick}>
           <ul>
             <li>
               <div className="organization-image-container">
-                <img className="organization-image" src={ '/api/'+organization.get('image')} />
+                <img className="organization-image" src={'/api/'+organization.get('image')} />
                 organization_image
               </div>
             </li>

@@ -12,13 +12,40 @@ var _state = Immutable.Map({
   isLogin: false,
   // self: null,
 })
+var _searchResult = Immutable.Map({
+  user: null,
+  organization: null,
+  message: null,
+})
+var _organizationDetail = Immutable.Map();
+
 function createUser(data) {
-  // _user.account = data.account;
-  // _user.name = data.name;
   _user = Immutable.Map({user_data: data.get('user_data')});
   _message = Immutable.Map({message: data.get('message')});
   _state = _state.set(data.getIn(['status', 'name']), data.getIn(['status', 'code']));
   _state = _state.set('isLogin', true);
+}
+function updateSearchUser(user_data, message) {
+  _searchResult = _searchResult.set('user', user_data);
+  _searchResult = _searchResult.set('organization', null);
+  _searchResult = _searchResult.set('message', message);
+  console.log(' updateSearchUser')
+}
+function updateSearchOrganization(organization_data, message) {
+  _searchResult = _searchResult.set('organization', organization_data);
+  _searchResult = _searchResult.set('user', null);
+  _searchResult = _searchResult.set('message', message);
+  console.log(' updateSearchOrganization')
+}
+function updateSearchMessage(message) {
+  _searchResult = _searchResult.set('organization', null);
+  _searchResult = _searchResult.set('user', null);
+  _searchResult = _searchResult.set('message', message);
+  console.log(' updateSearchMessage')
+}
+function updateOrganizationDetail(organization_data) {
+  _organizationDetail = Immutable.fromJS(organization_data);
+  console.log(' updateOrganizationDetail');
 }
 function updateUser(data) {
 
@@ -36,6 +63,21 @@ var Store = assign({}, EventEmitter.prototype, {
   },
   getMessage: function() {
     return _message.get('message');
+  },
+  getSearchUser: function() {
+    return _searchResult.get('user');
+  },
+  getSearchOrganization: function() {
+    return _searchResult.get('organization');
+  },
+  getSearchMessage: function() {
+    return _searchResult.get('message');
+  },
+  getSearchAll: function() {
+    return _searchResult.toJS();
+  },
+  getOrganizationDetail: function() {
+    return _organizationDetail.toJS();
   },
   isLogin: function() {
     return _state.get('isLogin');
@@ -69,6 +111,21 @@ AppDispatcher.register(function(action) {
       registerUser();
       Store.emitChange();
       break;
+    case Constants.SEARCHUSER:
+      updateSearchUser(action.data, action.message);
+      Store.emitChange();
+      break;
+    case Constants.SEARCHORGANIZATION:
+      updateSearchOrganization(action.data, action.message);
+      Store.emitChange();
+      break;
+    case Constants.SEARCHFAIL:
+      updateSearchMessage(action.message);
+      Store.emitChange();
+      break;
+    case Constants.SEARCHORGANIZATIONDETAIL:
+      updateOrganizationDetail(action.data);
+      Store.emitChange();
     default:
       // no op
   }

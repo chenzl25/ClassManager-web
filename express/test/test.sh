@@ -33,8 +33,8 @@ echo '\n'
 # curl -b cookie48.file --form accessible=true \
 # http://localhost:3000/settings/user
 
-curl  -b cookie15.file --form name=class999 --form image=@e.png  \
-http://localhost:3000/settings/organization/class999
+curl  -b cookie15.file --form name=123 --form image=@e.png  \
+http://localhost:3000/settings/organization/mygroup19
 echo '\n'
 
 # #join

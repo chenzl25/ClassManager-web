@@ -104,19 +104,23 @@ OrganizationSchema.statics.findByAccount = function(account, callback) {
 OrganizationSchema.statics.s_findByAccount = function(account, callback) {
 	this.findOne({ account: account }, {name:1, account:1, image:1, password:1})
 		.exec(function(err,data) {
-			var tem = {};
-			tem.account = data.account;
-			tem.image = data.image;
-			tem.name = date.name;
-			if (data.password === null) {
-				tem.need_password = false;
+			if (data) {
+				var tem = {};
+				tem.account = data.account;
+				tem.image = data.image;
+				tem.name = data.name;
+				if (data.password === null) {
+					tem.need_password = false;
+				} else {
+					tem.need_password = true;
+				}
+				callback(err, tem);
 			} else {
-				tem.need_password = true;
+				callback(err, null);
 			}
-			callback(err, tem);
 		});
-	return this.findOne({ account: account }, {name:1, account:1, image:1, password:1})
-			   .exec(callback);
+	// return this.findOne({ account: account }, {name:1, account:1, image:1, password:1})
+	// 		   .exec(callback);
 };
 //Model
 var Organization = mongoose.model('Organization', OrganizationSchema);

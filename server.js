@@ -11,7 +11,8 @@ new WebpackDevServer(webpack(config), {
 		  target: 'http://localhost:3000',
 		  secure: false
 		}
-  }
+  },
+  noInfo: true,
 }).listen(8080, 'localhost', function (err, result) {
   if (err) {
     console.log(err);

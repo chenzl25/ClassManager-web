@@ -97,12 +97,12 @@ router.get('/user/account/:account', function(req, res) {
 	    		result.message = 'search by account successfully';
 	    		result.user_data = data;
 	    	} else {
-	    		result.error = false;
+	    		result.error = true;
 	    		result.message = 'the account is not accessible ';
 	    		result.user_data = null;
 	    	}
     	} else {
-    		result.error = false;
+    		result.error = true;
     		result.message = 'the account does not exists ';
     		result.user_data = null;
     	}
@@ -381,6 +381,7 @@ router.get('/organization/:account/vote/:id', function(req, res) {
 router.get('/organization/account/:account', function(req, res) {
 	res.setHeader('Content-type','application/json');
    Organization.s_findByAccount(req.params.account, function(err, data_o) {
+   	var result = {};
    	if (data_o) {
    		result.error = false;
 	    result.message = 'search organization successfully';

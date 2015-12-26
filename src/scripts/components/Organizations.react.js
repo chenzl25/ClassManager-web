@@ -11,12 +11,21 @@ import OrganizationItem from './OrganizationItem.react'
 const Organizations = React.createClass({
   render() {
     var data = this.props.data.get('relationships');
-    var organizations = data.map( v => <OrganizationItem organization={v} key={v.get('_id')} />);
+    var organizations = data.map( v => <OrganizationItem 
+    									organization={v} 
+    									key={v.get('_id')} 
+    									onClick={this.clickHandlerGenerator(v.get('account'))}/>);
     return (
       <div className="organizations">
         {organizations}
       </div>
     )
+  },
+  clickHandlerGenerator(account) {
+  	return function clickHandler() {
+  		console.log('click the organization')
+	  	Actions.searchOrganizationDetail(account);
+  	}
   },
 })
 export default Organizations;
