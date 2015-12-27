@@ -7,7 +7,7 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
-import '../../styles/UnlookItem.scss'
+// import '../../styles/UnlookItem.scss'
 
 const UnlookItem = React.createClass({
   propTypes: {

@@ -7,7 +7,7 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
-import '../../styles/DetailMemberItem.scss'
+// import '../../styles/DetailMemberItem.scss'
 
 const DetailMemberItem = React.createClass({
   propTypes: {

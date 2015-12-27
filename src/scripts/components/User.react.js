@@ -49,54 +49,56 @@ const User = React.createClass({
     return (
       <div className="user">
         <div className="profile">
-          <ul>
+          <ul className="profile-list">
             <li>
-              <div><img src={'/api/'+data.get('image')} /></div>
+              <div className="user-image-container">
+                <img className="user-image" src={'/api/'+data.get('image')} />
+              </div>
             </li>
             <li>
-              <span>{data.get('name')}</span>
+              <span className="user-name">{data.get('name')}</span>
             </li>
             <li>
               <div className="setting-container">
-                <img className="setting" src={ path.join('/','api','images' ,'setting.png') } />
-                setting
+                <img className="setting-image" src={ path.join('/','api','images' ,'setting.png') } />
               </div>
             </li>
             <li>
               <div className="logout-container">
-                <img className="logout" src={ path.join('/','api','images' ,'logout.png') } />
-                logout
+                <img className="logout-image" src={ path.join('/','api','images' ,'logout.png') } />
               </div>
             </li>
           </ul>
         </div>
-        <div className="search">
+        <div className="search-container">
           <label htmlFor="search"></label>
-          <input type="text" autoFocus="true" name="search" placeholder="search" onKeyDown={this.searchKeyDownHandler} onChange={this.searchChangeHandler}/>
+          <input className="search-input" type="text" autoFocus="true" name="search" placeholder="search" onKeyDown={this.searchKeyDownHandler} onChange={this.searchChangeHandler}/>
           <RadioGroup
             name="user-or-organization"
             selectedValue={this.state.selectedValue}
             onChange={this.searchRadioChangeHandler }>
             {Radio => (
-              <div>
+              <div className="user-or-organization">
                 <label>
-                  <Radio value="user" />User
+                  <Radio value="user" /><span className="radio-name">User</span>
                 </label>
                 <label>
-                  <Radio value="organization" />Organization
+                  <Radio value="organization" /><span className="radio-name">Organization</span>
                 </label>
               </div>
             )}
           </RadioGroup>
         </div>
-        <div className="choice">
+        <div className="choices-container">
           <ul>
-            <li><Link to={path.join('/','user', this.state.data.get('account'), 'homeworks')}><img className= "homeworks" src={ path.join('/','api','images' ,'message.png') } />homeworks</Link></li>
-            <li><Link to={path.join('/','user', this.state.data.get('account'), 'organizatons')}><img className= "organizatons" src={ path.join('/','api','images' ,'people.png') } />organizatons</Link></li>
+            <li><Link to={path.join('/','user', this.state.data.get('account'), 'homeworks')}><img className= "homeworks-image" src={ path.join('/','api','images' ,'message.png') } /></Link></li>
+            <li><Link to={path.join('/','user', this.state.data.get('account'), 'organizatons')}><img className= "organizatons-image" src={ path.join('/','api','images' ,'people.png') } /></Link></li>
           </ul>
-          <RouteCSSTransitionGroup transitionName="hehe" transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={300} transitionLeave={false} >
-            {this.props.children&&React.cloneElement(this.props.children, {data: this.state.data, selectedValue: this.state.selectedValue})}
-          </RouteCSSTransitionGroup>
+          <div className="user-data-container">
+            <RouteCSSTransitionGroup transitionName="hehe" transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={300} transitionLeave={false} >
+              {this.props.children&&React.cloneElement(this.props.children, {data: this.state.data, selectedValue: this.state.selectedValue})}
+            </RouteCSSTransitionGroup>
+          </div>
         </div>
         <OrganizationDetail userAccount={data.get('account')}/>
       </div>

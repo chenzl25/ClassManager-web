@@ -1,0 +1,136 @@
+@import "../modules/variable";
+@import "../modules/lib";
+.user {
+	width: $user-width;
+	height: $user-height;
+	border: 1px white solid;
+	border-radius: 5px;
+	padding:15px;
+}
+.profile {
+	margin-left: auto;
+	margin-right: auto;
+	height: 60px;
+	> .profile-list {
+		display: flex;
+		flex-direction: row; 
+		justify-content: space-between;
+		list-style: none;
+		align-items: flex-end;
+		> li {
+			display: inline-block;
+		}
+	}
+}
+.user-image-container {
+	width: $user-image-width + 1;
+	height: $user-image-width + 1;
+	border: 1px $default-color solid;
+	.user-image {
+		width: $user-image-width;
+		height: $user-image-height;
+	}
+}
+.user-name {
+	color: white;
+	font-size: $user-name-font-size;
+}
+.setting-image {
+	width: $setting-image-width;
+	height: $setting-image-height;
+}
+.logout-image {
+	width: $logout-image-width;
+	height: $logout-image-height;
+}
+.search-container {
+	margin-left: auto;
+	margin-right: auto;
+	height: 50px;
+	.search-input {
+		margin-left: auto;
+		margin-right: auto;
+	    font-size: 18px;
+	    color: white;
+	    width: 200px;
+	    height: 25px;
+	    display: block;
+	    outline: none;
+	    background: transparent;
+	    border:1px white solid;
+	    border-radius: 5px;
+	    padding-left: 10px;
+	}
+}
+.user-or-organization {
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	flex-direction: row; 
+	justify-content: space-around;
+	input[type="radio"] {
+	    display:none;
+	}
+	input[type="radio"] + .radio-name {
+	    color: #eee;
+	    cursor:pointer;
+	    font-size: 15px;
+	}
+	input[type="radio"] + .radio-name::before {
+		content: '';
+	    display:inline-block;
+	    width:10px;
+	    height:10px;
+	    margin:-1px 4px 0 0;
+	    vertical-align:middle;
+	    cursor:pointer;
+	    border-radius:  50%;
+	    border: 1px $default-color solid;
+	    background-color:transparent;
+	}
+	input[type="radio"]:checked + .radio-name::before{
+	     background-color:#eee;
+	}
+	input[type="radio"] + .radio-name::before,
+	input[type="radio"]:checked + .radio-name::before {
+		@include transition(background-color 0.4s linear);
+	}
+}
+.choices-container {
+	margin-left: auto;
+	margin-right: auto;
+	> ul {
+		display: flex;
+		flex-direction: row; 
+		list-style: none;
+		> li {
+			flex: 1 1 50%;
+			display: inline-block;
+			border: {
+				top:1px $default-color solid;
+				left:1px $default-color solid;
+				right:1px $default-color solid;
+			}
+		}
+		> li  img {
+			display: block;
+			margin-right: auto;
+			margin-left: auto;
+		}
+	}
+}
+.homeworks-image {
+	width: $homeworks-image-width;
+	height: $homeworks-image-height;
+}
+.organizations-image {
+	width: $organizations-image-width;
+	height: $organizations-image-height;
+}
+
+
+.user-data-container {
+	overflow: auto;
+	height: 350px;
+	border: 1px $default-color solid;
+}

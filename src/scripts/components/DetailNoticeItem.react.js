@@ -7,7 +7,7 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
-import '../../styles/DetailNoticeItem.scss'
+// import '../../styles/DetailNoticeItem.scss'
 import Unlooks from './Unlooks.react'
 
 const DetailNoticeItem = React.createClass({

@@ -7,7 +7,7 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
-import '../../styles/DetailVoteItem.scss'
+// import '../../styles/DetailVoteItem.scss'
 import Unlooks from './Unlooks.react'
 import Options from './Options.react'
 

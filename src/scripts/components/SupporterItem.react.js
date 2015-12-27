@@ -7,7 +7,7 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
-import '../../styles/SupporterItem.scss'
+// import '../../styles/SupporterItem.scss'
 
 const SupporterItem = React.createClass({
   propTypes: {

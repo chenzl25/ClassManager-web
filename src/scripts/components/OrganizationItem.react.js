@@ -7,7 +7,7 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
-import '../../styles/organizationItem.scss'
+// import '../../styles/organizationItem.scss'
 
 const OrganizationItem = React.createClass({
   propTypes: {

@@ -7,7 +7,7 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
-import '../../styles/OptionItem.scss'
+// import '../../styles/OptionItem.scss'
 import Supporters from './Supporters.react'
 
 const OptionItem = React.createClass({

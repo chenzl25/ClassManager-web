@@ -1,0 +1,35 @@
+@import "../modules/variable";
+.app-wrap {
+  width: $app-width;  
+  margin-left:30px;
+  margin-top: 0px;
+}
+.app-name {
+  position: relative;
+  color: $app-name-color;
+  width: $app-left-width;
+  letter-spacing: 3px;
+  text-align: center;
+}
+.app-top-buttons {
+  margin-top:5px; 
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  list-style: none;
+  li a {
+    text-decoration: none;
+    color: $default-color;
+    background: transparent;
+    border:1px white solid;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    &:hover {
+      background: #06EBF2;
+      border: 1px #ccc solid;
+    }
+  }
+}
