@@ -1,0 +1,48 @@
+@import "../modules/variable";
+@import "../modules/lib";
+.supporters-container {
+	.supporters-top {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		// justify-content: space-between;
+		.supporter-number {
+			padding-right: 10px;
+		}
+		.expand, .unexpand {
+			margin-right: 50px;
+			width: 0; 
+			height: 0; 
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+			cursor: pointer;
+			@include transition(all linear 0.5s);
+		}
+		.expand {
+			// border-top: 10px solid $default-color;
+			@include transform(rotate(180deg));
+		}
+		.unexpand {
+			// border-bottom: 10px solid $default-color;
+			// @include transform(rotate(180deg));
+		}
+		.triangle {
+			border-bottom: 10px solid $default-color;
+		}
+	}
+}
+.supporters-list {
+	padding-left: 20px;
+	padding-right: 20px;
+	list-style: none;
+	.supporter-item-attribute-list {
+		list-style: none;
+		border-bottom: 1px dotted $default-color;
+		.supporter-item-account,
+		.supporter-item-name,
+		.supporter-item-student-id {
+			float: right;
+		}
+	}
+
+}

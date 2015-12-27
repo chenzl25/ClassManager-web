@@ -22,7 +22,7 @@ const DetailMembers = React.createClass({
                       organizationAccount={this.props.organizationAccount}
     									key={v.get('_id')} />);
     return (
-      <div className="detail-members">
+      <div className="detail-members-container">
         <ul className="detail-members-list">
           {detailMembers}
         </ul>

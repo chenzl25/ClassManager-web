@@ -16,9 +16,10 @@ const Options = React.createClass({
   var options = this.props.options;
     options = options.map( v => <OptionItem option={v} key={v.get('_id')} />);
     return (
-      <div className="options">
+      <div className="options-container">
         <div>
-          <span>Total Options: {options.size}</span>
+          <span>Total Options: </span>
+          <span className="option-number">{options.size}</span>
         </div>
         <ul className="options-list">
           {options}

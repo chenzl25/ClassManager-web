@@ -1,0 +1,14 @@
+@import "../modules/variable";
+@import "../modules/lib";
+.search-result-organization-container {
+	.search-result-image {
+		width:$search-result-image-width;
+		height: $search-result-image-height;
+	}
+}
+.search-result-user-container {
+	.search-result-image {
+		width:$search-result-image-width;
+		height: $search-result-image-height;
+	}
+}

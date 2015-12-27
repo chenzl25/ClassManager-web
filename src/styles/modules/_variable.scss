@@ -4,8 +4,12 @@ $app-name-color: #eee;
 $default-color: #eee;
 $app-left-width: 250px;
 
-$user-width: 250px;
-$user-height: 520px;
+$user-left-width: 250px;
+$user-right-width: 600px;
+$user-width: $user-left-width + $user-right-width;
+$user-height: 550px;
+$user-data-container-height: 0.7*$user-height;
+
 $user-image-width: 50px;
 $user-image-height: 50px;
 $user-name-font-size: 30px;
@@ -14,11 +18,20 @@ $setting-image-width: 25px;
 $setting-image-height: 25px;
 $logout-image-width: 25px;
 $logout-image-height: 25px;
-$homeworks-image-width: 25px;
-$homeworks-image-height: 25px;
-$organizations-image-width: 25px;
-$organizations-image-height: 25px;
 
+$organization-item-image-width: 25px;
+$organization-item-image-height: 25px;
+
+$search-result-image-width: 50px;
+$search-result-image-height: 50px;
+
+
+$organization-detail-data-container-height:  0.787*$user-height;
+
+$detail-member-image-width: 50px;
+$detail-member-image-height: 50px;
+
+$detail-notice-image-width: 550px;
 
 
 $blue:#14B9D1;

@@ -1,0 +1,26 @@
+@import "../modules/variable";
+@import "../modules/lib";
+
+.detail-homeworks-list {
+	list-style: none;
+}
+
+.detail-homework-item-container {
+	border-bottom: 1px $default-color dashed;
+	margin-bottom: 3px;
+	.detail-homework-item-attribute-list {
+		list-style: none;
+		.detail-homework-content {
+			text-indent: 15px;
+		}
+		.detail-homework-name,
+		.detail-homework-deadline,
+		.detail-homework-start-date {
+			float: right;
+		}
+		.attribute-name {
+			display: inline-block;
+			width: 100px;
+		}
+	}
+}

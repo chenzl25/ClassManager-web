@@ -17,16 +17,25 @@ const SupporterItem = React.createClass({
     var supporter = this.props.supporter;
     return (
       <li key={supporter.get('_id')}>
-        <div  className={classNames({'supporter-item': true })} onClick={this.props.onClick}>
-          <ul>
+        <div  className="supporter-item-container" onClick={this.props.onClick}>
+          <ul className="supporter-item-attribute-list">
             <li>
-              <span className="account">Account: {supporter.get('account')}</span>
+              <div>
+                <span className="attribute-name">Account: </span>
+                <span className="supporter-item-account">{supporter.get('account')}</span>
+              </div>
             </li>
             <li>
-              <span className="name">Name: {supporter.get('name')}</span>
+              <div>
+                <span className="attribute-name">Name: </span>
+                <span className="supporter-item-name">{supporter.get('name')}</span>
+              </div>
             </li>
             <li>
-              <span className="student-id">Student Id: {supporter.get('student_id')}</span>
+              <div>
+                <span className="attribute-name">Student Id: </span>
+                <span className="supporter-item-student-id">{supporter.get('student_id')}</span>
+              </div>
             </li>
           </ul>
         </div>

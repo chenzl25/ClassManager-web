@@ -33,9 +33,9 @@ echo '\n'
 # curl -b cookie48.file --form accessible=true \
 # http://localhost:3000/settings/user
 
-curl  -b cookie15.file --form name=123 --form image=@e.png  \
-http://localhost:3000/settings/organization/mygroup19
-echo '\n'
+# curl  -b cookie15.file --form name=123 --form image=@e.png  \
+# http://localhost:3000/settings/organization/mygroup19
+# echo '\n'
 
 # #join
 
@@ -66,14 +66,14 @@ echo '\n'
 # http://localhost:3000/create/organization/mygroup22/vote
 # echo '\n'
 
-# curl -b cookie15.file  --data 'name=program&content=program' \
-# http://localhost:3000/create/organization/mygroup23/notice
+# curl -b cookie15.file  --form name=Newton  --form content=hehe --form image=@e.png \
+# http://localhost:3000/create/organization/mygroup19/notice
 # echo '\n'
 
 #vote
-# curl -b cookie15.file --data 'vote_id=5648186941c8e50734ab1ded&option_id=5648186941c8e50734ab1df0' \
-# http://localhost:3000/vote/organization/mygroup18
-# echo '\n'
+curl -b cookie15.file --data 'vote_id=5648bdc8dffeff445992e56b&option_id=5648bdc8dffeff445992e56e' \
+http://localhost:3000/vote/organization/mygroup22
+echo '\n'
 
 # curl -b cookie10.file --data 'vote_id=5648186941c8e50734ab1ded&option_id=5648186941c8e50734ab1def' \
 # http://localhost:3000/vote/organization/mygroup18

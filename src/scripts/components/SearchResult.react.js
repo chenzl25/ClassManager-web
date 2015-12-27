@@ -41,12 +41,11 @@ const searchResult = React.createClass({
       var result = data.get(this.props.selectedValue);
       if (this.props.selectedValue === 'organization') {
         console.log('searchSuccess organization');
-        view = (<div  className="search-result-organization">
+        view = (<div  className="search-result-organization-container">
                   <ul>
                     <li>
-                      <div className="image-container">
-                        <img className="image" src={'/api/'+result.get('image')} />
-                        result_image
+                      <div className="search-result-container">
+                        <img className="search-result-image" src={'/api/'+result.get('image')} />
                       </div>
                     </li>
                     <li>
@@ -62,12 +61,11 @@ const searchResult = React.createClass({
                 </div>);
       } else if (this.props.selectedValue === 'user') {
         console.log('searchSuccess user');
-        view = (<div  className="search-result-user">
+        view = (<div  className="search-result-user-container">
                   <ul>
                     <li>
-                      <div className="image-container">
-                        <img className="image" src={'/api/'+result.get('image')} />
-                        result_image
+                      <div className="search-result-container">
+                        <img className="search-result-image" src={'/api/'+result.get('image')} />
                       </div>
                     </li>
                     <li>

@@ -1,0 +1,47 @@
+@import "../modules/variable";
+@import "../modules/lib";
+.unlooks-container {
+	.unlooks-top {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		.unvote-number, .unlook-number {
+			padding-right: 10px;
+		}
+		.expand, .unexpand {
+			width: 0; 
+			height: 0; 
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+			cursor: pointer;
+			@include transition(all linear 0.5s);
+		}
+		.expand {
+			// border-top: 10px solid $default-color;
+			@include transform(rotate(180deg));
+		}
+		.unexpand {
+			// border-bottom: 10px solid $default-color;
+			// @include transform(rotate(180deg));
+		}
+		.triangle {
+			border-bottom: 10px solid $default-color;
+		}
+	}
+}
+.unlooks-list {
+	padding-left: 20px;
+	padding-right: 20px;
+	list-style: none;
+	.unlook-item-attribute-list {
+		list-style: none;
+		border-bottom: 1px dotted $default-color;
+		.unlook-item-account,
+		.unlook-item-name,
+		.unlook-item-student-id {
+			float: right;
+		}
+	}
+
+}

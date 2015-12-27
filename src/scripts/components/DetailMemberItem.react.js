@@ -19,25 +19,24 @@ const DetailMemberItem = React.createClass({
     var member = this.props.member;
     return (
       <li key={member.get('_id')}>
-        <div  className={classNames({'member-item': true })} onClick={this.props.onClick}>
-          <ul>
+        <div  className={classNames({'detail-member-item-container': true })} onClick={this.props.onClick}>
+          <ul className="detail-member-item-attribute-list">
             <li>
-              <div className="member-image-container">
-                <img className="member-image" src={'/api/'+member.get('image')} />
-                member_image
+              <div className="detail-member-image-container">
+                <img className="detail-member-image" src={'/api/'+member.get('image')} />
               </div>
             </li>
             <li>
-              <span className="name">Name: {member.get('name')}</span>
+              Name: <span className="detail-member-name">{member.get('name')}</span>
             </li>
             <li>
-              <span className="account">Account: {member.get('account')}</span>
+              Account: <span className="detail-member-account">{member.get('account')}</span>
             </li>
             <li>
-              <span className="position">Position: {member.get('position')}</span>
+              Position: <span className="detail-member-position">{member.get('position')}</span>
             </li>
             <li>
-              <span className="student-id">Student Id: {member.get('student_id')}</span>
+              Student Id: <span className="detail-member-student-id">{member.get('student_id')}</span>
             </li>
           </ul>
         </div>

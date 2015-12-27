@@ -16,7 +16,7 @@ const Organizations = React.createClass({
     									key={v.get('_id')} 
     									onClick={this.clickHandlerGenerator(v.get('account'))}/>);
     return (
-      <div className="organizations">
+      <div className="organizations-container">
         <ul className="organizations-list">
           {organizations}
         </ul>

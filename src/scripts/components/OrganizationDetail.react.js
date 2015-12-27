@@ -54,43 +54,46 @@ const OrganizationDetail = React.createClass({
       default:      Child = <DetailMembers userAccount={this.props.userAccount} organizationAccount={data.get('account')} members={data.get('members')} />;
     }
     return (
-      <div className="organization-detail-wrap">
+      <div className="organization-detail-container">
         <div className="organization-detail">
           <div className="organization-detail-top">
-            <div className="image">
-              <img src={'/api/'+data.get('image')}/>
+            <div className="organization-detail-image-container">
+              <img className="organization-detail-image" src={'/api/'+data.get('image')}/>
             </div>
-            <div className="account-name">
-              <span className="account">Account: {data.get('account')}</span>
-              <span className="name">Name: {data.get('name')}</span>
+            <div className="organization-detail-account-name">
+              <div className="organization-detail-account">Account: {data.get('account')}</div>
+              <div className="organization-detail-name">Name: {data.get('name')}</div>
+            </div>
+            <div className="organization-detail-setting-container">
+              <img className="organization-detail-setting-image" src={ path.join('/','api','images' ,'setting.png') } />
             </div>
           </div>
-          <div className="choices">
+          <div className="organization-detail-choices-container">
             {/*need img later*/}
             <RadioGroup
               name="members-votes-homeworks-notices"
               selectedValue={this.state.route}
               onChange={this.radioChangeHandler }>
               {Radio => (
-                <div>
+                <div className="organization-detail-choices">
                   <label>
-                    <Radio value="members" />Members
+                    <Radio value="members" /><span className="radio-name">Members</span>{/*need img later*/}
                   </label>
                   <label>
-                    <Radio value="notices" />Notices
+                    <Radio value="notices" /><span className="radio-name">Notices</span>{/*need img later*/}
                   </label>
                   <label>
-                    <Radio value="votes" />Votes
+                    <Radio value="votes" /><span className="radio-name">Votes</span>{/*need img later*/}
                   </label>
                   <label>
-                    <Radio value="homeworks" />Homeworks
+                    <Radio value="homeworks" /><span className="radio-name">Homeworks</span>{/*need img later*/}
                   </label>
                 </div>
               )}
             </RadioGroup>
           </div>
-          <div>
-          {Child}
+          <div className="organization-detail-data-container">
+            {Child}
           </div>
         </div>
       </div>

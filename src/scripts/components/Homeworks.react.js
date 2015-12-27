@@ -13,10 +13,10 @@ const Homeworks = React.createClass({
     var data = this.props.data.get('homeworks');
     var homeworks = data.map( v => <HomeworkItem homework={v} key={v.get('_id')} />);
     return (
-      <div className="homeworks">
+      <div className="homeworks-container">
         <ul className="homwroks-list">
         	{homeworks}
-		</ul>
+		    </ul>
       </div>
     )
   },

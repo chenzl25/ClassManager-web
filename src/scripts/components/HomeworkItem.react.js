@@ -6,7 +6,7 @@ import { post, get } from '../lib/service'
 import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
-
+import moment from 'moment'
 
 const HomeworkItem = React.createClass({
   propTypes: {
@@ -24,13 +24,25 @@ const HomeworkItem = React.createClass({
               'complished': !homework.get('uncomplish'),
               'unlook': homework.get('unlook'),
               'looked': !homework.get('unlook'),
-              'homework': true })}>
-          <span className="name">{homework.get('name')}</span>
-          <p className="content">{homework.get('content')}</p>
-          <span className="deadline">{homework.get('deadline')}</span>
-          <span className="from"> from: {homework.get('account')}</span>
-          <button className="finlish" onClick={this.onFinlishClick} />
-          <button className="destroy" onClick={this.onDestroyClick} />
+              'homework-item': true })}>
+          <ul className="homework-item-attributes-list">
+            <li>
+              Name: <span className="homework-item-name">{homework.get('name')}</span>
+            </li>
+            <li>
+              Content: <p className="homework-item-content">{homework.get('content')}</p>
+            </li>
+            <li>
+              From: <span className="homework-item-from">{homework.get('account')}</span>
+            </li>
+            <li>
+              Deadline: <span className="homework-item-deadline">{moment(homework.get('deadline')).calendar()}</span>
+            </li>
+            <li>
+              <button className="homework-item-finlish" onClick={this.onFinlishClick} />
+              <button className="homework-item-destroy" onClick={this.onDestroyClick} />
+            </li>
+          </ul>
         </div>
       </li>
     );

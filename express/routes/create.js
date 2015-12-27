@@ -37,9 +37,11 @@ var notices_upload = multer({
   fileFilter: function  (req, file, cb) {
     if (!req.session.user_data || req.body.name === undefined || req.body.content === undefined) {
       cb(null,false);
+      console.log(req.body.name, req.body.content);
     } else {
       console.log(file);
-      if (!/image\/*/.test(file.mimetype)) {
+      // if (!/image\/*/.test(file.mimetype)) {
+      if (!/image\/*/.test(file.mimetype) && file.mimetype != 'application/octet-stream') {
         console.log('not image file has been uploaded by', req.session.user_data.account);
         req.unformat_upload = true;
         cb(null, false);
@@ -105,7 +107,7 @@ router.post('/organization/:account/homework', function(req, res) {
         data_o.homeworks.push(input);
         data_o.save(tools.invalid_data_handler);
         tools.add_homework_members(data_o,
-            data_o.homeworks[data_o.homeworks.length-1]);
+        data_o.homeworks[data_o.homeworks.length-1]);
 
         result.error = false;
         result.message = 'create homework successfully';

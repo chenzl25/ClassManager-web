@@ -1,0 +1,30 @@
+@import "../modules/variable";
+@import "../modules/lib";
+
+.detail-members-list {
+	list-style: none;
+}
+
+.detail-member-item-container {
+	height: 90px;
+	border-bottom: 1px $default-color dashed;
+	margin-bottom: 3px;
+	.detail-member-item-attribute-list {
+		list-style: none;
+		.detail-member-image-container {
+			float: left;
+			height: 80px;
+			padding-right: 10px;
+			.detail-member-image {
+				width: $detail-member-image-width;
+				height: $detail-member-image-height;
+			}
+		}
+		.detail-member-name,
+		.detail-member-account,
+		.detail-member-position,
+		.detail-member-student-id {
+			float: right;
+		}
+	}
+}

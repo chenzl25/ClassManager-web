@@ -20,6 +20,13 @@
 	     -o-transition: $mul;
 	        transition: $mul;
 }
+@mixin transform($mul...) {
+  -webkit-transform: $mul;
+     -moz-transform: $mul;
+      -ms-transform: $mul;
+       -o-transform: $mul;
+          transform: $mul;
+}
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
    color:    white;
    opacity:0.5;

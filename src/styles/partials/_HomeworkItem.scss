@@ -1,0 +1,22 @@
+@import "../modules/variable";
+@import "../modules/lib";
+// for homeworks
+.homeworks-container {
+	padding: 2px;
+}
+.homeworks-list {
+  list-style: none;
+}
+
+//for homeworks Item
+.homework-item {
+	border-bottom: 1px $default-color dashed;
+	margin-bottom: 2px;
+	> .homework-item-attributes-list {
+		list-style: none;
+	}
+	.homework-item-name, .homework-item-deadline ,.homework-item-from {
+		float: right;
+		padding-right: 5px;
+	}
+}

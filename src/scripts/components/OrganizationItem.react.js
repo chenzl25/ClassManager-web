@@ -21,21 +21,20 @@ const OrganizationItem = React.createClass({
     return (
       <li key={organization.get('_id')}>
         <div  className={classNames({'organization-item': true })} onClick={this.props.onClick}>
-          <ul>
+          <ul className="organization-item-attributes-list">
             <li>
-              <div className="organization-image-container">
-                <img className="organization-image" src={'/api/'+organization.get('image')} />
-                organization_image
+              <div className="organization-item-image-container">
+                <img className="organization-item-image" src={'/api/'+organization.get('image')} />
               </div>
             </li>
             <li>
-              <span className="name">{organization.get('name')}</span>
+              Name: <span className="organization-item-name">{organization.get('name')}</span>
             </li>
             <li>
-              <span className="account">{organization.get('account')}</span>
+              Account: <span className="organization-item-account">{organization.get('account')}</span>
             </li>
             <li>
-              <span className="position">{organization.get('position')}</span>
+              Position: <span className="organization-item-position">{organization.get('position')}</span>
             </li>
           </ul>
         </div>

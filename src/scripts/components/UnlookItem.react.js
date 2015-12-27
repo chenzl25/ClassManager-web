@@ -17,16 +17,25 @@ const UnlookItem = React.createClass({
     var unlook = this.props.unlook;
     return (
       <li key={unlook.get('_id')}>
-        <div  className={classNames({'unlook-item': true })} onClick={this.props.onClick}>
-          <ul>
+        <div  className="unlook-item-container" onClick={this.props.onClick}>
+          <ul className="unlook-item-attribute-list">
             <li>
-              <span className="account">Account: {unlook.get('account')}</span>
+              <div>
+                <span className="attribute-name">Account: </span>
+                <span className="unlook-item-account">{unlook.get('account')}</span>
+              </div>
             </li>
             <li>
-              <span className="name">Name: {unlook.get('name')}</span>
+              <div>
+                <span className="attribute-name">Name: </span>
+                <span className="unlook-item-name">{unlook.get('name')}</span>
+              </div>
             </li>
             <li>
-              <span className="student-id">Student Id: {unlook.get('student_id')}</span>
+              <div>
+                <span className="attribute-name">Student Id: </span>
+                <span className="unlook-item-student-id">{unlook.get('student_id')}</span>
+              </div>
             </li>
           </ul>
         </div>

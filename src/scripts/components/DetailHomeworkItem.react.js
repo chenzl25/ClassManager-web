@@ -9,6 +9,7 @@ import classNames from 'classnames'
 import path from 'path'
 // import '../../styles/DetailHomeworkItem.scss'
 import Unlooks from './Unlooks.react'
+import moment from 'moment'
 
 const DetailHomeworkItem = React.createClass({
   propTypes: {
@@ -20,20 +21,35 @@ const DetailHomeworkItem = React.createClass({
     var homework = this.props.homework;
     return (
       <li key={homework.get('_id')}>
-        <div  className={classNames({'homework-item': true })} onClick={this.props.onClick}>
-          <ul>
+        <div  className={classNames({'detail-homework-item-container': true })} onClick={this.props.onClick}>
+          <ul className="detail-homework-item-attribute-list">
             <li>
-              <span className="name">Name: {homework.get('name')}</span>
+              <div>
+                <span className="attribute-name">Name: </span>
+                <span className="detail-homework-name">{homework.get('name')}</span>
+              </div>
             </li>
             <li>
-              <span className="content">Content: {homework.get('content')}</span>
+              <div>
+                <span className="attribute-name">Start Date: </span>
+                <span className="detail-homework-start-date">{moment(homework.get('join_on')).calendar()}</span>
+              </div>
             </li>
             <li>
-              <span className="deadline">Deadline: {homework.get('deadline')}</span>
+              <div>
+                <span className="attribute-name">Deadline: </span>
+                <span className="detail-homework-deadline">{moment(homework.get('deadline')).calendar()}</span>
+              </div>
             </li>
             <li>
               {/*we can use message to remind here*/}
               <Unlooks unlooks={homework.get('unlooks') } />
+            </li>
+            <li>
+              <div>
+                <span className="attribute-name">Content: </span>
+                <p className="detail-homework-content">{homework.get('content')}</p>
+              </div>
             </li>
           </ul>
         </div>

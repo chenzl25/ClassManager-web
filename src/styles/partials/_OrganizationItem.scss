@@ -1,0 +1,31 @@
+@import "../modules/variable";
+@import "../modules/lib";
+// for organizations
+.organizations-container {
+	padding: 2px;
+}
+.organizations-list {
+  list-style: none;
+}
+
+//for organizations Item
+.organization-item {
+	border-bottom: 1px $default-color dashed;
+	margin-bottom: 2px;
+	> .organization-item-attributes-list {
+		list-style: none;
+		.organization-item-image-container {
+			float: left;
+			height: 60px;
+			padding-right: 10px;
+			.organization-item-image {
+				width: $organization-item-image-width;
+				height: $organization-item-image-height;
+			}
+		}
+	}
+	.organization-item-name, .organization-item-account ,.organization-item-position {
+		float: right;
+		padding-right: 5px;
+	}
+}

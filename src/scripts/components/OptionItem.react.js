@@ -18,9 +18,9 @@ const OptionItem = React.createClass({
     var option = this.props.option;
     return (
       <li key={option.get('_id')}>
-        <div  className={classNames({'option-item': true })} onClick={this.props.onClick}>
-          <div className="name-wrap">
-          	<span className="name">{option.get('name')}</span>
+        <div  className="option-item-container" onClick={this.props.onClick}>
+          <div className="option-item-name-container">
+          	<span className="option-item-name">{option.get('name')}</span>
           </div>
           <Supporters supporters={option.get('supporters')} />
         </div>

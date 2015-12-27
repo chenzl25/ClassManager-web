@@ -10,6 +10,7 @@ import path from 'path'
 // import '../../styles/DetailVoteItem.scss'
 import Unlooks from './Unlooks.react'
 import Options from './Options.react'
+import moment from 'moment'
 
 const DetailVoteItem = React.createClass({
   propTypes: {
@@ -21,22 +22,37 @@ const DetailVoteItem = React.createClass({
     var vote = this.props.vote;
     return (
       <li key={vote.get('_id')}>
-        <div  className={classNames({'vote-item': true })} onClick={this.props.onClick}>
-          <ul>
+        <div  className={classNames({'detail-vote-item-container': true })} onClick={this.props.onClick}>
+          <ul className="detail-vote-item-attribute-list">
             <li>
-              <span className="name">Name: {vote.get('name')}</span>
+              <div>
+                <span className="attribute-name">Name: </span>
+                <span className="detail-vote-name">{vote.get('name')}</span>
+              </div>
+            </li>
+             <li>
+              <div>
+                <span className="attribute-name">Start Date: </span>
+                <span className="detail-vote-start-date">{moment(vote.get('join_on')).calendar()}</span>
+              </div>
             </li>
             <li>
-              <span className="content">Content: {vote.get('content')}</span>
-            </li>
-            <li>
-              <Options options={vote.get('options')} />
-            </li>
-            <li>
-              <span className="deadline">Deadline: {vote.get('deadline')}</span>
+              <div>
+                <span className="attribute-name">Deadline: </span>
+                <span className="detail-vote-deadline">{moment(vote.get('deadline')).calendar()}</span>
+              </div>
             </li>
             <li>
               <Unlooks unlooks={vote.get('unvotes') } changeToUnvote={true} />
+            </li>
+            <li>
+              <div>
+                <span className="attribute-name">Content: </span>
+                <p className="detail-vote-content">{vote.get('content')}</p>
+              </div>
+            </li>
+            <li>
+              <Options options={vote.get('options')} />
             </li>
           </ul>
         </div>

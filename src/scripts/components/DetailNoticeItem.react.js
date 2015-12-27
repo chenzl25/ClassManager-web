@@ -7,8 +7,9 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
-// import '../../styles/DetailNoticeItem.scss'
 import Unlooks from './Unlooks.react'
+import moment from 'moment'
+
 
 const DetailNoticeItem = React.createClass({
   propTypes: {
@@ -20,25 +21,33 @@ const DetailNoticeItem = React.createClass({
     var notice = this.props.notice;
     return (
       <li key={notice.get('_id')}>
-        <div  className={classNames({'notice-item': true })} onClick={this.props.onClick}>
-          <ul>
+        <div  className={classNames({'detail-notice-item-container': true })} onClick={this.props.onClick}>
+          <ul className="detail-notice-item-attribute-list">
             <li>
-              <div className="notice-image-container">
-                <img className="notice-image" src={'/api/'+notice.get('image')} />
-                notice_image
+              <div>
+                <span className="attribute-name">Name: </span>
+                <span className="detail-notice-name">{notice.get('name')}</span>
               </div>
             </li>
             <li>
-              <span className="name">Name: {notice.get('name')}</span>
+              <div>
+                <span className="attribute-name">Start Date: </span>
+                <span className="detail-notice-start-date">{moment(notice.get('join_on')).calendar()}</span>
+              </div>
             </li>
             <li>
-              <span className="content">Content: {notice.get('content')}</span>
+              <Unlooks unlooks={notice.get('unlooks')} />
             </li>
             <li>
-              <span className="deadline">Deadline: {notice.get('deadline')}</span>
+              <div className="detail-notice-image-container">
+                <img className="detail-notice-image" src={'/api/'+notice.get('image')} />
+              </div>
             </li>
             <li>
-              <Unlooks unlooks={notice.get('unlooks') } />
+              <div>
+                <span className="attribute-name">Content: </span>
+                <p className="detail-notice-content">{notice.get('content')}</p>
+              </div>
             </li>
           </ul>
         </div>
