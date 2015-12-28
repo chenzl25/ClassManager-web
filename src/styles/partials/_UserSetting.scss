@@ -12,10 +12,22 @@
 			height: $user-setting-image-height;
 		}
 	}
-	input {
-		// float: right;
+	.image-input-container {
+	    position: relative;
+	    overflow: hidden;
+		svg {
+			fill: white;
+			margin-left: 10px;
+			@include scale(1.2);
+			cursor: pointer;
+		}
+		input[name=image] {
+			// visibility: hidden;
+			width: 0px;
+			height: 0px;
+		}
 	}
-	label {
+	label:not([for=image]) {
 		display: inline-block;
 		width: 100px;
 	}
