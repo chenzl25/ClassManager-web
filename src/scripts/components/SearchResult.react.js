@@ -9,18 +9,11 @@ import classNames from 'classnames'
 import path from 'path'
 
 const searchResult = React.createClass({
-  propTypes: {
-    selectedValue: PropTypes.string
-  },
-  setImmState(fn) {
-    return this.setState(({data}) => ({
-      data: fn(data)
-    }));
-  },
   getInitialState: function() {
-    return {data:  Immutable.fromJS(Store.getSearchAll())};
+    return {data: Immutable.fromJS(Store.getSearchAll())}
   },
   shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextProps.selectedValue);
     return !nextState.data.equals(this.state.data);
   },
   componentDidMount() {
@@ -30,6 +23,7 @@ const searchResult = React.createClass({
     Store.removeChangeListener(this.onChange);
   },
   render: function() {
+    console.log(this.state.selectedValue,'???');
     var data = this.state.data;
     var view;
     if (detectSearchResult(data) === 'searchFail') {
@@ -37,66 +31,95 @@ const searchResult = React.createClass({
       view = (<div className="search-result-message">
                 <p>{data.get('message')}</p>
               </div>);
-    } else if (detectSearchResult(data) === 'searchSuccess') {
-      var result = data.get(this.props.selectedValue);
-      if (this.props.selectedValue === 'organization') {
+    } else {
+      if (detectSearchResult(data) === 'searchSuccessOrganization') {
+        var result = data.get('organization');
         console.log('searchSuccess organization');
         view = (<div  className="search-result-organization-container">
-                  <ul>
+                  <ul className="search-result-organization-list">
                     <li>
-                      <div className="search-result-container">
-                        <img className="search-result-image" src={'/api/'+result.get('image')} />
+                      <div className="search-result-organization-image-container">
+                        <img className="search-result-organization-image" src={'/api/'+result.get('image')} />
+                        <span className="search-result-organization-need-password">{result.get('need_password')? 'Need Password':'Public'}</span>
                       </div>
                     </li>
                     <li>
-                      <span className="account">Account: {result.get('account')}</span>
+                      <div>
+                        <span className="attribute-name">Account: </span>
+                        <span className="search-result-organization-account">{result.get('account')}</span>
+                      </div>
                     </li>
                     <li>
-                      <span className="name">Name: {result.get('name')}</span>
-                    </li>
-                    <li>
-                      <span className="need-password">{result.get('need_password')? 'Need Password':'Public'}</span>
+                      <div>
+                        <span className="attribute-name">Name: </span>
+                        <span className="search-result-organization-name">{result.get('name')}</span>
+                      </div>
                     </li>
                   </ul>
                 </div>);
-      } else if (this.props.selectedValue === 'user') {
+      } else if (detectSearchResult(data) === 'searchSuccessUser') {
+        var result = data.get('user');
         console.log('searchSuccess user');
         view = (<div  className="search-result-user-container">
-                  <ul>
+                  <ul className="search-result-user-list">
                     <li>
-                      <div className="search-result-container">
-                        <img className="search-result-image" src={'/api/'+result.get('image')} />
+                      <div className="search-result-user-image-container">
+                        <img className="search-result-user-image" src={'/api/'+result.get('image')} />
                       </div>
                     </li>
                     <li>
-                      <span className="account">Account: {result.get('account')}</span>
+                      <div>
+                        <span className="attribute-name">Account: </span>
+                        <span className="search-result-user-account">{result.get('account')}</span>
+                      </div>
                     </li>
                     <li>
-                      <span className="nick_name">Nick Name: {result.get('nick_name')}</span>
+                      <div>
+                        <span className="attribute-name">Nick Name: </span>
+                        <span className="search-result-user-nick_name">{result.get('nick_name')}</span>
+                      </div>
                     </li>
                     <li>
-                      <span className="name">Name: {result.get('name')}</span>
+                      <div>
+                        <span className="attribute-name">Name: </span>
+                        <span className="search-result-user-name">{result.get('name')}</span>
+                      </div>
                     </li>
                     <li>
-                      <span className="gender">Gender: {result.get('gender')}</span>
+                      <div>
+                        <span className="attribute-name">Student Id: </span>
+                        <span className="search-result-user-student_id">{result.get('student_id')}</span>
+                      </div>
                     </li>
                     <li>
-                      <span className="school">Email: {result.get('email')}</span>
+                      <div>
+                        <span className="attribute-name">Gender: </span>
+                        <span className="search-result-user-gender">{result.get('gender')}</span>
+                      </div>
                     </li>
                     <li>
-                      <span className="phone">Phone: {result.get('phone')}</span>
+                      <div>
+                        <span className="attribute-name">Email: </span>
+                        <span className="search-result-user-school">{result.get('email')}</span>
+                      </div>
                     </li>
                     <li>
-                      <span className="student_id">Student Id: {result.get('student_id')}</span>
+                      <div>
+                        <span className="attribute-name">Phone: </span>
+                        <span className="search-result-user-phone">{result.get('phone')}</span>
+                      </div>
                     </li>
                     <li>
-                      <span className="phone">Phone: {result.get('phone')}</span>
+                      <div>
+                        <span className="attribute-name">QQ: </span>
+                        <span className="search-result-user-qq">{result.get('qq')}</span>
+                      </div>
                     </li>
                     <li>
-                      <span className="qq">QQ: {result.get('qq')}</span>
-                    </li>
-                    <li>
-                      <span className="wechat">Wechat: {result.get('wechat')}</span>
+                      <div>
+                        <span className="attribute-name">Wechat: </span>
+                        <span className="search-result-user-wechat">{result.get('wechat')}</span>
+                      </div>
                     </li>
                   </ul>
                 </div>);
@@ -114,9 +137,11 @@ const searchResult = React.createClass({
 function detectSearchResult (data) {
   if (data.get('user') === null && data.get('organization') === null) {
     return 'searchFail';
-  } else {
-    return 'searchSuccess';
-  }
+  } else if (data.get('user') !== null) {
+    return 'searchSuccessUser';
+  } else if (data.get('organization') !== null) {
+    return 'searchSuccessOrganization';
+  } 
 }
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);

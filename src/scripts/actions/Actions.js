@@ -46,6 +46,12 @@ var Actions = {
             });
           })
   },
+  changeSelectedValue: function(selectedValue) {
+    AppDispatcher.dispatch({
+      actionType: Constants.CHANGESELECTEDVALUE,
+      data: selectedValue
+    });
+  },
   searchOrganization: function(account) {
     console.log('searchOrganization Action');
     return get('/search/organization/account/'+account)

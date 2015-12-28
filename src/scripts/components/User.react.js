@@ -22,8 +22,9 @@ const User = React.createClass({
     if (!Store.isLogin()) {
       this.props.history.pushState(null, '/login');
     }
+    console.log(nextState.selectedValue);
     return !nextState.data.equals(this.state.data)
-           || nextState.selctedValue !== this.state.selectedValue
+           || nextState.selectedValue !== this.state.selectedValue
            || nextState.searchValue !== this.state.searchValue;
   },
   getInitialState() {
@@ -43,6 +44,7 @@ const User = React.createClass({
   },
   render() {
     var data = this.state.data;
+    console.log(this.state.selectedValue,'!!!');
     if (!data) {
       return (<p>please F5</p>)
     }
@@ -61,7 +63,9 @@ const User = React.createClass({
               </li>
               <li>
                 <div className="user-setting-container">
-                  <img className="user-setting-image" src={ path.join('/','api','images' ,'setting.png') } />
+                  <Link to={path.join('/','user', this.state.data.get('account'), 'userSetting')}>
+                    <img className="user-setting-image" src={ path.join('/','api','images' ,'setting.png') } />
+                  </Link>
                 </div>
               </li>
               <li>
@@ -97,7 +101,8 @@ const User = React.createClass({
             </ul>
             <div className="user-data-container">
               <RouteCSSTransitionGroup transitionName="hehe" transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={300} transitionLeave={false} >
-                {this.props.children&&React.cloneElement(this.props.children, {data: this.state.data, selectedValue: this.state.selectedValue})}
+                {this.props.children&&React.cloneElement(this.props.children, {data: this.state.data})}
+                {/*this.props.children&&*/}
               </RouteCSSTransitionGroup>
             </div>
           </div>
@@ -114,7 +119,8 @@ const User = React.createClass({
     // this.setState('searchResult', Immutable.fromJS(Store['getSearch'+capitalizeFirstLetter(this.state.selctedValue)]()));
   },
   searchRadioChangeHandler(value) {
-    this.setState({selectedValue: value});
+    // Actions.changeSelectedValue(value);
+    this.setState({'selectedValue': value});
     console.log(this.state.selectedValue, value);
   },
   searchKeyDownHandler(event) {
@@ -128,6 +134,9 @@ const User = React.createClass({
     this.setState({searchValue: event.target.value})
   },
   search() {
+    // if (this.state.searchValue === '') {
+    //   return;
+    // }
     if (this.state.selectedValue == 'organization') {
       Actions.searchOrganization(this.state.searchValue)
              .then((result)=>this.props.history.pushState(null, path.join('/','user', this.state.data.get('account'), '/','searchResult')))
@@ -135,6 +144,9 @@ const User = React.createClass({
       Actions.searchUser(this.state.searchValue)
              .then((result)=>this.props.history.pushState(null, path.join('/','user', this.state.data.get('account'), '/','searchResult')))
     }
+  },
+  settingClickHandler() {
+
   }
 })
 export default User;

@@ -11,6 +11,7 @@ var _message = Immutable.Map();
 var _state = Immutable.Map({
   isLogin: false,
   // self: null,
+  selectedValue: 'organization'
 })
 var _searchResult = Immutable.Map({
   user: null,
@@ -19,11 +20,15 @@ var _searchResult = Immutable.Map({
 })
 var _organizationDetail = Immutable.Map();
 
+
 function createUser(data) {
   _user = Immutable.Map({user_data: data.get('user_data')});
   _message = Immutable.Map({message: data.get('message')});
   _state = _state.set(data.getIn(['status', 'name']), data.getIn(['status', 'code']));
   _state = _state.set('isLogin', true);
+}
+function updateSelectedValue(selectedValue) {
+  _state = _state.set('selectedValue', selectedValue)
 }
 function updateSearchUser(user_data, message) {
   _searchResult = _searchResult.set('user', user_data);
@@ -82,6 +87,9 @@ var Store = assign({}, EventEmitter.prototype, {
   isLogin: function() {
     return _state.get('isLogin');
   },
+  getSelectedValue: function() {
+    return _state.get('selectedValue');
+  },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -109,6 +117,10 @@ AppDispatcher.register(function(action) {
       break;
     case Constants.REGISTER:
       registerUser();
+      Store.emitChange();
+      break;
+    case Constants.CHANGESELECTEDVALUE:
+      updateSelectedValue(action.data);
       Store.emitChange();
       break;
     case Constants.SEARCHUSER:

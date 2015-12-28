@@ -9,6 +9,8 @@ import User from './components/User.react'
 import Homeworks from './components/Homeworks.react'
 import Organizations from './components/Organizations.react'
 import SearchResult from './components/SearchResult.react'
+import UserSetting from './components/UserSetting.react'
+
 // const history = createHistory();
 render((
   <Router>
@@ -21,6 +23,7 @@ render((
       	<Route path="homeworks" component={Homeworks}/>
 		    <Route path="organizatons" component={Organizations}/>
 		    <Route path="searchResult" component={SearchResult}/>
+        <Route path="userSetting" component={UserSetting} />
       </Route>
       <Redirect from="*" to="/" />
     </Route>

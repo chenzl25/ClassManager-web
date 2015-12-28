@@ -27,16 +27,28 @@ const DetailMemberItem = React.createClass({
               </div>
             </li>
             <li>
-              Name: <span className="detail-member-name">{member.get('name')}</span>
+              <div>
+                <span className="attribute-name">Name: </span>
+                <span className="detail-member-name">{member.get('name')}</span>
+              </div>
             </li>
             <li>
-              Account: <span className="detail-member-account">{member.get('account')}</span>
+              <div>
+                <span className="attribute-name">Account: </span>
+                <span className="detail-member-account">{member.get('account')}</span>
+              </div>
             </li>
             <li>
-              Position: <span className="detail-member-position">{member.get('position')}</span>
+              <div>
+                <span className="attribute-name">Position: </span>
+                <span className="detail-member-position">{member.get('position')}</span>
+              </div>
             </li>
             <li>
-              Student Id: <span className="detail-member-student-id">{member.get('student_id')}</span>
+              <div>
+                <span className="attribute-name">Student Id: </span>
+                <span className="detail-member-student-id">{member.get('student_id')}</span>
+              </div>
             </li>
           </ul>
         </div>

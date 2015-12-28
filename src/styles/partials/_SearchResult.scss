@@ -1,14 +1,50 @@
 @import "../modules/variable";
 @import "../modules/lib";
 .search-result-organization-container {
-	.search-result-image {
-		width:$search-result-image-width;
-		height: $search-result-image-height;
+	padding: 3px;
+}
+.search-result-organization-list {
+	list-style: none;
+	.search-result-organization-need-password,
+	.search-result-organization-account,
+	.search-result-organization-name {
+		float: right;
 	}
+	.attribute-name {
+	}
+	border-bottom: 1px $default-color dashed;
+	margin-bottom: 5px;
 }
 .search-result-user-container {
-	.search-result-image {
-		width:$search-result-image-width;
-		height: $search-result-image-height;
+}
+.search-result-user-image, .search-result-organization-image {
+	width:$search-result-image-width;
+	height: $search-result-image-height;
+}
+.search-result-user-container {
+	padding: 3px;
+}
+.search-result-user-list {
+	list-style: none;
+	.search-result-user-account,
+	.search-result-user-nick_name,
+	.search-result-user-name,
+	.search-result-user-student_id,
+	.search-result-user-gender,
+	.search-result-user-school,
+	.search-result-user-phone,
+	.search-result-user-qq,
+	.search-result-user-wechat {
+		float: right;
 	}
+	.attribute-name {
+	}
+	border-bottom: 1px $default-color dashed;
+	margin-bottom: 5px;
+}
+.search-result-user-container {
+}
+.search-result-user-image, .search-result-user-image {
+	width:$search-result-image-width;
+	height: $search-result-image-height;
 }
