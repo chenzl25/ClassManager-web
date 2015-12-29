@@ -22,15 +22,15 @@ const Register = React.createClass({
                 password: null,
                 again: null,
                 warning: null,
-                registered: false})
+                registered: false,
+                firstMount: true})
         };
   },
   render() {
     var WarningComponent;
     console.log(this.state.data.get('waring'))
-    if (this.state.data.get('warning')) {
-      WarningComponent = <Warning message={this.state.data.get('warning')} 
-               url={this.state.data.get('registered')? '/login' : null}/>
+    if (!this.state.data.get('firstMount')) {
+      WarningComponent = <Warning message={this.state.data.get('warning') || {success: 'register successfully'}} />
     }
     return (
 			<form id="register-form"  onSubmit={this.submitHandler}>
@@ -44,7 +44,7 @@ const Register = React.createClass({
 				</div>
 				<div>
 					<label htmlFor="again">Again:</label>
-					<input type="text" name="again" placeholder="password" onChange={this.changeHandler} />
+					<input type="password" name="again" placeholder="again" onChange={this.changeHandler} />
 				</div>
 				<div>
 					<label htmlFor="submit"></label>
@@ -69,9 +69,11 @@ const Register = React.createClass({
             this.setImmState(d => d.update('warning', v => Store.getMessage()));
           }, (err) => {
             console.log('reject:',err);
+            this.setImmState(d=> d.update('registered', v => false));
             this.setImmState(d => d.update('warning', v => Object({error: err})));
           })
     }
+    this.setImmState(d=> d.update('firstMount', v => false));
   },
 })
 export default Register;

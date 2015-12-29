@@ -11,26 +11,24 @@ import classNames from 'classnames'
 const Warning = React.createClass({
   propTypes: {
     message: PropTypes.object.isRequired,
-    url: PropTypes.string
   },
   render() {
     var LinkComponent;
-    if (this.props.url) {
+    var message = Immutable.fromJS(this.props.message);
+    if (message.get('success')) {
       LinkComponent = <Link className="success" to={this.props.url || ''}>Continue</Link>
     }
-    var message = Immutable.fromJS(this.props.message);
     var warningMessage = [];
     for (var key of ['account', 'password', 'again', 'error']) {
       if (message.get(key))      
-        warningMessage.push(<li key={key}>{capitalizeFirstLetter(key)}: {message.get(key)}</li>)
+        warningMessage.push(<li className="warning" key={key}>{capitalizeFirstLetter(key)}: {message.get(key)}</li>)
     }
     return (
-      <div className="warning">
-        <ul>
+      <div className="warning-container">
+        <ul className="warning-list">
           {warningMessage}
         </ul>
         {LinkComponent}
-        <p>{this.props.url}</p>
       </div>
     )
   },

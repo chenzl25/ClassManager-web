@@ -10,11 +10,13 @@ import path from 'path'
 
 const searchResult = React.createClass({
   getInitialState: function() {
-    return {data: Immutable.fromJS(Store.getSearchAll())}
+    return {data: Immutable.fromJS(Store.getSearchAll()),
+            joinMessage: ''}
   },
   shouldComponentUpdate(nextProps, nextState) {
     console.log(nextProps.selectedValue);
-    return !nextState.data.equals(this.state.data);
+    return !nextState.data.equals(this.state.data)
+           || nextState.joinMessage !== this.state.joinMessage;
   },
   componentDidMount() {
     Store.addChangeListener(this.onChange);
@@ -22,6 +24,8 @@ const searchResult = React.createClass({
   componentWillUnmount() {
     Store.removeChangeListener(this.onChange);
   },
+  // componentWillUpdate() {
+  // },
   render: function() {
     console.log(this.state.selectedValue,'???');
     var data = this.state.data;
@@ -40,7 +44,8 @@ const searchResult = React.createClass({
                     <li>
                       <div className="search-result-organization-image-container">
                         <img className="search-result-organization-image" src={'/api/'+result.get('image')} />
-                        <span className="search-result-organization-need-password">{result.get('need_password')? 'Need Password':'Public'}</span>
+                        <button className="button-join" onClick={this.joinWithoutPasswordHandler}>Join</button>
+                        <span className="search-result-organization-private">{result.get('need_password')? 'Private':'Public'}</span>
                       </div>
                     </li>
                     <li>
@@ -55,8 +60,14 @@ const searchResult = React.createClass({
                         <span className="search-result-organization-name">{result.get('name')}</span>
                       </div>
                     </li>
+                    <li>
+                      <div className="join-message-container">
+                        <p className="join-message">{this.state.joinMessage}</p>
+                      </div>
+                    </li>
                   </ul>
-                </div>);
+                </div>
+                );
       } else if (detectSearchResult(data) === 'searchSuccessUser') {
         var result = data.get('user');
         console.log('searchSuccess user');
@@ -130,6 +141,12 @@ const searchResult = React.createClass({
   },
   onChange() {
     this.setState({'data': Immutable.fromJS(Store.getSearchAll())});
+    this.setState({joinMessage: ''})
+  },
+  joinWithoutPasswordHandler() {
+    Actions.joinWithoutPassword(this.state.data.getIn(['organization', 'account']))
+           .then((result) => this.setState({joinMessage: result}),
+                 (err) => this.setState({joinMessage: err}));
   }
 
 });

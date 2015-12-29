@@ -19,9 +19,6 @@ const User = React.createClass({
     }));
   },
   shouldComponentUpdate(nextProps, nextState) {
-    if (!Store.isLogin()) {
-      this.props.history.pushState(null, '/login');
-    }
     console.log(nextState.selectedValue);
     return !nextState.data.equals(this.state.data)
            || nextState.selectedValue !== this.state.selectedValue
@@ -31,22 +28,35 @@ const User = React.createClass({
     return {data:  Immutable.fromJS(Store.getUser()),
             selectedValue: 'organization',
             searchValue: '',
-            // searchResult: Immutable.Map()
           };
   },
   // componentWillMount() {
   // },
   componentDidMount() {
+    if (!this.state.data) {
+      this.props.history.pushState(null, '/login');
+      return;
+    }
     Store.addChangeListener(this.onChange);
+    window.addEventListener("beforeunload", function (e) {
+      var confirmationMessage = 'Sure to leave?';
+
+      (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+      return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+    });
   },
   componentWillUnmount() {
     Store.removeChangeListener(this.onChange);
+    // window.removeEventListener("beforeunload");
+  },
+  componentWillUpdate() {
+    // window.removeEventListener("beforeunload");
   },
   render() {
     var data = this.state.data;
     console.log(this.state.selectedValue,'!!!');
     if (!data) {
-      return (<p>please F5</p>)
+      return (<div></div>);
     }
     return (
       <div className="user">
@@ -69,8 +79,8 @@ const User = React.createClass({
                 </div>
               </li>
               <li>
-                <div className="user-logout-container">
-                  <img className="user-logout-image" src={ path.join('/','api','images' ,'logout.png') } />
+                <div className="user-logout-container" >
+                  <img  onClick={this.logoutHandler} className="user-logout-image" src={ path.join('/','api','images' ,'logout.png') } />
                 </div>
               </li>
             </ul>
@@ -147,6 +157,11 @@ const User = React.createClass({
   },
   settingClickHandler() {
 
+  },
+  logoutHandler() {
+    window.removeEventListener('beforeunload');
+    // this.props.history.pushState(null,'/login');
+    window.location.reload(true);
   }
 })
 export default User;

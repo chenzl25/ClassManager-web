@@ -103,6 +103,17 @@ var Actions = {
           }, (err) => {
             console.log('reject: ',err, 'inAction')
           })
+  },
+  joinWithoutPassword: function(OrganizationAccount) {
+    return get('/join/organization/'+OrganizationAccount)
+          .then((result) => {
+            console.log(result.toJS());
+            this.updateUser();
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            return Promise.reject(err);
+          })
   }
 };
 
