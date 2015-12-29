@@ -53,7 +53,9 @@ function updateOrganizationDetail(organization_data) {
   console.log(' updateOrganizationDetail');
 }
 function updateUser(data) {
-
+  _user = Immutable.Map({user_data: data.get('user_data')});
+  _message = Immutable.Map({message: data.get('message')});
+  _state = _state.set(data.getIn(['status', 'name']), data.getIn(['status', 'code']));
 }
 function destroyUser() {
   _user = {};
@@ -137,6 +139,9 @@ AppDispatcher.register(function(action) {
       break;
     case Constants.SEARCHORGANIZATIONDETAIL:
       updateOrganizationDetail(action.data);
+      Store.emitChange();
+    case Constants.UPDATEUSER:
+      updateUser(action.data);
       Store.emitChange();
     default:
       // no op

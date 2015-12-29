@@ -13,13 +13,24 @@
 		}
 	}
 	.image-input-container {
-	    position: relative;
-	    overflow: hidden;
+		position: relative;
+		// overflow: hidden;
 		svg {
 			fill: white;
-			margin-left: 10px;
-			@include scale(1.2);
+			// margin-left: 20px;
+			// margin-top: -20px;
+			position: absolute;
+			top: 20px;
+			right: 30px;
+			@include scale(1.5);
 			cursor: pointer;
+		}
+		.user-setting-image-preview {
+			margin-left: 20px; 
+			width:	$user-setting-image-preview-width;
+			height: $user-setting-image-preview-height;
+			font-size: 14px;
+			line-height: 40px;
 		}
 		input[name=image] {
 			// visibility: hidden;
@@ -32,25 +43,25 @@
 		width: 100px;
 	}
 	input:not([name=image]) {
-	    font-size: 15px;
-	    color: white;
-	    width: 100px;
-	    height: 25px;
-	    display: inline-block;
-	    outline: none;
-	    background: transparent;
-	    border-bottom:1px white solid;
-	    // border-radius: 5px;
-	    margin-top: 10px;
-	    // padding-left: 10px;
+		font-size: 15px;
+		color: white;
+		width: 100px;
+		height: 25px;
+		display: inline-block;
+		outline: none;
+		background: transparent;
+		border-bottom:1px white solid;
+		// border-radius: 5px;
+		margin-top: 10px;
+		// padding-left: 10px;
 	  }
 	  input[type="submit"] {
-	    letter-spacing: 2px;
-	    border:1px white solid;
-	    border-radius: 5px;
-	    &:hover {
-	      background: #2287B0;
-	      border: 1px #ccc solid;
-	    }
+		letter-spacing: 2px;
+		border:1px white solid;
+		border-radius: 5px;
+		&:hover {
+		  background: #2287B0;
+		  border: 1px #ccc solid;
+		}
 	  }
 }

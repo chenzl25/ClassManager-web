@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import Constants from '../constants/Constants'
-import { post, get } from '../lib/service'
+import { post, get,postFormData } from '../lib/service'
 
 var Actions = {
   login: function(account, password) {
@@ -78,6 +78,27 @@ var Actions = {
               actionType: Constants.SEARCHORGANIZATIONDETAIL,
               data: result.get('organization_data'),
               // message: result.get('message')
+            });
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+          })
+  },
+  userSetting: function(data) {
+    return postFormData('/settings/user', data)
+          .then((result) => {
+            console.log(result.toJS());
+            this.updateUser();
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+          })
+  },
+  updateUser: function() {
+    return get('/search/user')
+          .then((result) => {
+            console.log(result.toJS());
+            AppDispatcher.dispatch({
+              actionType: Constants.UPDATEUSER,
+              data: result,
             });
           }, (err) => {
             console.log('reject: ',err, 'inAction')

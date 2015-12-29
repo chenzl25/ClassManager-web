@@ -8,6 +8,7 @@ export default keyMirror({
   SEARCHORGANIZATION: null,
   SEARCHFAIL: null,
   SEARCHORGANIZATIONDETAIL:null,
-  CHANGESELECTEDVALUE: null
+  CHANGESELECTEDVALUE: null,
+  UPDATEUSER:null
 });
  

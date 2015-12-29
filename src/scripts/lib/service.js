@@ -57,6 +57,8 @@ function Request(url, options) {
 //         },
 //         responseType: "json"
 //     });
+
+//post json default
 export function post(url, data) {
     url = '/api' + url;
     return Request(url, {
@@ -68,12 +70,21 @@ export function post(url, data) {
         formData: false,
     })
 }
+export function postFormData(url, data) {
+    url = '/api' + url;
+    return Request(url, {
+        method: "POST",
+        data: data,
+        responseType: "json",
+        // headers: {"Content-type": "multipart/form-data"},
+        formData: true,
+    })
+}
 export function get(url, data) {
     url = '/api' + url;
     return Request(url, {
         method: "GET",
         mimeType: "application/json",
-        // data: data,
         responseType: "json"
     })
 }
