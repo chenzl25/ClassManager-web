@@ -6,6 +6,7 @@ var HomeworkSchema = new mongoose.Schema({
     account: {type:String,default: null},    //organization account
 	name: {type:String,default: null},
 	content: {type:String,default: null},
+    join_on: { type: Date, default: Date.now },
 	deadline: {type:Date,default: null},
 	unlook: {type:Boolean,default:true},
     uncomplish: {type:Boolean,default:true}    //添加的

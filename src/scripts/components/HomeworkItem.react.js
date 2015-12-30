@@ -33,29 +33,47 @@ const HomeworkItem = React.createClass({
               Content: <p className="homework-item-content">{homework.get('content')}</p>
             </li>
             <li>
-              From: <span className="homework-item-from">{homework.get('account')}</span>
+              Source: <span className="homework-item-from">{homework.get('account')}</span>
+            </li>
+            <li>
+              Start Date: <span className="homework-item-from">{moment(homework.get('join_on')).calendar()}</span>
             </li>
             <li>
               Deadline: <span className="homework-item-deadline">{moment(homework.get('deadline')).calendar()}</span>
             </li>
             <li>
-              <button className="homework-item-finlish" onClick={this.onFinlishClick} />
-              <button className="homework-item-destroy" onClick={this.onDestroyClick} />
+              State: <span className="homework-item-uncomplish">{homework.get('uncomplish')? 'Uncomplished': 'Complished'}</span>
+
+            </li>
+            <li>
+              {homework.get('unlook')? <button className="homework-item-look-button" onClick={this.lookHandeler}>Look</button>:'hasLooked'}
+              <button className="homework-item-complish-button" onClick={this.complishHandeler}>{!homework.get('uncomplish')? 'Uncomplished': 'Complished'}</button>
             </li>
           </ul>
         </div>
       </li>
     );
   },
-  onDestroyClick: function() {
-    // TodoActions.destroy(this.props.homework.id);
-    console.log('destroy');
+  lookHandeler() {
+    console.log('looked')
+    Actions.lookHomework(this.props.homework.get('account'), this.props.homework.get('_id'));
   },
-  onFinlishClick: function() {
-    // TodoActions.destroy(this.props.homework.id);
+  complishHandeler() {
     console.log('finlish');
+    Actions.complishHomework(this.props.homework.get('_id'), !this.props.homework.get('uncomplish'));
   }
 
 });
 
 export default HomeworkItem
+
+
+// Homework = {
+//   _id: ObjectId,         //在数据库里面的ID，子对象都有ID，可以不用管
+//   account: String,       // organization account
+//   name: String,      //作业的名称
+//   content: String,     //作业内容
+//   deadline: Date,      //作业的截至日期
+//   unlook: Boolean,        //对于User来说，看到了没    方便Organization类统计
+//   uncomplish: Boolean     //是否完成了作业
+// });

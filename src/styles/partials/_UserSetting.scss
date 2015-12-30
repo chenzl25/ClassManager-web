@@ -39,6 +39,7 @@
 		}
 	}
 	label:not([for=image]) {
+		// trick here to make input right
 		display: inline-block;
 		width: 100px;
 	}
@@ -52,7 +53,7 @@
 		background: transparent;
 		border-bottom:1px white solid;
 		// border-radius: 5px;
-		margin-top: 10px;
+		margin-top: 6px;
 		// padding-left: 10px;
 	  }
 	  input[type="submit"] {
@@ -64,4 +65,38 @@
 		  border: 1px #ccc solid;
 		}
 	  }
+}
+.male-or-female {
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	flex-direction: row; 
+	justify-content: space-around;
+	input[type="radio"] {
+	    display:none !important;
+	}
+	input[type="radio"] + .radio-name {
+	    color: #eee;
+	    cursor:pointer;
+	    font-size: 15px;
+	}
+	input[type="radio"] + .radio-name::before {
+		content: '';
+	    display:inline-block;
+	    width:10px;
+	    height:10px;
+	    margin:-1px 4px 0 0;
+	    vertical-align:middle;
+	    cursor:pointer;
+	    border-radius:  50%;
+	    border: 1px $default-color solid;
+	    background-color:transparent;
+	}
+	input[type="radio"]:checked + .radio-name::before{
+	     background-color:#eee;
+	}
+	input[type="radio"] + .radio-name::before,
+	input[type="radio"]:checked + .radio-name::before {
+		@include transition(background-color 0.4s linear);
+	}
 }

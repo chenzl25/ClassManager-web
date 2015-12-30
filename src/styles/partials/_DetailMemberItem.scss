@@ -19,6 +19,21 @@
 				width: $detail-member-image-width;
 				height: $detail-member-image-height;
 			}
+			.up-button, .down-button {
+				font-size: 13px;
+			    color: white;
+			    width: 50px;
+			    height: 20px;
+			    display: inline-block;
+			    outline: none;
+			    background: transparent;
+			    border:1px white solid;
+			    border-radius: 5px;
+			    &:hover {
+			      background: #13B8CF;
+			      border: 1px #ccc solid;
+			    }
+			}
 		}
 		.detail-member-name,
 		.detail-member-account,

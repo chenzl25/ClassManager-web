@@ -13,6 +13,7 @@ import DetailMembers from './DetailMembers.react'
 import DetailNotices from './DetailNotices.react'
 import DetailVotes from './DetailVotes.react'
 import DetailHomeworks from './DetailHomeworks.react'
+import OrganizationSetting from './OrganizationSetting.react'
 import RadioGroup from 'react-radio-group'
 
 const OrganizationDetail = React.createClass({
@@ -51,6 +52,7 @@ const OrganizationDetail = React.createClass({
       case 'votes': Child = <DetailVotes userAccount={this.props.userAccount} organizationAccount={data.get('account')} votes={data.get('votes')} />; break;
       case 'notices': Child = <DetailNotices userAccount={this.props.userAccount} organizationAccount={data.get('account')} notices={data.get('notices')} />; break;
       case 'homeworks': Child = <DetailHomeworks userAccount={this.props.userAccount} organizationAccount={data.get('account')} homeworks={data.get('homeworks')} />; break;
+      case 'setting': Child = <OrganizationSetting userAccount={this.props.userAccount} organizationData={data} />; break;
       default:      Child = <DetailMembers userAccount={this.props.userAccount} organizationAccount={data.get('account')} members={data.get('members')} />;
     }
     return (
@@ -65,7 +67,7 @@ const OrganizationDetail = React.createClass({
               <div className="organization-detail-name">Name: {data.get('name')}</div>
             </div>
             <div className="organization-detail-setting-container">
-              <img className="organization-detail-setting-image" src={ path.join('/','api','images' ,'setting.png') } />
+              <img className="organization-detail-setting-image" src={ path.join('/','api','images' ,'setting.png') } onClick={this.settingClickHandler} />
             </div>
           </div>
           <div className="organization-detail-choices-container">
@@ -104,6 +106,10 @@ const OrganizationDetail = React.createClass({
   },
   radioChangeHandler(value) {
     this.setState({route: value});
+  },
+  settingClickHandler() {
+    console.log('organizationSettingClick');
+    this.setState({route: 'setting'});
   }
 })
 export default OrganizationDetail;

@@ -4,7 +4,7 @@
 User = {
 	_id: ObjectId,              //User 在数据库里面的ID
 	name: String,               //真实姓名  陈梓麟
-    nick_name: String,          //昵称		Dylan
+    nick_name: String,          //昵称		Dylan // this will be deprecated, because I think the nick_name hard to control
     account: String,            //账号，（用户名感觉会与姓名混淆，所以叫账号）asd123
     password: String,           //密码		123abc
     gender: String,      //性别 male  或  female
@@ -224,7 +224,7 @@ var Status =  {    //是否修改过的状态值类似于User
     POST
 	4: /update/organization/{:account}/member/{:member_id}          //这个更新一般是职务吧，但由班级管理员来跟新
 	input: {				  
-		name:String,
+		name:String,   //this will be deprecated, because I think the nick_name hard to control
 		position: String
 	}
 	output:{error:'', message:''}  	
@@ -456,9 +456,8 @@ var Status =  {    //是否修改过的状态值类似于User
 
     //join 加群处理
     POST 				  //用密码加班级
-    /join/organization   //加cookie
+    /join/organization/{:account}   //加cookie
     input: {
-    	account: String,
     	password: String
     }
     output: {

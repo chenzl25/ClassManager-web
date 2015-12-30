@@ -112,10 +112,10 @@ app.use(session({
   secret: 'my_app',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 300000 },
+  cookie: { maxAge: 1800000 },
   store: new MongoStore({
     url: config.url_sessions,
-    ttl: 600 // = 10 minutes. Default
+    ttl: 1800 // = 10 minutes. Default
   }),
 
 }));

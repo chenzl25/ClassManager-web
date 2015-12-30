@@ -70,10 +70,14 @@ echo '\n'
 # http://localhost:3000/create/organization/mygroup19/notice
 # echo '\n'
 
-#vote
-curl -b cookie15.file --data 'vote_id=5648bdc8dffeff445992e56b&option_id=5648bdc8dffeff445992e56e' \
-http://localhost:3000/vote/organization/mygroup22
+curl -b cookie15.file  --data 'name=Newton&content=abcedfghijklmn'  \
+http://localhost:3000/create/organization/mygroup22/homework
 echo '\n'
+
+#vote
+# curl -b cookie15.file --data 'vote_id=5648bdc8dffeff445992e56b&option_id=5648bdc8dffeff445992e56e' \
+# http://localhost:3000/vote/organization/mygroup22
+# echo '\n'
 
 # curl -b cookie10.file --data 'vote_id=5648186941c8e50734ab1ded&option_id=5648186941c8e50734ab1def' \
 # http://localhost:3000/vote/organization/mygroup18

@@ -7,6 +7,7 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
+import RadioGroup from 'react-radio-group'
 
 const UserSetting = React.createClass({
   propTypes: {
@@ -19,18 +20,20 @@ const UserSetting = React.createClass({
   },
   getInitialState: function() {
     var data = this.props.data;
-    return {  input:
-      Immutable.Map({
-        account: data.get('account'),
-        nick_name: data.get('nick_name'),
-        name: data.get('name'),
-        student_id: data.get('student_id'),
-        gender: data.get('gender'),
-        email: data.get('email'),
-        phone: data.get('phone'),
-        qq: data.get('qq'),
-        wechat: data.get('wechat'),
-      })
+    return {  
+      input:Immutable.Map({
+              nick_name: data.get('nick_name'),
+              name: data.get('name'),
+              student_id: data.get('student_id'),
+              gender: data.get('gender'),
+              email: data.get('email'),
+              phone: data.get('phone'),
+              qq: data.get('qq'),
+              wechat: data.get('wechat'),
+            }),
+      settingSuccess: false,
+      settingFail: false,
+      settingMessage: ''
     };
   },
   render() {
@@ -49,11 +52,12 @@ const UserSetting = React.createClass({
                 </div>
                 <div>
                   <label htmlFor="account">Account:</label>
-                  <input type="text" autoFocus="true" name="account" defaultValue={result.get('account')} onChange={this.inputChangeHandler} />
+                  {this.props.data.get('account')}
+                  {/* <input type="text" autoFocus="true" name="account" value={this.props.data.get('account')} onChange={this.inputChangeHandler} /> */}
                 </div>
                 <div>
                   <label htmlFor="nick-name">Nick Name:</label>
-                  <input type="text" name="nick-name" defaultValue={result.get('nick_name')} onChange={this.inputChangeHandler} />
+                  <input type="text" autoFocus="true" name="nick-name" defaultValue={result.get('nick_name')} onChange={this.inputChangeHandler} />
                 </div>
                 <div>
                   <label htmlFor="name">Name:</label>
@@ -61,11 +65,27 @@ const UserSetting = React.createClass({
                 </div>
                 <div>
                   <label htmlFor="student-id">Student Id:</label>
-                  <input type="text" name="student-id" defaultValue={result.get('student_id')} onChange={this.inputChangeHandler} />
+                  <input type="text" name="student_id" defaultValue={result.get('student_id')} onChange={this.inputChangeHandler} />
                 </div>
                 <div>
-                  <label htmlFor="gender">Gender:</label>
+                  {/*<label htmlFor="gender">Gender:</label>
                   <input type="text" name="gender" defaultValue={result.get('gender')} onChange={this.inputChangeHandler} />
+                  */}
+                  <RadioGroup
+                    name="gender-radio"
+                    selectedValue={this.state.input.get('gender')}
+                    onChange={this.searchRadioChangeHandler}>
+                    {Radio => (
+                      <div className="male-or-female">
+                        <label>
+                          <Radio value="male" /><span className="radio-name">Male</span>
+                        </label>
+                        <label>
+                          <Radio value="female" /><span className="radio-name">Female</span>
+                        </label>
+                      </div>
+                    )}
+                  </RadioGroup>
                 </div>
                 <div>
                   <label htmlFor="email">Email:</label>
@@ -84,14 +104,18 @@ const UserSetting = React.createClass({
                   <input type="text" name="wechat" defaultValue={result.get('wechat')} onChange={this.inputChangeHandler} />
                 </div>
                 <div>
-                  <label htmlFor="submit"></label>
-                  <input type="submit" name ="submit"/>
+                  <label htmlFor="submit" className={classNames({success: this.state.settingSuccess, warning: this.state.settingFail})} ></label>
+                  <input type="submit" name="submit" value="Setting"/>
                 </div>
               </form>
+              <p>{this.state.settingMessage}</p>
             </div>);
   },
   inputChangeHandler(event) {
     this.setImmState(d => d.update(event.target.name, v => event.target.value));
+  },
+  searchRadioChangeHandler(value) {
+    this.setImmState(d => d.set('gender', value));
   },
   imageChangeHandler() {
     var image = this.refs.userSettingImageInput.files[0];
@@ -116,7 +140,13 @@ const UserSetting = React.createClass({
       if (this.state.input.get(key))
         data = data.set(key, this.state.input.get(key));
     }
-    Actions.userSetting(data.toJS());
+    Actions.userSetting(data.toJS())
+           .then((result) => {this.setState({settingMessage: result});
+                              this.setState({settingSuccess: true});
+                              this.setState({settingFail: false})},
+                 (err) => {this.setState({settingMessage: err});
+                           this.setState({settingFail: true});
+                           this.setState({settingSuccess: false})});
   },
   svgClickHandler() {
     this.refs.userSettingImageInput.click();

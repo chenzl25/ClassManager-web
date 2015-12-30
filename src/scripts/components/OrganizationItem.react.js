@@ -11,7 +11,8 @@ import path from 'path'
 
 const OrganizationItem = React.createClass({
   propTypes: {
-    organization: PropTypes.object.isRequired
+    organization: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
   },
   getInitialState: function() {
     return null;

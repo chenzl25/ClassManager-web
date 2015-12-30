@@ -15,8 +15,31 @@ const DetailMemberItem = React.createClass({
     userAccount: PropTypes.string.isRequired,
     organizationAccount: PropTypes.string.isRequired
   },
+  setImmState(fn) {
+    return this.setState(({data}) => ({
+      data: fn(data)
+    }));
+  },
+  getInitialState() {
+    return {data:  Immutable.fromJS(Store.getUser())};
+  },
+  // componentDidMount() {
+  //     Store.addChangeListener(this.onStoreChange);
+  // },
+  // componentWillUnmount() {
+  //     Store.removeChangeListener(this.onStoreChange);
+  // },
   render: function() {
     var member = this.props.member;
+    console.log(this.state.data.get('relationships').find(v => v.get('account') === this.props.organizationAccount).get('position'), 'in detail MemberItem');
+    var userIsFounder = false;
+    if (this.state.data.get('relationships').find(v => v.get('account') === this.props.organizationAccount).get('position') === 'founder') {
+      userIsFounder = true;
+    }
+    var memberIsMember = member.get('position') === 'member';
+    var memberIsManager = member.get('position') === 'manager';
+    var memberIsFounder = member.get('position') === 'founder'
+    var memberIsOthers = !memberIsMember && !memberIsManager && !memberIsFounder;
     return (
       <li key={member.get('_id')}>
         <div  className={classNames({'detail-member-item-container': true })} onClick={this.props.onClick}>
@@ -24,6 +47,20 @@ const DetailMemberItem = React.createClass({
             <li>
               <div className="detail-member-image-container">
                 <img className="detail-member-image" src={'/api/'+member.get('image')} />
+                {userIsFounder && memberIsMember && !memberIsFounder? 
+                  (
+                    <div className="up-button-container">
+                      <button className="up-button" onClick={this.upButtonClickHandler}>Up</button>
+                    </div>
+                   ):''
+                }
+                {userIsFounder && memberIsManager && !memberIsFounder || memberIsOthers? 
+                  (
+                    <div className="down-button-container">
+                      <button className="down-button" onClick={this.downButtonClickHandler}>Down</button>
+                    </div>
+                   ):''
+                }
               </div>
             </li>
             <li>
@@ -54,6 +91,17 @@ const DetailMemberItem = React.createClass({
         </div>
       </li>
     )
+  },
+  // onStoreChange() {
+  //    this.setImmState(d => Immutable.fromJS(Store.getUser()));
+  // },
+  upButtonClickHandler() {
+    console.log('upButtonClickHandler');
+    Actions.upMember(this.props.organizationAccount, this.props.member.get('_id'));
+  },
+  downButtonClickHandler() {
+    console.log('downButtonClickHandler');
+    Actions.downMember(this.props.organizationAccount, this.props.member.get('_id'));
   },
   onDestroyClick: function() {
     // TodoActions.destroy(this.props.member.id);

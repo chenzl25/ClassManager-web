@@ -140,9 +140,11 @@ AppDispatcher.register(function(action) {
     case Constants.SEARCHORGANIZATIONDETAIL:
       updateOrganizationDetail(action.data);
       Store.emitChange();
+      break;
     case Constants.UPDATEUSER:
       updateUser(action.data);
       Store.emitChange();
+      break;
     default:
       // no op
   }

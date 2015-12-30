@@ -44,8 +44,11 @@ const searchResult = React.createClass({
                     <li>
                       <div className="search-result-organization-image-container">
                         <img className="search-result-organization-image" src={'/api/'+result.get('image')} />
-                        <button className="button-join" onClick={this.joinWithoutPasswordHandler}>Join</button>
-                        <span className="search-result-organization-private">{result.get('need_password')? 'Private':'Public'}</span>
+                        <div className="join-container">  
+                          <button className="button-join" onClick={result.get('need_password')? this.joinWithPasswordHandler : this.joinWithoutPasswordHandler}>Join</button>
+                          <span className="search-result-organization-private">{result.get('need_password')? 'Private':'Public'}</span>
+                          {result.get('need_password')? (<div className="join-password-container"><span>PASS:</span><input ref="joinPasswordInput" className="join-password" type="password" /></div>):''}
+                        </div>
                       </div>
                     </li>
                     <li>
@@ -140,11 +143,19 @@ const searchResult = React.createClass({
     return view;
   },
   onChange() {
+    if (this.state.data.equals(Immutable.fromJS(Store.getSearchAll()))) {
+      return;
+    }
     this.setState({'data': Immutable.fromJS(Store.getSearchAll())});
-    this.setState({joinMessage: ''})
+    this.setState({joinMessage: ''});
   },
   joinWithoutPasswordHandler() {
     Actions.joinWithoutPassword(this.state.data.getIn(['organization', 'account']))
+           .then((result) => this.setState({joinMessage: result}),
+                 (err) => this.setState({joinMessage: err}));
+  },
+  joinWithPasswordHandler() {
+    Actions.joinWithPassword(this.state.data.getIn(['organization', 'account']), this.refs.joinPasswordInput.value)
            .then((result) => this.setState({joinMessage: result}),
                  (err) => this.setState({joinMessage: err}));
   }

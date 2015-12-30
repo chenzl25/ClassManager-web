@@ -78,8 +78,8 @@ var organizations_upload = multer({
       cb(null,false);
     } else {
       console.log(file);
-      // if (!/image\/*/.test(file.mimetype)) {
-      if (!/image\/*/.test(file.mimetype) && file.mimetype != 'application/octet-stream') {
+      if (!/image\/*/.test(file.mimetype)) {
+      // if (!/image\/*/.test(file.mimetype) && file.mimetype != 'application/octet-stream') {
         console.log('not image file has been uploaded by', req.session.user_data.account);
         req.unformat_upload = true;
         cb(null, false);
@@ -111,23 +111,23 @@ router.post('/user',users_upload.single('image'),function(req,res) {
     res.end(JSON.stringify(result));
   }
 	if (req.session.user_data) {
-		var input = {};
-        var result = {};
-        input.account = req.body.account || null;
-        input.password = req.body.password || null;
-        input.name = req.body.name || null;
-        input.nick_name = input.name || null;
-        input.student_id =req.body.student_id || null;
-        input.email = req.body.email || null;
-        input.image = req.body.image || null;
-        input.gender = req.body.gender || null;
-        input.school = req.body.school || null;
-        input.age = req.body.age || null;
-        input.signature = req.body.signature || null;
-        input.accessible = req.body.accessible || null;
-        input.qq= req.body.qq || null;
-        input.wechat = req.body.wechat|| null;
-        input.phone = req.body.phone || null;
+		  var input = {};
+      var result = {};
+      input.account = req.body.account || null;
+      input.password = req.body.password || null;
+      input.name = req.body.name || null;
+      input.nick_name = input.name || null;
+      input.student_id =req.body.student_id || null;
+      input.email = req.body.email || null;
+      input.image = req.body.image || null;
+      input.gender = req.body.gender || null;
+      input.school = req.body.school || null;
+      input.age = req.body.age || null;
+      input.signature = req.body.signature || null;
+      input.accessible = req.body.accessible || null;
+      input.qq= req.body.qq || null;
+      input.wechat = req.body.wechat|| null;
+      input.phone = req.body.phone || null;
     	result = validator.validate_settings_user(input);
     	if (result.error) {
             if (req.has_real_image) {
@@ -179,6 +179,7 @@ router.post('/user',users_upload.single('image'),function(req,res) {
                   for (var j = 0; j < datas[i].members.length; j++) {
                     if (datas[i].members[j].account === data_u.account) {
                       datas[i].members[j].student_id = data_u.student_id;
+                      datas[i].members[j].name = data_u.name;
                       datas[i].members[j].image = data_u.image;
                       break;
                     }

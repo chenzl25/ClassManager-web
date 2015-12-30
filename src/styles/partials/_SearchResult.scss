@@ -15,6 +15,48 @@
 	border-bottom: 1px $default-color dashed;
 	margin-bottom: 5px;
 }
+.button-join {
+	float: right;
+	font-size: 15px;
+    color: white;
+    width: 50px;
+    height: 20px;
+    display: inline-block;
+    outline: none;
+    background: transparent;
+    border:1px white solid;
+    border-radius: 5px;
+    margin-left: 5px;
+    &:hover {
+      background: #13B8CF;
+      border: 1px #ccc solid;
+    }
+}
+.join-container {
+	float: right;
+}
+.join-password-container {
+	.join-password {
+		// float: right;
+		font-size: 15px;
+	    color: white;
+	    width: 80px;
+	    height: 20px;
+	    display: inline-block;
+	    outline: none;
+	    background: transparent;
+	    border-bottom:1px white solid;
+	    margin-left: 5px;
+	}
+}
+.join-message-container {
+	margin-top: 5px;
+}
+
+
+
+
+//user
 .search-result-user-container {
 }
 .search-result-user-image, .search-result-organization-image {
@@ -47,21 +89,4 @@
 .search-result-user-image, .search-result-user-image {
 	width:$search-result-image-width;
 	height: $search-result-image-height;
-}
-.button-join {
-	float: right;
-	font-size: 15px;
-    color: white;
-    width: 50px;
-    height: 20px;
-    display: inline-block;
-    outline: none;
-    background: transparent;
-    border:1px white solid;
-    border-radius: 5px;
-    margin-left: 5px;
-    &:hover {
-      background: #13B8CF;
-      border: 1px #ccc solid;
-    }
 }

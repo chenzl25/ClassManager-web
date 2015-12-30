@@ -40,8 +40,8 @@ var notices_upload = multer({
       console.log(req.body.name, req.body.content);
     } else {
       console.log(file);
-      // if (!/image\/*/.test(file.mimetype)) {
-      if (!/image\/*/.test(file.mimetype) && file.mimetype != 'application/octet-stream') {
+      if (!/image\/*/.test(file.mimetype)) {
+      // if (!/image\/*/.test(file.mimetype) && file.mimetype != 'application/octet-stream') {
         console.log('not image file has been uploaded by', req.session.user_data.account);
         req.unformat_upload = true;
         cb(null, false);

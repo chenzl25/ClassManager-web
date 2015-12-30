@@ -1,0 +1,67 @@
+@import "../modules/variable";
+@import "../modules/lib";
+.organization-setting-container {
+	padding-left: 3px;
+	padding-top: 3px;
+}
+#organization-setting-form {
+	list-style: none;
+	.organization-setting-image-container {
+		.organization-setting-image {
+			width: $organization-setting-image-width;
+			height: $organization-setting-image-height;
+		}
+	}
+	.image-input-container {
+		position: relative;
+		// overflow: hidden;
+		svg {
+			fill: white;
+			// margin-left: 20px;
+			// margin-top: -20px;
+			position: absolute;
+			top: 20px;
+			left: 160px;
+			@include scale(1.5);
+			cursor: pointer;
+		}
+		.organization-setting-image-preview {
+			margin-left: 20px; 
+			width:	$organization-setting-image-preview-width;
+			height: $organization-setting-image-preview-height;
+			font-size: 14px;
+			line-height: 40px;
+		}
+		input[name=image] {
+			// visibility: hidden;
+			width: 0px;
+			height: 0px;
+		}
+	}
+	label:not([for=image]) {
+		display: inline-block;
+		width: 100px;
+	}
+	input:not([name=image]) {
+		font-size: 15px;
+		color: white;
+		width: 100px;
+		height: 25px;
+		display: inline-block;
+		outline: none;
+		background: transparent;
+		border-bottom:1px white solid;
+		// border-radius: 5px;
+		margin-top: 10px;
+		// padding-left: 10px;
+	  }
+	  input[type="submit"] {
+		letter-spacing: 2px;
+		border:1px white solid;
+		border-radius: 5px;
+		&:hover {
+		  background: #2287B0;
+		  border: 1px #ccc solid;
+		}
+	  }
+}

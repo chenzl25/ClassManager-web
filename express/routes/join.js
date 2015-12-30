@@ -32,7 +32,7 @@ router.get('/organization/:account', function(req, res) {
 				res.end(JSON.stringify(result));
 			} else {
 				if (data_o.password !== null) {
-					result.error = false;
+					result.error = true;
 					result.message = "the organization need password";
 					res.end(JSON.stringify(result));
 					return;
@@ -77,7 +77,7 @@ router.post('/organization/:account', function(req, res) {
 	var user_data = req.session.user_data;
 	var password = req.body.password || null;
 	if (password === null) {
-		result.error = false;
+		result.error = true;
 		result.message = "you haven't given the password";
 		res.end(JSON.stringify(result));
 		return;
@@ -97,7 +97,7 @@ router.post('/organization/:account', function(req, res) {
 				res.end(JSON.stringify(result));
 			} else {
 				if (data_o.password !== password) {
-					result.error = false;
+					result.error = true;
 					result.message = "the password you give is wrong";
 					res.end(JSON.stringify(result));
 					return;
