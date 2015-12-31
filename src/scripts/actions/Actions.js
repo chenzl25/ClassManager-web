@@ -4,10 +4,10 @@ import { post, get,postFormData } from '../lib/service'
 import path from 'path'
 
 var Actions = {
-  login: function(account, password) {
+  login: function(userAccount, userPassword) {
     //some ajax here
     console.log('login Action');
-    return post('/login/user', {account: account, password: password})
+    return post('/login/user', {account: userAccount, password: userPassword})
           .then((result) => {
             console.log(result.toJS());
             AppDispatcher.dispatch({
@@ -16,19 +16,30 @@ var Actions = {
             });
           })
   },
-  logout: function(account, password) {
+  logout: function() {
     //some ajax here
     var data;
     AppDispatcher.dispatch({
       actionType: Constants.LOGOUT,
     });
   },
-  register: function(account, password) {
+  registerUser: function(userAccount, userPassword) {
     //some ajax here
     var data;
     AppDispatcher.dispatch({
       actionType: Constants.REGISTER,
     });
+  },
+  registerOrganization: function(organizationAccount, organizationPassword) {
+    console.log('registerOrganization Action');
+    return post('/register/organization', {account: organizationAccount, password: organizationPassword})
+          .then((result) => {
+            console.log(result.toJS());
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            return Promise.reject(err);
+          });
   },
   searchUser: function(account) {
     console.log('searchsearchUser Action');
@@ -182,7 +193,7 @@ var Actions = {
   },
   upMember: function(organizationAccount, memberId) {
     this.updataMemberPosition(organizationAccount, memberId, 'manager');
-  },
+  },  
   downMember: function(organizationAccount, memberId) {
     this.updataMemberPosition(organizationAccount, memberId, 'member');
   }

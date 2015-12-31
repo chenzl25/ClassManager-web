@@ -5,12 +5,17 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import path from 'path'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import RouteCSSTransitionGroup from './RouteCSSTransitionGroup.react'
 import { Router, Route, Link, Redirect,IndexRoute } from 'react-router'
 import Homeworks from './Homeworks.react'
 import Organizations from './Organizations.react'
 import OrganizationDetail from './OrganizationDetail.react'
 import RadioGroup from 'react-radio-group'
+import Dropdown from './Dropdown.react'
+
+
+
 
 const User = React.createClass({
   setImmState(fn) {
@@ -22,12 +27,14 @@ const User = React.createClass({
     console.log(nextState.selectedValue);
     return !nextState.data.equals(this.state.data)
            || nextState.selectedValue !== this.state.selectedValue
-           || nextState.searchValue !== this.state.searchValue;
+           || nextState.searchValue !== this.state.searchValue
+           || nextState.dropdown !== this.state.dropdown;
   },
   getInitialState() {
     return {data:  Immutable.fromJS(Store.getUser()),
             selectedValue: 'organization',
             searchValue: '',
+            drowdown: false
           };
   },
   // componentWillMount() {
@@ -58,6 +65,7 @@ const User = React.createClass({
     if (!data) {
       return (<div></div>);
     }
+    console.log(this.state.dropdown)
     return (
       <div className="user">
         <div className="user-left">
@@ -71,6 +79,7 @@ const User = React.createClass({
               <li>
                 <span className="user-name">{data.get('name')}</span>
               </li>
+              {/*
               <li>
                 <div className="user-setting-container">
                   <Link to={path.join('/','user', this.state.data.get('account'), 'userSetting')}>
@@ -78,9 +87,13 @@ const User = React.createClass({
                   </Link>
                 </div>
               </li>
+              */}
               <li>
-                <div className="user-logout-container" >
-                  <img  onClick={this.logoutHandler} className="user-logout-image" src={ path.join('/','api','images' ,'logout.png') } />
+                <div className="user-dropdown-container" >
+                  <img  onClick={this.dropdownHandler } className="user-dropdown-image" src={ path.join('/','api','images' ,'menu.png') } />
+                  <ReactCSSTransitionGroup transitionName="dropdown" transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={300} transitionEnter={true} transitionLeaveTimeout={300} transitionLeave={true}>
+                    {this.state.dropdown?<Dropdown userAccount={this.state.data.get('account')} logoutHandler={this.logoutHandler} history={this.props.history} />:''}
+                  </ReactCSSTransitionGroup>
                 </div>
               </li>
             </ul>
@@ -95,10 +108,10 @@ const User = React.createClass({
               {Radio => (
                 <div className="user-or-organization">
                   <label>
-                    <Radio value="user" /><span className="radio-name">User</span>
+                    <Radio value="organization" /><span className="radio-name">Organization</span>
                   </label>
                   <label>
-                    <Radio value="organization" /><span className="radio-name">Organization</span>
+                    <Radio value="user" /><span className="radio-name">User</span>
                   </label>
                 </div>
               )}
@@ -156,12 +169,14 @@ const User = React.createClass({
     }
   },
   settingClickHandler() {
-
   },
   logoutHandler() {
+    console.log('logoutHandler');
     window.removeEventListener('beforeunload');
-    // this.props.history.pushState(null,'/login');
     window.location.reload(true);
-  }
+  },
+  dropdownHandler() {
+    this.setState({dropdown: !this.state.dropdown});
+  },
 })
 export default User;

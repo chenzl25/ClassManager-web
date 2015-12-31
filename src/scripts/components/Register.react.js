@@ -30,7 +30,7 @@ const Register = React.createClass({
     var WarningComponent;
     console.log(this.state.data.get('waring'))
     if (!this.state.data.get('firstMount')) {
-      WarningComponent = <Warning message={this.state.data.get('warning') || {success: 'register successfully'}} />
+      WarningComponent = <Warning message={this.state.data.get('warning') || {success: 'register successfully'}} url="" />
     }
     return (
 			<form id="register-form"  onSubmit={this.submitHandler}>

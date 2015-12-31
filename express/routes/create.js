@@ -104,7 +104,7 @@ router.post('/organization/:account/homework', function(req, res) {
             res.end(JSON.stringify(result));
             return;
         }
-        data_o.homeworks.push(input);
+        data_o.homeworks.unshift(input);
         data_o.save(tools.invalid_data_handler);
         tools.add_homework_members(data_o,
         data_o.homeworks[data_o.homeworks.length-1]);
@@ -179,7 +179,7 @@ router.post('/organization/:account/notice', notices_upload.single('image'),func
             res.end(JSON.stringify(result));
             return;
         }
-        data_o.notices.push(input);
+        data_o.notices.unshift(input);
         data_o.save(tools.invalid_data_handler);
 
         result.error = false;
@@ -253,7 +253,7 @@ router.post('/organization/:account/vote', function(req, res) {
             input.options[i] = {name:input.options[i]};
         }
         input.unvotes = data_o.members;
-        data_o.votes.push(input);
+        data_o.votes.unshift(input);
         data_o.save(tools.invalid_data_handler);
 
         result.error = false;

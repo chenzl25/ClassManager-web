@@ -35,10 +35,12 @@
 	margin-left: auto;
 	margin-right: auto;
 	height: 60px;
+	width: 200px;
 	> .user-profile-list {
 		display: flex;
 		flex-direction: row; 
 		justify-content: space-between;
+		width: 200px;
 		list-style: none;
 		align-items: flex-end;
 		> li {
@@ -58,15 +60,33 @@
 .user-name {
 	color: white;
 	font-size: $user-name-font-size;
+	display: block;
+	width: 100px; // username need to be a specifit width
+	overflow: hidden;
 }
-.user-setting-image {
-	width: $setting-image-width;
-	height: $setting-image-height;
-}
-.user-logout-image {
-	width: $logout-image-width;
-	height: $logout-image-height;
-	cursor: pointer;
+// .user-setting-container {
+// 	.user-setting-image {
+// 		width: $setting-image-width;
+// 		height: $setting-image-height;
+// 	}
+// }
+// .user-logout-container {
+// 	// width: $logout-image-width+ 3px;
+// 	// height: $logout-image-width + 3px;
+// 	.user-logout-image {
+// 		width: $logout-image-width;
+// 		height: $logout-image-height;
+// 		cursor: pointer;
+// 	}
+// }
+.user-dropdown-container {
+	width: $dropdown-image-width+ 3px;
+	height: $dropdown-image-width + 3px;
+	.user-dropdown-image {
+		width: $dropdown-image-width;
+		height: $dropdown-image-height;
+		cursor: pointer;
+	}
 }
 .user-search-container {
 	margin-left: auto;

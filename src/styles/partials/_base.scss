@@ -6,22 +6,4 @@ html {
   background-size: 100%;
 }
 
-.hehe-enter {
-  // @include scale(1.2);
-  opacity: 0.01;
-}
-
-.hehe-enter.hehe-enter-active {
-  opacity: 1;
-  transition: all 500ms ease-in;
-}
-
-.hehe-appear {
-  opacity: 0.01;
-}
-
-.hehe-appear.hehe-appear-active {
-  opacity: 1;
-  transition: all .5s ease-in;
-}
 

@@ -10,7 +10,7 @@ import Homeworks from './components/Homeworks.react'
 import Organizations from './components/Organizations.react'
 import SearchResult from './components/SearchResult.react'
 import UserSetting from './components/UserSetting.react'
-
+import OrganizationCreate from './components/OrganizationCreate.react'
 // const history = createHistory();
 render((
   <Router>
@@ -24,6 +24,7 @@ render((
 		    <Route path="organizatons" component={Organizations}/>
 		    <Route path="searchResult" component={SearchResult}/>
         <Route path="userSetting" component={UserSetting} />
+        <Route path="organizationCreate" component={OrganizationCreate} />
       </Route>
       <Redirect from="*" to="/" />
     </Route>

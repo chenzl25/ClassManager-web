@@ -1,0 +1,66 @@
+@import "../modules/variable";
+@import "../modules/lib";
+.dropdown-container {
+  @include transition(all 0.5);
+	position: relative;
+	z-index: 1;
+	background: #16B3CD;
+	border: 1px $default-color solid;
+	border-radius: 5px;
+	width: 100px;
+	display: flex;
+	flex-direction: column; 
+	justify-content: space-around;
+	.dropdown-list {
+		list-style: none;
+	}
+	.user-setting-container,
+	.user-create-organization-container,
+	.user-logout-container {
+		cursor: pointer;
+		border-radius: 5px;
+		padding: 5px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		&:hover {
+			background: #1C95B6;
+		}
+		.user-setting-image,
+		.user-create-organization-image,
+		.user-logout-image {
+			width: 25px;
+			height: 25px;
+		}
+	}
+
+	a { // fix the <Link> component decoration
+		text-decoration: none;
+	}
+}
+
+.dropdown-attribute-name {
+}
+
+.dropdown-enter {
+  opacity: 0.01;
+}
+
+.dropdown-enter.dropdown-enter-active {
+  opacity: 1;
+  transition: all .3s ease-in;
+}
+
+.dropdown-appear {
+  opacity: 0.01;
+}
+
+.dropdown-appear.dropdown-appear-active {
+  opacity: 1;
+  transition: all .3s ease-in;
+}
+
+.dropdown-leave.dropdown-leave-active {
+  opacity: 0;
+  transition: all .3s ease-in;
+}

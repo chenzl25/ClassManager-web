@@ -14,6 +14,9 @@ import DetailNotices from './DetailNotices.react'
 import DetailVotes from './DetailVotes.react'
 import DetailHomeworks from './DetailHomeworks.react'
 import OrganizationSetting from './OrganizationSetting.react'
+import HomeoworkCreate from './HomeworkCreate.react'
+import NoticeCreate from './NoticeCreate.react'
+import VoteCreate from './VoteCreate.react'
 import RadioGroup from 'react-radio-group'
 
 const OrganizationDetail = React.createClass({
@@ -53,6 +56,9 @@ const OrganizationDetail = React.createClass({
       case 'notices': Child = <DetailNotices userAccount={this.props.userAccount} organizationAccount={data.get('account')} notices={data.get('notices')} />; break;
       case 'homeworks': Child = <DetailHomeworks userAccount={this.props.userAccount} organizationAccount={data.get('account')} homeworks={data.get('homeworks')} />; break;
       case 'setting': Child = <OrganizationSetting userAccount={this.props.userAccount} organizationData={data} />; break;
+      case 'homeworkCreate': Child = <HomeoworkCreate userAccount={this.props.userAccount} organizationAccount={data.get('account')} />; break;
+      case 'noticeCreate': Child = <NoticeCreate userAccount={this.props.userAccount} organizationAccount={data.get('account')} />; break;
+      case 'voteCreate': Child = <VoteCreate userAccount={this.props.userAccount} organizationAccount={data.get('account')} />; break;
       default:      Child = <DetailMembers userAccount={this.props.userAccount} organizationAccount={data.get('account')} members={data.get('members')} />;
     }
     return (
@@ -71,7 +77,7 @@ const OrganizationDetail = React.createClass({
             </div>
           </div>
           <div className="organization-detail-choices-container">
-            {/*need img later*/}
+            
             <RadioGroup
               name="members-votes-homeworks-notices"
               selectedValue={this.state.route}
@@ -79,16 +85,37 @@ const OrganizationDetail = React.createClass({
               {Radio => (
                 <div className="organization-detail-choices">
                   <label>
-                    <Radio value="members" /><span className="radio-name">Members</span>{/*need img later*/}
+                    <div className="choice-container">
+                      <Radio value="members" />
+                      <span className="radio-name">Members</span>
+                    </div>
                   </label>
                   <label>
-                    <Radio value="notices" /><span className="radio-name">Notices</span>{/*need img later*/}
+                    <div className="choice-container">
+                      <Radio value="notices" />
+                      <span className="radio-name">Notices</span>
+                      <img className="add-logo-image" 
+                           src={path.join('/','api','images' ,'add-logo.png')}
+                           onClick={this.noticeCreateRouterHandler}/>
+                    </div>
                   </label>
                   <label>
-                    <Radio value="votes" /><span className="radio-name">Votes</span>{/*need img later*/}
+                    <div className="choice-container">
+                      <Radio value="votes" />
+                      <span className="radio-name">Votes</span>
+                      <img className="add-logo-image" 
+                           src={path.join('/','api','images' ,'add-logo.png')}
+                           onClick={this.voteCreateRouterHandler}/>
+                    </div>
                   </label>
                   <label>
-                    <Radio value="homeworks" /><span className="radio-name">Homeworks</span>{/*need img later*/}
+                    <div className="choice-container">
+                      <Radio value="homeworks" />
+                      <span className="radio-name">Homeworks</span>
+                      <img className="add-logo-image"
+                           src={path.join('/','api','images' ,'add-logo.png')}
+                           onClick={this.homeworkCreateRouterHandler}/>
+                    </div>
                   </label>
                 </div>
               )}
@@ -105,11 +132,27 @@ const OrganizationDetail = React.createClass({
     this.setState({data: Immutable.fromJS(Store.getOrganizationDetail())});
   },
   radioChangeHandler(value) {
+    console.log('RadioClick');
     this.setState({route: value});
   },
   settingClickHandler() {
     console.log('organizationSettingClick');
     this.setState({route: 'setting'});
+  },
+  noticeCreateRouterHandler(event) {
+    // event.stopPropagation()
+    this.setState({route: 'noticeCreate'});
+  },
+  voteCreateRouterHandler(event) {
+    // event.stopPropagation()
+    this.setState({route: 'voteCreate'});
+  },
+  homeworkCreateRouterHandler(e) {
+    // e.stopPropagation();
+    e.preventDefault();
+    // e.nativeEvent.stopPropagation();
+    console.log('homeworkCreateRouterHandler')
+    this.setState({route: 'homeworkCreate'});
   }
 })
 export default OrganizationDetail;
