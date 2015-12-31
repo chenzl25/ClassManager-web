@@ -107,7 +107,7 @@ router.post('/organization/:account/homework', function(req, res) {
         data_o.homeworks.unshift(input);
         data_o.save(tools.invalid_data_handler);
         tools.add_homework_members(data_o,
-        data_o.homeworks[data_o.homeworks.length-1]);
+        data_o.homeworks[0]);
 
         result.error = false;
         result.message = 'create homework successfully';

@@ -49,6 +49,9 @@ function updateSearchMessage(message) {
   console.log(' updateSearchMessage')
 }
 function updateOrganizationDetail(organization_data) {
+  if (typeof organization_data != 'object') {
+    return;
+  }
   _organizationDetail = Immutable.fromJS(organization_data);
   console.log(' updateOrganizationDetail');
 }

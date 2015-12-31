@@ -48,7 +48,7 @@ const OrganizationCreate = React.createClass({
                   <input type="password" name="again" placeholder="again" onChange={this.inputChangeHandler} />
                 </div>
                 <div>
-                  <label htmlFor="submit" className={classNames({success: this.state.settingSuccess, warning: this.state.settingFail})} ></label>
+                  <label htmlFor="submit" ></label>
                   <input type="submit" name="submit" value="Register"/>
                 </div>
               </form>

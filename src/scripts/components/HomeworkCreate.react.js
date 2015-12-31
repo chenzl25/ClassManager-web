@@ -7,6 +7,7 @@ import Store from '../stores/Store'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import moment from 'moment'
+import Warning from './Warning.react'
 
 const HomeworkCreate = React.createClass({
   propTypes: {
@@ -22,8 +23,9 @@ const HomeworkCreate = React.createClass({
     return {  
       input:Immutable.Map({
               name: '',
+              deadlineDate: '',
+              deadlineTime: '',
               content: '',
-              deadline: '',
             }),
       createSuccess: false,
       createFail: false,
@@ -34,40 +36,60 @@ const HomeworkCreate = React.createClass({
     console.log('homeworkCreate')
     return (
       <div className="homework-create-container">
-        <p>Create Homework</p>
+        <p className="homework-create-header">Create Homework</p>
         <form id="homework-create-form"  onSubmit={this.submitHandler}>
-          <div>
-            <label htmlFor="name">Name:</label>
-            <input type="text" autoFocus="true" name="name" value={this.state.input.get('name')} onChange={this.inputChangeHandler} />
+          <div className="name-deadline-container">
+            <div className="input-container">
+              <label htmlFor="name">Name:</label>
+              <input type="text" autoFocus="true" name="name" value={this.state.input.get('name')} onChange={this.inputChangeHandler} />
+            </div>
+            <div className="input-container">
+              <label htmlFor="deadline">Deadline:</label>
+              <input type="date" name="deadlineDate" value={this.state.input.get('deadlineDate')} onChange={this.inputChangeHandler} />
+              <input type="time" name="deadlineTime" value={this.state.input.get('deadlineTime')} onChange={this.inputChangeHandler} />
+            </div>
           </div>
-          <div>
+          <div className="input-container">
             <label htmlFor="content">Content:</label>
-            <input type="text" name="content" value={this.state.input.get('content')} onChange={this.inputChangeHandler} />
+            {/*<input type="text" name="content" value={this.state.input.get('content')} onChange={this.inputChangeHandler} />*/}
+            <textarea rows="9" cols="50" name="content" form="homework-create-form" value={this.state.input.get('content')} onChange={this.inputChangeHandler} ></textarea>
           </div>
-          <div>
-            <label htmlFor="deadline">Student Id:</label>
-            <input type="text" name="deadline" value={this.state.input.get('deadline')} onChange={this.inputChangeHandler} />
+          <div className="input-container">
+            <label htmlFor="submit" ></label>
+            <input type="submit" name="submit" value="Create"/>
           </div>
+          <Warning message={(() => {
+                              if (!this.state.createSuccess && !this.state.createFail) {
+                                return {};
+                              }
+                              if (this.state.createSuccess) {
+                                return this.state.createMessage;
+                              }
+                              if (this.state.createFail) {
+                                return this.state.createMessage;
+                              }
+                            })()} />
         </form>
       </div>
     );
   },
   inputChangeHandler(event) {
-    this.setImmState(d => d.update(event.target.name, v => event.target.value));
+    this.setImmState(input => input.update(event.target.name, v => event.target.value));
   },
   submitHandler(event) {
     event.preventDefault();
     var data = Immutable.Map();
-    console.log(this.state.input.keys());
-    for (var key of this.state.input.keys()) {
-      if (this.state.input.get(key))
-        data = data.set(key, this.state.input.get(key));
-    }
-    Actions.createHomework(data.toJS())
-           .then((result) => {this.setState({createMessage: result});
+    var deadlineMoment = moment(this.state.input.get('deadlineDate')+' '+this.state.input.get('deadlineTime'));
+    var deadlineDate = deadlineMoment.toDate();
+    var deadline = deadlineDate.getTime();
+    data = data.set('name', this.state.input.get('name'));
+    data = data.set('content', this.state.input.get('content'));
+    data = data.set('deadline', deadline);
+    Actions.createHomework(this.props.organizationAccount,data.toJS())
+           .then((result) => {this.setState({createMessage: Object({success: result})});
                               this.setState({createSuccess: true});
                               this.setState({createFail: false})},
-                 (err) => {this.setState({createMessage: err});
+                 (err) => {this.setState({createMessage: Object({error:err})});
                            this.setState({createFail: true});
                            this.setState({createSuccess: false})});
   }

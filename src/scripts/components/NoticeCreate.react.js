@@ -13,45 +13,14 @@ import moment from 'moment'
 
 const NoticeCreate = React.createClass({
   propTypes: {
-    notice: PropTypes.object.isRequired,
-    userAccount: PropTypes.string.isRequired,
-    organizationAccount: PropTypes.string.isRequired
+    // notice: PropTypes.object.isRequired,
+    // userAccount: PropTypes.string.isRequired,
+    // organizationAccount: PropTypes.string.isRequired
   },
   render: function() {
     var notice = this.props.notice;
     return (
-      <li key={notice.get('_id')}>
-        <div  className={classNames({'detail-notice-item-container': true })} onClick={this.props.onClick}>
-          <ul className="detail-notice-item-attribute-list">
-            <li>
-              <div>
-                <span className="attribute-name">Name: </span>
-                <span className="detail-notice-name">{notice.get('name')}</span>
-              </div>
-            </li>
-            <li>
-              <div>
-                <span className="attribute-name">Start Date: </span>
-                <span className="detail-notice-start-date">{moment(notice.get('join_on')).calendar()}</span>
-              </div>
-            </li>
-            <li>
-              <Unlooks unlooks={notice.get('unlooks')} />
-            </li>
-            <li>
-              <div className="detail-notice-image-container">
-                <img className="detail-notice-image" src={'/api/'+notice.get('image')} />
-              </div>
-            </li>
-            <li>
-              <div>
-                <span className="attribute-name">Content: </span>
-                <p className="detail-notice-content">{notice.get('content')}</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </li>
+     <p></p>
     )
   },
   onDestroyClick: function() {

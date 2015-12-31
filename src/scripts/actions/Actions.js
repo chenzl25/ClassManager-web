@@ -196,6 +196,19 @@ var Actions = {
   },  
   downMember: function(organizationAccount, memberId) {
     this.updataMemberPosition(organizationAccount, memberId, 'member');
+  },
+  createHomework: function(organizationAccount, homeworkData) {
+    console.log("createHomework");
+    return post(path.join('/create', 'organization', organizationAccount, 'homework'), homeworkData)
+          .then((result) => {
+            console.log(result.toJS());
+            this.updateUser();
+            this.searchOrganizationDetail(organizationAccount);
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            return Promise.reject(err);
+          })
   }
 };
 

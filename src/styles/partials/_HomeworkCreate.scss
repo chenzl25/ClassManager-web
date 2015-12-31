@@ -1,0 +1,53 @@
+.homework-create-header {
+  font-size: 20px;
+  text-align: center;
+}
+#homework-create-form {
+  width:450px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  .name-deadline-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .input-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input {
+    font-size: 15px;
+    color: white;
+    width: 150px;
+    height: 30px;
+    display: inline-block;
+    outline: none;
+    background: transparent;
+    border:1px white solid;
+    border-radius: 5px;
+    // margin-top: 1  px;
+    padding-left: 10px;
+  }
+  textarea {
+    font-size: 17px;
+    // margin-top: 1  px;
+    padding: 5px;
+    display: inline-block;
+    outline: none;
+    background: transparent;
+    border:1px white solid;
+    border-radius: 5px;
+  }
+  input[type="submit"] {
+    margin-top: 5px;
+    margin-left: 300px;
+    letter-spacing: 2px;
+    &:hover {
+      background: #2287B0;
+      border: 1px #ccc solid;
+    }
+  }
+}

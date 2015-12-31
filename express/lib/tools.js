@@ -77,17 +77,20 @@ var tools = {
 		var self = this;
 		for (var i = 0; i < data_o.members.length; i++) {
 			User.findByAccount(data_o.members[i].account, function(err,data) {
-				data.homeworks.push(homework);
-				data.homeworks[data.homeworks.length-1].account = data_o.account;
-				self.update_status(data_o, 'homeworks');
-				data.save(self.invalid_data_handler);
+				if (data && data.homeworks) { // this for the begining time of some user doesn't have homeorks property
+					console.log(data.homeworks);
+					data.homeworks.unshift(homework);
+					data.homeworks[0].account = data_o.account;
+					self.update_status(data_o, 'homeworks');
+					data.save(self.invalid_data_handler);
+				}
 			});
 		}
 	},
 	send_message: function (account, message) {
 		var self = this;
 		User.findByAccount(account, function(err, data) {
-			data.messages.push(message);
+			data.messages.unshift(message);
 			self.update_status(data, 'messages');
 			data.save(this.invalid_data_handler);
 		});

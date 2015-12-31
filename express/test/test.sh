@@ -9,9 +9,9 @@
 # echo '\n'
 # # login user
 
-curl  -c cookie15.file --data 'account=myuser15&password=myuser15' \
-http://localhost:3000/login/user
-echo '\n'
+# curl  -c cookie15.file --data 'account=myuser15&password=myuser15' \
+# http://localhost:3000/login/user
+# echo '\n'
 
 
 # curl  -c cookie11.file --data 'account=myuser11&password=myuser11' \
@@ -70,8 +70,12 @@ echo '\n'
 # http://localhost:3000/create/organization/mygroup19/notice
 # echo '\n'
 
-curl -b cookie15.file  --data 'name=Newton&content=abcedfghijklmn'  \
-http://localhost:3000/create/organization/mygroup22/homework
+# curl -b cookie15.file  --data 'name=newhomework&content="If you exclude Opera Mini, all browsers"'  \
+# http://localhost:3000/create/organization/mygroup22/homework
+# echo '\n'
+
+curl -b cookie48.file  --data 'name=newhomework&content="If you exclude Opera Mini, all browsers"'  \
+http://localhost:3000/create/organization/mygroup48/homework
 echo '\n'
 
 #vote

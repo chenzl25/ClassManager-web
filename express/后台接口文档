@@ -493,7 +493,7 @@ var Status =  {    //是否修改过的状态值类似于User
     input: {
     	name:String
 		content:String
-		deadline:String
+		deadline:String  // or Number
     }
     output: {
     	error:'',
