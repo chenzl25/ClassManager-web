@@ -31,7 +31,7 @@ router.get('/organization/:account', function(req, res) {
 				result.organization_data = null;
 				res.end(JSON.stringify(result));
 			} else {
-				if (data_o.password !== null) {
+				if (data_o.password !== null && data_o.password !== '') {
 					result.error = true;
 					result.message = "the organization need password";
 					res.end(JSON.stringify(result));

@@ -140,19 +140,21 @@ const OrganizationDetail = React.createClass({
     this.setState({route: 'setting'});
   },
   noticeCreateRouterHandler(event) {
-    // event.stopPropagation()
+    console.log('noticeCreateRouterHandler')
+    event.preventDefault();
     this.setState({route: 'noticeCreate'});
   },
   voteCreateRouterHandler(event) {
-    // event.stopPropagation()
+    console.log('voteCreateRouterHandler')
+    event.preventDefault();
     this.setState({route: 'voteCreate'});
   },
-  homeworkCreateRouterHandler(e) {
+  homeworkCreateRouterHandler(event) {
     // e.stopPropagation();
-    e.preventDefault();
+    event.preventDefault();
     // e.nativeEvent.stopPropagation();
     console.log('homeworkCreateRouterHandler')
     this.setState({route: 'homeworkCreate'});
-  }
+  },
 })
 export default OrganizationDetail;

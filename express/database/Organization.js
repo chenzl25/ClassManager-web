@@ -109,7 +109,7 @@ OrganizationSchema.statics.s_findByAccount = function(account, callback) {
 				tem.account = data.account;
 				tem.image = data.image;
 				tem.name = data.name;
-				if (data.password === null) {
+				if (data.password === null || data.password === '') {
 					tem.need_password = false;
 				} else {
 					tem.need_password = true;

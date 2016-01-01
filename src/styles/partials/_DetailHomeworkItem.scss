@@ -24,3 +24,36 @@
 		}
 	}
 }
+.homework-item-complish-button {
+	float: right;
+	font-size: 13px;
+    color: white;
+    width: 90px;
+    height: 20px;
+    display: inline-block;
+    outline: none;
+    background: transparent;
+    border:1px white solid;
+    border-radius: 5px;
+    &:hover {
+      background: #13B8CF;
+      border: 1px #ccc solid;
+    }
+}
+
+.homework-item-look-button {
+	// float: right;
+	font-size: 13px;
+    color: white;
+    width: 50px;
+    height: 20px;
+    display: inline-block;
+    outline: none;
+    background: transparent;
+    border:1px white solid;
+    border-radius: 5px;
+    &:hover {
+      background: #13B8CF;
+      border: 1px #ccc solid;
+    }
+}

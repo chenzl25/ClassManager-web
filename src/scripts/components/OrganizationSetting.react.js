@@ -33,7 +33,8 @@ const OrganizationSetting = React.createClass({
     return {  
       input: Immutable.Map({
               name: data.get('name'),
-              school: data.get('school')
+              school: data.get('school'),
+              password: data.get('password') 
             }),
       settingMessage: '',
       settingSuccess: false,
@@ -56,11 +57,15 @@ const OrganizationSetting = React.createClass({
                 </div>
                 <div>
                   <label htmlFor="name">Name:</label>
-                  <input type="text" name="name" value={this.state.input.get('name')} onChange={this.inputChangeHandler} />
+                  <input type="text" autoFocus="true" name="name" value={this.state.input.get('name')} onChange={this.inputChangeHandler} />
                 </div>
                 <div>
                   <label htmlFor="school">School:</label>
-                  <input type="text" autoFocus="true" name="school" value={this.state.input.get('school')} onChange={this.inputChangeHandler} />
+                  <input type="text" name="school" value={this.state.input.get('school')} onChange={this.inputChangeHandler} />
+                </div>
+                <div>
+                  <label htmlFor="password">Password:</label>
+                  <input type="password" name="password" value={this.state.input.get('password')} onChange={this.inputChangeHandler} />
                 </div>
                 <div>
                   <label htmlFor="submit" className={classNames({success:this.state.settingSuccess, warning:this.state.settingFail})}></label>
@@ -95,6 +100,9 @@ const OrganizationSetting = React.createClass({
     for (var key of this.state.input.keys()) {
       if (this.state.input.get(key))
         data = data.set(key, this.state.input.get(key));
+    }
+    if (data.get('password') === undefined) {
+      data = data.set('password', '');
     }
     Actions.organizationSetting(this.props.organizationData.get('account'),data.toJS())
            .then((result) => {this.setState({settingMessage: result});

@@ -17,8 +17,29 @@ const DetailNoticeItem = React.createClass({
     userAccount: PropTypes.string.isRequired,
     organizationAccount: PropTypes.string.isRequired
   },
+  setImmState(fn) {
+    return this.setState(({data}) => ({
+      data: fn(data)
+    }));
+  },
+  getInitialState: function() {
+    return {
+      data: Immutable.fromJS(Store.getOrganizationDetail())
+    }
+  },
+  componentDidMount() {
+    Store.addChangeListener(this.onChange);
+  },
+  componentWillUnmount() {
+    Store.removeChangeListener(this.onChange);
+  },
   render: function() {
     var notice = this.props.notice;
+    var userIsUnlook = false;
+    if (this.state.data.get('notices').find(v => v.get('_id') == notice.get('_id')).get('unlooks').find(v => v.get('account') === this.props.userAccount)) {
+      userIsUnlook = true;
+    }
+    console.log(userIsUnlook , 'userIsUnlook');
     return (
       <li key={notice.get('_id')}>
         <div  className={classNames({'detail-notice-item-container': true })} onClick={this.props.onClick}>
@@ -49,15 +70,25 @@ const DetailNoticeItem = React.createClass({
                 <p className="detail-notice-content">{notice.get('content')}</p>
               </div>
             </li>
+            <li>
+              {userIsUnlook? <button className="notice-item-look-button" onClick={this.lookHandeler}>Look</button>:'hasLooked'}
+            </li>
           </ul>
         </div>
       </li>
     )
   },
+  onChange() {
+    this.setState({'data': Immutable.fromJS(Store.getOrganizationDetail())});
+  },
   onDestroyClick: function() {
-    // TodoActions.destroy(this.props.notice.id);
+    // TodoActions.destroy(this.props.homework.id);
     console.log('destroy');
-  }
+  },
+  lookHandeler() {
+    console.log('looked');
+    Actions.lookNotice(this.props.organizationAccount, this.props.notice.get('_id'));
+  },
 
 });
 

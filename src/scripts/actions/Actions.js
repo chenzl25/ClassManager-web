@@ -35,6 +35,7 @@ var Actions = {
     return post('/register/organization', {account: organizationAccount, password: organizationPassword})
           .then((result) => {
             console.log(result.toJS());
+            this.updateUser();
             return Promise.resolve(result.get('message'));
           }, (err) => {
             console.log('reject: ',err, 'inAction')
@@ -166,6 +167,20 @@ var Actions = {
             // return Promise.reject(err);
           })
   },
+  lookNotice: function(organizationAccount, noticeId) {
+    console.log('lookNotice');
+    console.log(path.join('/search','organization', organizationAccount, 'notice', noticeId));
+    return get(path.join('/search','organization', organizationAccount, 'notice', noticeId))
+          .then((result) => {
+            console.log(result.toJS());
+            this.updateUser();
+            this.searchOrganizationDetail(organizationAccount);
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            // return Promise.reject(err);
+          })
+  },
   complishHomework: function(homeworkId, complishFlag) {
     console.log("complishHomework");
     return post('/update/user/homework/'+homeworkId, {uncomplish: complishFlag})
@@ -209,7 +224,32 @@ var Actions = {
             console.log('reject: ',err, 'inAction')
             return Promise.reject(err);
           })
-  }
+  },
+  createNotice: function(organizationAccount,data) {
+    return postFormData(path.join('/create','organization',organizationAccount,'notice'), data)
+          .then((result) => {
+            console.log(result.toJS());
+            this.searchOrganizationDetail(organizationAccount);
+            this.updateUser();
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction');
+            return Promise.reject(err);
+          })
+  },
+  createVote: function(organizationAccount, VoteData) {
+    console.log("createVote");
+    return post(path.join('/create', 'organization', organizationAccount, 'Vote'), VoteData)
+          .then((result) => {
+            console.log(result.toJS());
+            this.updateUser();
+            this.searchOrganizationDetail(organizationAccount);
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            return Promise.reject(err);
+          })
+  },
 };
 
 export default Actions;

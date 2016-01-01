@@ -210,7 +210,7 @@ router.post('/user',users_upload.single('image'),function(req,res) {
 });
 
 router.post('/organization/:account', organizations_upload.single('image'),function(req, res) {
-  // console.log(req.body);
+  console.log(req.body);
   res.setHeader('Content-type','application/json');
   if (req.unformat_upload === true) {
     var result = {};
@@ -228,12 +228,23 @@ router.post('/organization/:account', organizations_upload.single('image'),funct
     res.end(JSON.stringify(result));
     return;
   }
-  if (!user_in_organization(user_data,organization_account, result)) {
+  if (!manager_or_founder_in_organization(user_data,organization_account, result)) {
     result.error = true;
     res.end(JSON.stringify(result));
+    if (req.has_real_image) {
+        fs.unlink(path.join(__dirname, '..', 'uploads', req.body.image), function(err) {
+            if (err) {
+                console.log('rm image failed', err);
+            } else {
+                console.log('rm image successfully');
+            }
+        });
+    }
+    return;
   }
   input.account = req.body.account || null;
-  input.password = req.body.password || null;
+  // input.password = req.body.password || null;
+  input.password = req.body.password === undefined? null : req.body.password;
   input.name = req.body.name || null;
   input.image = req.body.image || null;
   input.school = req.body.school || null;
@@ -270,6 +281,9 @@ router.post('/organization/:account', organizations_upload.single('image'),funct
       var cnt = 0;
       for (var i in keys) {
         if(keys[i] == 'image') {
+        }
+        if (keys[i] == 'password' && input['password'] === '') {
+          input['password'] = null;
         }
         if (input[keys[i]] !==  null && input[keys[i]] !== data[keys[i]]) {
           data[keys[i]] = input[keys[i]];
@@ -322,7 +336,7 @@ router.post('/organization/:account', organizations_upload.single('image'),funct
   });
 });
 
-function user_in_organization(user, account, result) {
+function manager_or_founder_in_organization(user, account, result) {
   var ok = false;
   for (var i =0; i < user.relationships.length; i++) {
     if (  user.relationships[i].account === account) {

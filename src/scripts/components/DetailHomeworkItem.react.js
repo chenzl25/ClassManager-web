@@ -17,8 +17,30 @@ const DetailHomeworkItem = React.createClass({
     userAccount: PropTypes.string.isRequired,
     organizationAccount: PropTypes.string.isRequired
   },
+  setImmState(fn) {
+    return this.setState(({data}) => ({
+      data: fn(data)
+    }));
+  },
+  getInitialState: function() {
+    return {
+      data: Immutable.fromJS(Store.getUser())
+    }
+  },
+  componentDidMount() {
+    Store.addChangeListener(this.onChange);
+  },
+  componentWillUnmount() {
+    Store.removeChangeListener(this.onChange);
+  },
   render: function() {
     var homework = this.props.homework;
+    var userHomework = this.state.data.get('homeworks').find(v => v.get('_id') === homework.get('_id'));
+    // here we should be care because this use to fix the beginning bug
+    if (userHomework == undefined) {    
+      userHomework = Immutable.Map();
+    }
+    // end...
     return (
       <li key={homework.get('_id')}>
         <div  className={classNames({'detail-homework-item-container': true })} onClick={this.props.onClick}>
@@ -51,17 +73,35 @@ const DetailHomeworkItem = React.createClass({
                 <p className="detail-homework-content">{homework.get('content')}</p>
               </div>
             </li>
+            <li>
+              {userHomework.get('unlook')? <button className="homework-item-look-button" onClick={this.lookHandeler}>Look</button>:'hasLooked'}
+              <button className="homework-item-complish-button" onClick={this.complishHandeler}>{!userHomework.get('uncomplish')? 'Uncomplished': 'Complished'}</button>
+            </li>
           </ul>
         </div>
       </li>
     )
   },
+  onChange() {
+    this.setState({'data': Immutable.fromJS(Store.getUser())});
+  },
   onDestroyClick: function() {
     // TodoActions.destroy(this.props.homework.id);
     console.log('destroy');
+  },
+  lookHandeler() {
+    console.log('looked');
+    var userHomework = this.state.data.get('homeworks').find(v => v.get('_id') === this.props.homework.get('_id'));
+    Actions.lookHomework(userHomework.get('account'), userHomework.get('_id'));
+  },
+  complishHandeler() {
+    console.log('finlish');
+    var userHomework = this.state.data.get('homeworks').find(v => v.get('_id') === this.props.homework.get('_id'));
+    Actions.complishHomework(userHomework.get('_id'), !userHomework.get('uncomplish'));
   }
 
 });
+
 
 export default DetailHomeworkItem
 
