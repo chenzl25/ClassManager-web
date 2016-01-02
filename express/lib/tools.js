@@ -87,6 +87,18 @@ var tools = {
 			});
 		}
 	},
+	delete_homework_members: function(data_o,homework_id) {
+		var self = this;
+		for (var i = 0; i < data_o.members.length; i++) {
+			User.findByAccount(data_o.members[i].account, function(err,data) {
+				if (data && data.homeworks) { // this for the begining time of some user doesn't have homeorks property
+					data.homeworks.id(homework_id).remove();
+					self.update_status(data_o, 'homeworks');
+					data.save(self.invalid_data_handler);
+				}
+			});
+		}
+	},
 	send_message: function (account, message) {
 		var self = this;
 		User.findByAccount(account, function(err, data) {

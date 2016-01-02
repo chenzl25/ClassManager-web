@@ -88,3 +88,11 @@ export function get(url, data) {
         responseType: "json"
     })
 }
+export function deleteData(url, data) {
+    url = '/api' + url;
+    return Request(url, {
+        method: "DELETE",
+        mimeType: "application/json",
+        responseType: "json"
+    })
+}

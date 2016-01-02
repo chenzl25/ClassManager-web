@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher'
 import Constants from '../constants/Constants'
-import { post, get,postFormData } from '../lib/service'
+import { post, get,postFormData, deleteData } from '../lib/service'
 import path from 'path'
 
 var Actions = {
@@ -250,6 +250,57 @@ var Actions = {
             return Promise.reject(err);
           })
   },
+  vote: function(organizationAccount, voteId, optionId) {
+    console.log("vote");
+    return post(path.join('/vote', 'organization', organizationAccount), {vote_id: voteId, option_id: optionId})
+          .then((result) => {
+            console.log(result.toJS());
+            this.searchOrganizationDetail(organizationAccount);
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            // return Promise.reject(err);
+          })
+  },
+  deleteHomework: function(organizationAccount, homeworkId) {
+    console.log("deleteHomwork");
+    return deleteData(path.join('/organization', organizationAccount, 'homework', homeworkId))
+          .then((result) => {
+            console.log(result.toJS());
+            this.searchOrganizationDetail(organizationAccount);
+            this.updateUser();
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            // return Promise.reject(err);
+          })
+  },
+  deleteNotice: function(organizationAccount, noticeId) {
+    console.log("deleteNotice");
+    return deleteData(path.join('/organization', organizationAccount, 'notice', noticeId))
+          .then((result) => {
+            console.log(result.toJS());
+            this.searchOrganizationDetail(organizationAccount);
+            this.updateUser();
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            // return Promise.reject(err);
+          })
+  },
+  deleteVote: function(organizationAccount, voteId) {
+    console.log("deleteVote");
+    return deleteData(path.join('/organization', organizationAccount, 'vote', voteId))
+          .then((result) => {
+            console.log(result.toJS());
+            this.searchOrganizationDetail(organizationAccount);
+            this.updateUser();
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            // return Promise.reject(err);
+          })
+  }
 };
 
 export default Actions;

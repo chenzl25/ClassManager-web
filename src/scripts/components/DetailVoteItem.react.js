@@ -18,12 +18,37 @@ const DetailVoteItem = React.createClass({
     userAccount: PropTypes.string.isRequired,
     organizationAccount: PropTypes.string.isRequired
   },
+  setImmState(fn) {
+    return this.setState(({data}) => ({
+      data: fn(data)
+    }));
+  },
+  getInitialState: function() {
+    return {
+      data: Immutable.fromJS(Store.getOrganizationDetail())
+    }
+  },
+  componentDidMount() {
+    Store.addChangeListener(this.onChange);
+  },
+  componentWillUnmount() {
+    Store.removeChangeListener(this.onChange);
+  },
   render: function() {
     var vote = this.props.vote;
+    var userHasVoted = vote.get('unvotes').find(v => v.get('account') === this.props.userAccount) === undefined;
+    console.log('userHasVoted', userHasVoted);
+    var userPosition = this.state.data.get('members').find(v => v.get('account') === this.props.userAccount).get('position');
+    console.log('userPosition', userPosition);
     return (
       <li key={vote.get('_id')}>
         <div  className={classNames({'detail-vote-item-container': true })} onClick={this.props.onClick}>
           <ul className="detail-vote-item-attribute-list">
+            {(userPosition === 'founder' || userPosition === 'manager') ?
+              (<li>
+                 <span className="attribute-name"></span>
+                 <button className="delete-button" onClick={this.deleteVoteHandler} >delete</button>
+               </li>):''}
             <li>
               <div>
                 <span className="attribute-name">Name: </span>
@@ -52,17 +77,20 @@ const DetailVoteItem = React.createClass({
               </div>
             </li>
             <li>
-              <Options options={vote.get('options')} />
+              <Options options={vote.get('options')} userHasVoted={userHasVoted} userAccount={this.props.userAccount} organizationAccount={this.props.organizationAccount} voteId={vote.get('_id')}/>
             </li>
           </ul>
         </div>
       </li>
     )
   },
-  onDestroyClick: function() {
-    // TodoActions.destroy(this.props.vote.id);
-    console.log('destroy');
-  }
+  onChange() {
+    this.setState({'data': Immutable.fromJS(Store.getOrganizationDetail())});
+  },
+  deleteVoteHandler() {
+    console.log('delete the vote');
+    Actions.deleteVote(this.props.organizationAccount, this.props.vote.get('_id'));
+  },
 
 });
 

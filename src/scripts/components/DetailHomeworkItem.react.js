@@ -41,10 +41,17 @@ const DetailHomeworkItem = React.createClass({
       userHomework = Immutable.Map();
     }
     // end...
+    var userPosition = this.state.data.get('relationships').find(v => v.get('account') === this.props.organizationAccount).get('position');
+    console.log('userPosition', userPosition);
     return (
       <li key={homework.get('_id')}>
         <div  className={classNames({'detail-homework-item-container': true })} onClick={this.props.onClick}>
           <ul className="detail-homework-item-attribute-list">
+            {(userPosition === 'founder' || userPosition === 'manager') ?
+              (<li>
+                 <span className="attribute-name"></span>
+                 <button className="delete-button" onClick={this.deleteHomeworkHandler} >delete</button>
+               </li>):''}
             <li>
               <div>
                 <span className="attribute-name">Name: </span>
@@ -74,8 +81,8 @@ const DetailHomeworkItem = React.createClass({
               </div>
             </li>
             <li>
-              {userHomework.get('unlook')? <button className="homework-item-look-button" onClick={this.lookHandeler}>Look</button>:'hasLooked'}
-              <button className="homework-item-complish-button" onClick={this.complishHandeler}>{!userHomework.get('uncomplish')? 'Uncomplished': 'Complished'}</button>
+              {userHomework.get('unlook')? <button className="homework-item-look-button" onClick={this.lookHandler}>Look</button>:'hasLooked'}
+              <button className="homework-item-complish-button" onClick={this.complishHandler}>{!userHomework.get('uncomplish')? 'Uncomplished': 'Complished'}</button>
             </li>
           </ul>
         </div>
@@ -85,16 +92,16 @@ const DetailHomeworkItem = React.createClass({
   onChange() {
     this.setState({'data': Immutable.fromJS(Store.getUser())});
   },
-  onDestroyClick: function() {
-    // TodoActions.destroy(this.props.homework.id);
-    console.log('destroy');
+  deleteHomeworkHandler() {
+    console.log('delete the homework');
+    Actions.deleteHomework(this.props.organizationAccount, this.props.homework.get('_id'));
   },
-  lookHandeler() {
+  lookHandler() {
     console.log('looked');
     var userHomework = this.state.data.get('homeworks').find(v => v.get('_id') === this.props.homework.get('_id'));
     Actions.lookHomework(userHomework.get('account'), userHomework.get('_id'));
   },
-  complishHandeler() {
+  complishHandler() {
     console.log('finlish');
     var userHomework = this.state.data.get('homeworks').find(v => v.get('_id') === this.props.homework.get('_id'));
     Actions.complishHomework(userHomework.get('_id'), !userHomework.get('uncomplish'));

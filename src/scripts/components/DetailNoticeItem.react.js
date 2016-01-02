@@ -40,10 +40,17 @@ const DetailNoticeItem = React.createClass({
       userIsUnlook = true;
     }
     console.log(userIsUnlook , 'userIsUnlook');
+    var userPosition = this.state.data.get('members').find(v => v.get('account') === this.props.userAccount).get('position');
+    console.log('userPosition', userPosition);
     return (
       <li key={notice.get('_id')}>
         <div  className={classNames({'detail-notice-item-container': true })} onClick={this.props.onClick}>
           <ul className="detail-notice-item-attribute-list">
+            {(userPosition === 'founder' || userPosition === 'manager') ?
+              (<li>
+                 <span className="attribute-name"></span>
+                 <button className="delete-button" onClick={this.deleteNoticeHandler} >delete</button>
+               </li>):''}
             <li>
               <div>
                 <span className="attribute-name">Name: </span>
@@ -81,9 +88,9 @@ const DetailNoticeItem = React.createClass({
   onChange() {
     this.setState({'data': Immutable.fromJS(Store.getOrganizationDetail())});
   },
-  onDestroyClick: function() {
-    // TodoActions.destroy(this.props.homework.id);
-    console.log('destroy');
+  deleteNoticeHandler() {
+    console.log('delete the notice');
+    Actions.deleteNotice(this.props.organizationAccount, this.props.notice.get('_id'));
   },
   lookHandeler() {
     console.log('looked');

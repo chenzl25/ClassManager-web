@@ -6,3 +6,24 @@
 }
 .option-item-container {
 }
+.vote-button {
+	// float: right;
+	margin-left: 20px;
+	font-size: 13px;
+    color: white;
+    width: 50px;
+    height: 20px;
+    display: inline-block;
+    outline: none;
+    background: transparent;
+    border:1px white solid;
+    border-radius: 5px;
+    &:hover {
+      background: #13B8CF;
+      border: 1px #ccc solid;
+    }
+}
+.user-vote-here {
+	margin-left: 20px;
+	color: #ccc;
+}

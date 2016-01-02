@@ -283,7 +283,7 @@ router.post('/organization/:account', organizations_upload.single('image'),funct
         if(keys[i] == 'image') {
         }
         if (keys[i] == 'password' && input['password'] === '') {
-          input['password'] = null;
+          data[keys[i]] = null;
         }
         if (input[keys[i]] !==  null && input[keys[i]] !== data[keys[i]]) {
           data[keys[i]] = input[keys[i]];

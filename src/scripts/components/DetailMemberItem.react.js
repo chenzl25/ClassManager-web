@@ -23,12 +23,12 @@ const DetailMemberItem = React.createClass({
   getInitialState() {
     return {data:  Immutable.fromJS(Store.getUser())};
   },
-  // componentDidMount() {
-  //     Store.addChangeListener(this.onStoreChange);
-  // },
-  // componentWillUnmount() {
-  //     Store.removeChangeListener(this.onStoreChange);
-  // },
+  componentDidMount() {
+      Store.addChangeListener(this.onStoreChange);
+  },
+  componentWillUnmount() {
+      Store.removeChangeListener(this.onStoreChange);
+  },
   render: function() {
     var member = this.props.member;
     console.log(this.state.data.get('relationships').find(v => v.get('account') === this.props.organizationAccount).get('position'), 'in detail MemberItem');
@@ -92,9 +92,9 @@ const DetailMemberItem = React.createClass({
       </li>
     )
   },
-  // onStoreChange() {
-  //    this.setImmState(d => Immutable.fromJS(Store.getUser()));
-  // },
+  onStoreChange() {
+     this.setImmState(d => Immutable.fromJS(Store.getUser()));
+  },
   upButtonClickHandler() {
     console.log('upButtonClickHandler');
     Actions.upMember(this.props.organizationAccount, this.props.member.get('_id'));

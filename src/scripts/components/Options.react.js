@@ -10,11 +10,15 @@ import OptionItem from './OptionItem.react'
 
 const Options = React.createClass({
   propTypes: {
-  options: PropTypes.object.isRequired,
+    options: PropTypes.object.isRequired,
+    userAccount: PropTypes.string.isRequired,
+    organizationAccount: PropTypes.string.isRequired,
+    voteId: PropTypes.string.isRequired,
+    userHasVoted: PropTypes.bool.isRequired
   },
   render() {
   var options = this.props.options;
-    options = options.map( v => <OptionItem option={v} key={v.get('_id')} />);
+    options = options.map( v => <OptionItem option={v} userHasVoted={this.props.userHasVoted} userAccount={this.props.userAccount} organizationAccount={this.props.organizationAccount} voteId={this.props.voteId}  key={v.get('_id')} />);
     return (
       <div className="options-container">
         <div>

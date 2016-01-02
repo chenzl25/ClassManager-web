@@ -197,6 +197,7 @@ router.delete('/organization/:account/homework/:id',function(req, res) {
             res.end(JSON.stringify(result));
             return;
         } else {
+            tools.delete_homework_members(data_o, id);
             homework.remove();
             data_o.save(tools.invalid_data_handler);
         }
