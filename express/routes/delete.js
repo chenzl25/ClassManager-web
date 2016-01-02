@@ -41,22 +41,24 @@ router.delete('/organization/:account',function(req, res) {
             res.end(JSON.stringify(result));
             return;
         }
-        var message_for_founder = {
-            name:'Server Message',
-            content: 'delete organization '+data_o.name+' successfully',
-            sender: '#Server#'
-        };
+        // for save error becausee async version error
+
+        // var message_for_founder = {
+        //     name:'Server Message',
+        //     content: 'delete organization '+data_o.name+' successfully',
+        //     sender: '#Server#'
+        // };
         //this method will update the status for message
-        tools.send_message(user_data.account, message_for_founder);
-        var message_for_others = {
-            name:'Server Message',
-            content: data_o.name + ' has been ungrouped by the founder ' + user_data.name,
-            sender: '#Server#'
-        };
+        // tools.send_message(user_data.account, message_for_founder);
+        // var message_for_others = {
+        //     name:'Server Message',
+        //     content: data_o.name + ' has been ungrouped by the founder ' + user_data.name,
+        //     sender: '#Server#'
+        // };
         for (var i = 0; i < data_o.members.length; i++) {
             tools.ungroup(data_o.members[i].account, data_o.account);
-            if (data_o.members[i].account !== user_data.account)
-                tools.send_message(data_o.members[i].account, message_for_others);
+            // if (data_o.members[i].account !== user_data.account)
+            //     tools.send_message(data_o.members[i].account, message_for_others);
         }
 
         //delete the image about the organization

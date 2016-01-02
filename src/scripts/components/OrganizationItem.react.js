@@ -24,6 +24,10 @@ const OrganizationItem = React.createClass({
         <div  className={classNames({'organization-item': true })} onClick={this.props.onClick}>
           <ul className="organization-item-attributes-list">
             <li>
+              <span className="attribute-name"></span>
+              <button className="delete-button" onClick={this.deleteOrganizationHandler} >delete</button>
+            </li>
+            <li>
               <div className="organization-item-image-container">
                 <img className="organization-item-image" src={'/api/'+organization.get('image')} />
               </div>
@@ -42,9 +46,12 @@ const OrganizationItem = React.createClass({
       </li>
     )
   },
-  onDestroyClick: function() {
-    // TodoActions.destroy(this.props.organization.id);
-    console.log('destroy');
+  deleteOrganizationHandler() {
+    if (this.props.organization.get('position') === 'founder') {
+      Actions.deleteOrganization(this.props.organization.get('account'));
+    } else {
+      Actions.quitOrganization(this.props.organization.get('account'));
+    }
   }
 
 });

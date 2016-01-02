@@ -27,6 +27,7 @@ var tools = {
 		// err is our ValidationError object
 		// err.errors.password is a ValidatorError object
 		if (err) {
+			console.log(err);
 	    	console.log('Attention!');
 	    	console.log('--------------the save() failed----------------------');
 	    	for (var i in err.errors) {
@@ -109,15 +110,19 @@ var tools = {
 	},
 	ungroup: function(user_account, organization_account) {
 		var self = this;
+		console.log(user_account, organization_account, '!!!');
 		User.findByAccount(user_account, function(err, data_u) {
+			if (data_u == null) return;
 			for (var i = 0; i < data_u.relationships.length; i++) {
+				console.log(data_u.relationships[i]);
 				if (data_u.relationships[i].account === organization_account) {
 					data_u.relationships.splice(i,1);
 					self.update_status(data_u, 'relationships');
-					data_u.save(self.invalid_data_handler);
+					console.log('!!!!!!!');
 					break;
 				}
 			}
+			data_u.save(self.invalid_data_handler);
 		});
 	},
 	exclude: function(user_account, organization_account) {

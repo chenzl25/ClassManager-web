@@ -23,6 +23,9 @@
 				height: $organization-item-image-height;
 			}
 		}
+		.attribute-name {
+			display: inline-block;
+		}
 	}
 	.organization-item-name, .organization-item-account ,.organization-item-position {
 		float: right;

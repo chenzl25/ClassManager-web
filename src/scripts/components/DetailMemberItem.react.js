@@ -32,10 +32,8 @@ const DetailMemberItem = React.createClass({
   render: function() {
     var member = this.props.member;
     console.log(this.state.data.get('relationships').find(v => v.get('account') === this.props.organizationAccount).get('position'), 'in detail MemberItem');
-    var userIsFounder = false;
-    if (this.state.data.get('relationships').find(v => v.get('account') === this.props.organizationAccount).get('position') === 'founder') {
-      userIsFounder = true;
-    }
+    var userIsFounder = this.state.data.get('relationships').find(v => v.get('account') === this.props.organizationAccount).get('position') === 'founder';
+    var userIsManager = this.state.data.get('relationships').find(v => v.get('account') === this.props.organizationAccount).get('position') === 'manager';
     var memberIsMember = member.get('position') === 'member';
     var memberIsManager = member.get('position') === 'manager';
     var memberIsFounder = member.get('position') === 'founder'
@@ -44,6 +42,11 @@ const DetailMemberItem = React.createClass({
       <li key={member.get('_id')}>
         <div  className={classNames({'detail-member-item-container': true })} onClick={this.props.onClick}>
           <ul className="detail-member-item-attribute-list">
+            {(!memberIsFounder && (userIsFounder || (userIsManager && memberIsMember))) ?
+              (<li>
+                 <span className="attribute-name"></span>
+                 <button className="delete-button" onClick={this.deleteMemberHandler} >delete</button>
+               </li>):''}
             <li>
               <div className="detail-member-image-container">
                 <img className="detail-member-image" src={'/api/'+member.get('image')} />
@@ -103,9 +106,9 @@ const DetailMemberItem = React.createClass({
     console.log('downButtonClickHandler');
     Actions.downMember(this.props.organizationAccount, this.props.member.get('_id'));
   },
-  onDestroyClick: function() {
-    // TodoActions.destroy(this.props.member.id);
-    console.log('destroy');
+  deleteMemberHandler() {
+    console.log('deleteMemberHandler');
+    Actions.deleteMember(this.props.organizationAccount, this.props.member.get('account'));
   }
 
 });

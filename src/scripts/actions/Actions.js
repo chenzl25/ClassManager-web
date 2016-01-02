@@ -300,6 +300,43 @@ var Actions = {
             console.log('reject: ',err, 'inAction')
             // return Promise.reject(err);
           })
+  },
+  deleteMember: function(organizationAccount, memberAccount) {
+    console.log("deleteMember");
+    return deleteData(path.join('/organization', organizationAccount, 'member', memberAccount))
+          .then((result) => {
+            console.log(result.toJS());
+            this.searchOrganizationDetail(organizationAccount);
+            this.updateUser();
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            // return Promise.reject(err);
+          })
+  },
+  deleteOrganization: function(organizationAccount) {
+    console.log("deleteOrganization");
+    return deleteData(path.join('/organization', organizationAccount))
+          .then((result) => {
+            console.log(result.toJS());
+            this.updateUser();
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            // return Promise.reject(err);
+          })
+  },
+  quitOrganization: function(organizationAccount) {
+    console.log("quitOrganization");
+    return deleteData(path.join('/user','organization', organizationAccount))
+          .then((result) => {
+            console.log(result.toJS());
+            this.updateUser();
+            return Promise.resolve(result.get('message'));
+          }, (err) => {
+            console.log('reject: ',err, 'inAction')
+            // return Promise.reject(err);
+          })
   }
 };
 

@@ -34,11 +34,12 @@ const User = React.createClass({
     return {data:  Immutable.fromJS(Store.getUser()),
             selectedValue: 'organization',
             searchValue: '',
-            drowdown: false
+            drowdown: false,
+            intervalFlag: null
           };
   },
-  // componentWillMount() {
-  // },
+  componentWillMount() {
+  },
   componentDidMount() {
     if (!this.state.data) {
       this.props.history.pushState(null, '/login');
@@ -51,10 +52,15 @@ const User = React.createClass({
       (e || window.event).returnValue = confirmationMessage; //Gecko + IE
       return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
     });
+    var intervalFlag = setInterval(function() {
+      Actions.updateUser();  
+    }, 10000);
+    this.setState({intervalFlag: intervalFlag});
   },
   componentWillUnmount() {
     Store.removeChangeListener(this.onChange);
     // window.removeEventListener("beforeunload");
+    clearInterval(this.state.intervalFlag);
   },
   componentWillUpdate() {
     // window.removeEventListener("beforeunload");
