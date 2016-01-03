@@ -156,6 +156,9 @@
 				left:1px $default-color solid;
 				right:1px $default-color solid;
 			}
+			&:hover {
+				background: #17AFCA;
+			}
 		}
 		> li  img {
 			display: block;
@@ -169,4 +172,28 @@
 	overflow: auto;
 	height: $user-data-container-height;
 	border: 1px $default-color solid;
+}
+
+
+.hehe-enter {
+  opacity: 0.01;
+}
+
+.hehe-enter.hehe-enter-active {
+  opacity: 1;
+  transition: all .3s ease-in;
+}
+
+.hehe-appear {
+  opacity: 0.01;
+}
+
+.hehe-appear.hehe-appear-active {
+  opacity: 1;
+  transition: all .3s ease-in;
+}
+
+.hehe-leave.hehe-leave-active {
+  opacity: 0;
+  transition: all .3s ease-in;
 }

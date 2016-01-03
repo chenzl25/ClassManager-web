@@ -28,6 +28,9 @@
 	justify-content: space-around;
 	> label {
 		flex: 1 1 100%;
+		&:hover {
+			background: #17AFCA;
+		}
 	}
 	input[type="radio"] {
 	    display:none;
@@ -93,4 +96,3 @@
 	padding: 5px;
 	overflow: auto;
 }
-
