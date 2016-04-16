@@ -55,7 +55,11 @@ const Register = React.createClass({
     )
   },
   changeHandler(event) {
-    this.setImmState(d => d.update(event.target.name, v => event.target.value));
+    // this.setImmState(d => d.update(event.target.name, v => event.target.value));
+    // fix some bug here, for the event can not be access above code
+    var name = event.target.name;
+    var value = event.target.value;
+    this.setImmState(d => d.update(name, v => value));
   },
   submitHandler(event) {
     event.preventDefault();
