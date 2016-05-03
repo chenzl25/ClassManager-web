@@ -178,7 +178,12 @@ const User = React.createClass({
   },
   logoutHandler() {
     console.log('logoutHandler');
-    window.removeEventListener('beforeunload');
+    window.removeEventListener('beforeunload',function (e) {
+      var confirmationMessage = 'Sure to leave?';
+
+      (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+      return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+    });
     window.location.reload(true);
   },
   dropdownHandler() {

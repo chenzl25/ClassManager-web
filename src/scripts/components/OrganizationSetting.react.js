@@ -76,7 +76,10 @@ const OrganizationSetting = React.createClass({
             </div>);
   },
   inputChangeHandler(event) {
-    this.setImmState(d => d.update(event.target.name, v => event.target.value));
+    var name = event.target.name;
+    var value = event.target.value;
+    this.setImmState(d => d.update(name, v => value));
+    // this.setImmState(d => d.update(event.target.name, v => event.target.value));
   },
   imageChangeHandler() {
     var image = this.refs.userSettingImageInput.files[0];
