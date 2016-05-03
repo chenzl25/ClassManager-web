@@ -97,12 +97,15 @@ const VoteCreate = React.createClass({
     this.setImmState(input => input.set('options', input.get('options').pop()));
   },
   inputChangeHandler(event) {
+    var name = event.target.name;
+    var value = event.target.value;
     if (/option([0-9]*)/.test(event.target.name)) {
       var index = event.target.name.match(/option([0-9]*)/)[1];
-      this.setImmState(input => input.set('options', input.get('options').set(index, event.target.value)));
+      this.setImmState(input => input.set('options', input.get('options').set(index, value)));
       return;
     }
-    this.setImmState(input => input.update(event.target.name, v => event.target.value));
+    this.setImmState(d => d.update(name, v => value));
+    // this.setImmState(input => input.update(event.target.name, v => event.target.value));
   },
   submitHandler(event) {
     event.preventDefault();

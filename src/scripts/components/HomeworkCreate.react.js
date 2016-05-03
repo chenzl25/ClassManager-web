@@ -74,7 +74,10 @@ const HomeworkCreate = React.createClass({
     );
   },
   inputChangeHandler(event) {
-    this.setImmState(input => input.update(event.target.name, v => event.target.value));
+    var name = event.target.name;
+    var value = event.target.value;
+    this.setImmState(d => d.update(name, v => value));
+    // this.setImmState(input => input.update(event.target.name, v => event.target.value));
   },
   submitHandler(event) {
     event.preventDefault();
