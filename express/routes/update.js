@@ -69,13 +69,19 @@ router.post('/user/homework/:id',function(req, res) {
             res.end(JSON.stringify(result));
             return;
         }
-        var homework = data_u.homeworks.id(id);
-        homework.uncomplish = input.uncomplish;
-        tools.update_status(data_u, 'homeworks');
-        data_u.save(tools.invalid_data_handler);
-        result.error = false;
-        result.message = 'update homework successfully';
-        res.end(JSON.stringify(result));
+        if (data_u.homeworks.id(id)) {
+            var homework = data_u.homeworks.id(id);
+            homework.uncomplish = input.uncomplish;
+            tools.update_status(data_u, 'homeworks');
+            data_u.save(tools.invalid_data_handler);
+            result.error = false;
+            result.message = 'update homework successfully';
+            res.end(JSON.stringify(result));
+        } else {
+            result.error = true;
+            result.message = "homework doesn't exists";
+            res.end(JSON.stringify(result));
+        }
     });
 });
 
