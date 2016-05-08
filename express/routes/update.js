@@ -59,6 +59,10 @@ router.post('/user/homework/:id',function(req, res) {
     }
     User.findByAccount(user_data.account, function(err, data_u) {
         input.uncomplish = req.body.uncomplish;
+        // extend the acceptance //
+        if (input.uncomplish && input.uncomplish.toLowerCase() == "false") input.uncomplish = false;
+        if (input.uncomplish && input.uncomplish.toLowerCase() == "true")  input.uncomplish = true;
+        ///////////////////////////
         if (typeof input.uncomplish !== 'boolean') {
             result.error = true;
             result.message = 'the uncomplish must be Boolean';
