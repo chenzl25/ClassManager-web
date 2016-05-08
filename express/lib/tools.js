@@ -93,9 +93,11 @@ var tools = {
 		for (var i = 0; i < data_o.members.length; i++) {
 			User.findByAccount(data_o.members[i].account, function(err,data) {
 				if (data && data.homeworks) { // this for the begining time of some user doesn't have homeorks property
-					data.homeworks.id(homework_id).remove();
-					self.update_status(data_o, 'homeworks');
-					data.save(self.invalid_data_handler);
+					if (data.homeworks.id(homework_id)) {
+						data.homeworks.id(homework_id).remove();
+						self.update_status(data_o, 'homeworks');
+						data.save(self.invalid_data_handler);
+					}
 				}
 			});
 		}
