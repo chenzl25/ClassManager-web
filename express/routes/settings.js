@@ -115,6 +115,11 @@ router.post('/user',users_upload.single('image'),function(req,res) {
       var result = {};
       input.account = req.body.account || null;
       input.password = req.body.password || null;
+      if (input.password) {
+        input.password = crypto.createHash('sha1')
+                   .update(input.password)
+                   .digest('base64');
+      }
       input.name = req.body.name || null;
       input.nick_name = input.name || null;
       input.student_id =req.body.student_id || null;
