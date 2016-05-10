@@ -254,7 +254,7 @@ var Status =  {    //是否修改过的状态值类似于User
 		name: String,						 //修改Vote名字和内容和截止日期
 		content: String,					 //
 		deadline: Date, 					
-		options: [{_id:'',name=''}...]       //把需要修改的投票项的_id加上name放到数组里传过来
+		options: ["A","B"...]       //把需要修改的投票项的_id加上name放到数组里传过来
 	});
 
 
@@ -519,7 +519,7 @@ var Status =  {    //是否修改过的状态值类似于User
     	name:String,
 		content:String,
 		deadline:String,
-		options:[{name:''},...]
+		options:["A", "B",...]
     }
     output: {
     	error:'',
