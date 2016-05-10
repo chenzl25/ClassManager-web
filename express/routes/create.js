@@ -238,9 +238,13 @@ router.post('/organization/:account/vote', function(req, res) {
             return;
         }
         try {
-            input.options = JSON.parse(req.body.options);
             if (input.options instanceof Array === false) {
-                throw Error('your options is not a legal string-like Array');
+                input.options = JSON.parse(req.body.options);
+                if (input.options instanceof Array === false) {
+                    throw Error('your options is not a legal string-like Array');
+                }
+            } else {
+                // here the input.options is Array, still ok
             }
         } catch (e) {
             console.log(e);
