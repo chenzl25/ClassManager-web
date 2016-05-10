@@ -238,7 +238,7 @@ router.post('/organization/:account/vote', function(req, res) {
             return;
         }
         try {
-            if (input.options instanceof Array === false) {
+            if (req.body.options instanceof Array === false) {
                 input.options = JSON.parse(req.body.options);
                 if (input.options instanceof Array === false) {
                     throw Error('your options is not a legal string-like Array');
@@ -252,7 +252,8 @@ router.post('/organization/:account/vote', function(req, res) {
             result.message = 'your options is not a legal string-like Array';
             res.end(JSON.stringify(result));
             return;
-        }
+  
+  }
         for (var i = 0; i < input.options.length; i++) {
             input.options[i] = {name:input.options[i]};
         }
@@ -265,4 +266,5 @@ router.post('/organization/:account/vote', function(req, res) {
         res.end(JSON.stringify(result));
     });
 });
+
 module.exports = router;
