@@ -78,7 +78,7 @@ var organizations_upload = multer({
       cb(null,false);
     } else {
       console.log(file);
-      if (!/image\/*/.test(file.mimetype)) {
+      if (/*we let all pass*/false && !/image\/*/.test(file.mimetype)) {
       // if (!/image\/*/.test(file.mimetype) && file.mimetype != 'application/octet-stream') {
         console.log('not image file has been uploaded by', req.session.user_data.account);
         req.unformat_upload = true;
