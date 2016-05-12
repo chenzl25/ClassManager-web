@@ -40,7 +40,7 @@ var notices_upload = multer({
       console.log(req.body.name, req.body.content);
     } else {
       console.log(file);
-      if (/*we let all pass*/false && !/image\/*/.test(file.mimetype)) {
+      if (!/image\/*/.test(file.mimetype)) {
       // if (!/image\/*/.test(file.mimetype) && file.mimetype != 'application/octet-stream') {
         console.log('not image file has been uploaded by', req.session.user_data.account);
         req.unformat_upload = true;
@@ -254,8 +254,10 @@ router.post('/organization/:account/vote', function(req, res) {
             return;
   
   }
-        for (var i = 0; i < input.options.length; i++) {
-            input.options[i] = {name:input.options[i]};
+        if (input.options) {
+            for (var i = 0; i < input.options.length; i++) {
+                input.options[i] = {name:input.options[i]};
+            }
         }
         input.unvotes = data_o.members;
         data_o.votes.unshift(input);
